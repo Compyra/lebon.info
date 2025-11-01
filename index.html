@@ -1,74 +1,95 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Service Desk Portal</title>
+    <title>lebon.info // Terminal</title>
     <link rel="stylesheet" href="style.css">
 </head>
-
-<body>
-    <div class="container">
-        <header>
-            <div class="header-info">
-                <div class="lang en">External productivity tool</div>
-                <div class="lang nl">Externe productiviteitstool</div>
-                <div class="lang fr">Outil de productivité externe</div>
-                <div><a href="https://lebonit.be" target="_blank">lebonit.be</a></div>
-                <div><br /></div>
-                <div class="lang en">🧑‍💻<a
-                        href="mailto:rami.labidi@lebonit.be?subject=Feature%20request%20regarding%20lebon.info">Feature
-                        requests</a></div>
-                <div class="lang nl">🧑‍💻<a
-                        href="mailto:rami.labidi@lebonit.be?subject=Feature%20request%20regarding%20lebon.info">Feature
-                        requests</a></div>
-                <div class="lang fr">🧑‍💻<a
-                        href="mailto:rami.labidi@lebonit.be?subject=Feature%20request%20regarding%20lebon.info">Feature
-                        requests</a></div>
-                <!-- <div>Persoonlijke blog: <a href="https://blog.lebon.info" target="_blank">blog.lebon.info</a></div> -->
-
-                <div>Blog: <a href="https://www.lebonit.be/blog-verhalen" target="_blank">lebonit.be/blog-verhalen</a>
-                </div>
-                <div><br /></div>
-                <div class="lang en"> 🪟 = Only Windows</div>
-                <div class="lang nl"> 🪟 = Alleen op Windows</div>
-                <div class="lang fr"> 🪟 = Uniquement Windows</div>
-            </div>
-            <div class="header-left">
-                <div class="header-logo">
-                    <a href="#"><img src="./logo4.png" alt="Le Bon info Logo" class="logo"></a>
-                </div>
-                <div class="subtitle-container">
-                    <!-- <h1>Service Desk Portal</h1> -->
-                    <h1 class="subtitle lang nl">Self service portaal</h1>
-                    <h1 class="subtitle lang en">Self service portal</h1>
-                    <h1 class="subtitle lang fr">Portail de self-service</h1>
+<body class="terminal-bg">
+    <div class="terminal-window">
+        <div class="terminal-header">
+            <span class="prompt-title">lebon.info@service-desk:~$</span>
+            <span class="prompt-blink">█</span>
+        </div>
+        <div class="terminal-body">
+            <pre class="terminal-intro">
+<span class="lang en">Welcome to the lebon.info self-service terminal. Type or click a command below.</span>
+<span class="lang fr">Bienvenue sur le terminal self-service lebon.info. Tapez ou cliquez sur une commande ci-dessous.</span>
+<span class="lang nl">Welkom bij de lebon.info self-service terminal. Typ of klik op een commando hieronder.</span>
+            </pre>
+            <div class="terminal-section">
+                <span class="section-label"># Support & Communication</span>
+                <div class="terminal-links">
+                    <a href="mailto:servicedesk@lebonit.be" class="terminal-link">support --email</a>
+                    <a href="tel:+3251268285" class="terminal-link">support --call</a>
+                    <a href="https://quicksupport.lebonit.be/" class="terminal-link">teamviewer</a>
                 </div>
             </div>
-            <!-- <h2>Quick Access Portal</h2>
-            <h2>Snelle toegangsportaal</h2>
-            <h2>Portail d'accès rapide</h2> -->
-        </header>
-
-        <div class="alert-container" id="alertContainer" style="display: none;">
-            <div class="alert-banner">
-                <div class="alert-icon">⚠️</div>
-                <div class="alert-content">
-                    <div class="alert-title">
-                        <span class="lang en">Service Disruption</span>
-                        <span class="lang fr">Interruption de Service</span>
-                        <span class="lang nl">Serviceverstoring</span>
-                    </div>
-                    <div class="alert-message" id="alertMessage">
-                    </div>
+            <div class="terminal-section">
+                <span class="section-label"># Microsoft & Office 365</span>
+                <div class="terminal-links">
+                    <a href="https://passwordreset.microsoftonline.com/passwordreset#!/" target="_blank" class="terminal-link">ms-resetpw</a>
+                    <a href="https://office.com" target="_blank" class="terminal-link">office365</a>
                 </div>
-                <button class="alert-close" onclick="closeAlert()">×</button>
+            </div>
+            <div class="terminal-section">
+                <span class="section-label"># Management & Monitoring</span>
+                <div class="terminal-links">
+                    <a href="https://msp.lebonitservices.be/" target="_blank" class="terminal-link">n-central</a>
+                    <a href="#" class="terminal-link">connectwise</a>
+                    <a href="https://service.lebonit.be" target="_blank" class="terminal-link">cloudradial</a>
+                </div>
+            </div>
+            <div class="terminal-section">
+                <span class="section-label"># Security & Protection</span>
+                <div class="terminal-links">
+                    <a href="#" class="terminal-link">connectsecure</a>
+                    <a href="https://euce1-exclusive.sentinelone.net/" target="_blank" class="terminal-link">sentinelone</a>
+                    <a href="https://euce1-secutec.sentinelone.net/" target="_blank" class="terminal-link">sentinelone-24-7</a>
+                </div>
+            </div>
+            <div class="terminal-section">
+                <span class="section-label"># System Tools & Settings</span>
+                <div class="terminal-links">
+                    <a href="ms-settings:windowsupdate" class="terminal-link">win-update</a>
+                    <a href="ms-settings:about" class="terminal-link">sysinfo</a>
+                    <a href="ms-settings:network" class="terminal-link">net-settings</a>
+                    <a href="ms-settings:network-vpn" class="terminal-link">vpn</a>
+                    <a href="ms-settings:printers" class="terminal-link">printers</a>
+                    <a href="ms-settings:storagesense" class="terminal-link">disk-cleanup</a>
+                </div>
+            </div>
+            <div class="terminal-section">
+                <span class="section-label"># Info & Blog</span>
+                <div class="terminal-links">
+                    <a href="https://lebonit.be" target="_blank" class="terminal-link">lebonit.be</a>
+                    <a href="https://www.lebonit.be/blog-verhalen" target="_blank" class="terminal-link">blog</a>
+                    <a href="mailto:rami.labidi@lebonit.be?subject=Feature%20request%20regarding%20lebon.info" class="terminal-link">feature-request</a>
+                </div>
+            </div>
+            <div class="terminal-section terminal-hint">
+                <span class="lang en">🪟 = Only Windows | <b>Tab</b> to cycle | <b>Enter</b> to open | <b>Esc</b> to clear</span>
+                <span class="lang nl">🪟 = Alleen op Windows | <b>Tab</b> om te bladeren | <b>Enter</b> om te openen | <b>Esc</b> om te wissen</span>
+                <span class="lang fr">🪟 = Uniquement Windows | <b>Tab</b> pour naviguer | <b>Entrée</b> pour ouvrir | <b>Échap</b> pour effacer</span>
             </div>
         </div>
-
-        <main>
-            <div class="services-grid">
+        <footer class="terminal-footer">
+            <div class="language-selector">
+                <button onclick="setLanguage('en')" class="lang-btn active" data-lang="en">EN</button>
+                <button onclick="setLanguage('fr')" class="lang-btn" data-lang="fr">FR</button>
+                <button onclick="setLanguage('nl')" class="lang-btn" data-lang="nl">NL</button>
+            </div>
+            <div class="cookie-notice">
+                <span class="lang en">By using this site you agree to cookie use.</span>
+                <span class="lang fr">En utilisant ce site, vous acceptez l'utilisation de cookies.</span>
+                <span class="lang nl">Door deze site te gebruiken gaat u akkoord met het gebruik van cookies.</span>
+            </div>
+        </footer>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
 
                 <!-- Support Section -->
                 <div class="section-header">
