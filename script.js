@@ -6,7 +6,26 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Add hover effects for better UX
     addEnhancedHoverEffects();
+
+    // Add ESC key handler to focus first object
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' || e.key === 'Esc') {
+            focusFirstObject();
+        }
+    });
 });
+
+function focusFirstObject() {
+    // Try terminal-link, then service-link, then lang-btn
+    const selectors = ['.terminal-link', '.service-link', '.lang-btn'];
+    for (const sel of selectors) {
+        const el = document.querySelector(sel);
+        if (el) {
+            el.focus();
+            return;
+        }
+    }
+}
 
 function initializePage() {
     // Check for saved language preference

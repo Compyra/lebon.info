@@ -76,6 +76,9 @@ body.terminal-bg {
     margin-bottom: 10px;
     font-family: inherit;
     white-space: pre-line;
+    min-height: 2.2em;
+    display: flex;
+    align-items: center;
 }
 
 .terminal-section {
@@ -391,7 +394,6 @@ main {
     color: #232b28;
     border-color: var(--terminal-link-hover);
     box-shadow: 0 2px 8px #003a;
-}
 }
 
 .call-btn {
