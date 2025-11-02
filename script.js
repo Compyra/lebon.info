@@ -247,32 +247,32 @@ if ('serviceWorker' in navigator) {
     });
 }
 
-function showAlert(messageEn, messageFr, messageNl) {
-    const alertContainer = document.getElementById('alertContainer');
-    const alertMessage = document.getElementById('alertMessage');
+// function showAlert(messageEn, messageFr, messageNl) {
+//     const alertContainer = document.getElementById('alertContainer');
+//     const alertMessage = document.getElementById('alertMessage');
     
-    // Update bericht
-    alertMessage.innerHTML = `
-        <span class="lang en">${messageEn}</span>
-        <span class="lang fr">${messageFr}</span>
-        <span class="lang nl">${messageNl}</span>
-    `;
+//     // Update bericht
+//     alertMessage.innerHTML = `
+//         <span class="lang en">${messageEn}</span>
+//         <span class="lang fr">${messageFr}</span>
+//         <span class="lang nl">${messageNl}</span>
+//     `;
     
-    // Toon alert
-    alertContainer.style.display = 'block';
+//     // Toon alert
+//     alertContainer.style.display = 'block';
     
-    // // Herlaad taal instellingen
-    // const currentLang = localStorage.getItem('language') || 'en';
-    // setLanguage(currentLang);
-}
+//     // // Herlaad taal instellingen
+//     // const currentLang = localStorage.getItem('language') || 'en';
+//     // setLanguage(currentLang);
+// }
 
-function closeAlert() {
-    document.getElementById('alertContainer').style.display = 'none';
-}
+// function closeAlert() {
+//     document.getElementById('alertContainer').style.display = 'none';
+// }
 
-// Voorbeeld gebruik - roep aan wanneer nodig:
-showAlert(
-    "Microsoft is experiencing issues today. Email delivery may be delayed.",
-    "Microsoft connaît des problèmes aujourd'hui. La livraison d'e-mails peut être retardée.",
-    "Microsoft ondervindt vandaag problemen. E-mailbezorging kan vertraagd zijn."
-);
+// // Voorbeeld gebruik - roep aan wanneer nodig:
+// showAlert(
+//     "Microsoft is experiencing issues today. Email delivery may be delayed.",
+//     "Microsoft connaît des problèmes aujourd'hui. La livraison d'e-mails peut être retardée.",
+//     "Microsoft ondervindt vandaag problemen. E-mailbezorging kan vertraagd zijn."
+// );
