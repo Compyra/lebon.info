@@ -4,7 +4,7 @@
   { "title_en": "checkpoint — product alerts", "url": "https://support.checkpoint.com/product-alerts#" },
   { "title_en": "sonicwall — PSIRT vuln list", "url": "https://psirt.global.sonicwall.com/vuln-list" },
   { "title_en": "citrix — security bulletin (list)", "url": "https://support.citrix.com/support-home/topic-article-list?trendingCategory=20&trendingTopicName=Security%20Bulletin" },
-  { "title_en": "citrix — specific bulletin page", "url": "https://support.citrix.com/s/topic/0TO4z0000001GYdGAM/security-bulletin?language=en_US" },
+  { "title_en": "citrix — specific bulletin pages", "url": "https://support.citrix.com/s/topic/0TO4z0000001GYdGAM/security-bulletin?language=en_US" },
   { "title_en": "Broadcom / VMware notifications", "url": "https://support.broadcom.com/web/ecx/search?searchString=&activeType=all&from=0&sortby=post_time&orderBy=desc&pageNo=1&aggregations=%5B%7B%22type%22%3A%22productname%22%2C%22filter%22%3A%5B%22VMware+vSphere+ESXi%22%2C%22VMware%22%2C%22VMware+vCenter+Server%22%5D%7D%2C%7B%22type%22%3A%22_type%22%2C%22filter%22%3A%5B%22notification_docs%22%5D%7D%5D&uid=d042dbba-f8c4-11ea-beba-0242ac12000b&resultsPerPage=10&exactPhrase=&withOneOrMore=&withoutTheWords=&pageSize=10&language=en&suCaseCreate=false" },
   { "title_en": "synology — security advisory", "url": "https://www.synology.com/en-global/security/advisory" },
   { "title_en": "veeam — knowledge base (security)", "url": "https://www.veeam.com/knowledge-base.html?type=security" },
@@ -23,7 +23,7 @@
   { "title_en": "Schneider Electric — security notifications", "url": "https://www.se.com/ww/en/work/support/cybersecurity/security-notifications.jsp" },
   { "title_en": "Next UPS (add URL if known)", "url": "" },
   { "title_en": "Scality (add URL if known)", "url": "" },
-  { "title_en": "FastVue (add URL if known)", "url": "" },
+  { "title_en": "FastVue - Reporter for SonicWall Release notes", "url": "https://releasenotes.fastvue.co/product/reporter-for-sonicwall/" },
   { "title_en": "CIPP — releases (GitHub)", "url": "https://github.com/KelvinTegelaar/CIPP/releases" },
   { "title_en": "WatchGuard — PSIRT advisories", "url": "https://www.watchguard.com/wgrd-psirt/advisories" }
 ]
