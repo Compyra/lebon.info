@@ -43,16 +43,28 @@ document.addEventListener('DOMContentLoaded', async () => {
   links.forEach(item => {
     const div = document.createElement('div');
     div.className = 'cve-item';
-    const a = document.createElement('a');
-    a.href = item.url;
-    a.target = '_blank';
-    a.rel = 'noopener';
-    a.textContent = item.title;
-    div.appendChild(a);
+    // support both the older `title` field and the newer `title_en`
+    const title = item.title_en || item.title || '';
+    const url = item.url || '';
+
+    if (url && /^https?:\/\//i.test(url)) {
+      const a = document.createElement('a');
+      a.href = url;
+      a.target = '_blank';
+      a.rel = 'noopener';
+      a.textContent = title;
+      div.appendChild(a);
+    } else {
+      const span = document.createElement('span');
+      span.textContent = title + (url ? ' (' + url + ')' : ' (URL not set)');
+      span.className = 'missing-url';
+      div.appendChild(span);
+    }
     listContainer.appendChild(div);
   });
-
-  const urls = links.map(l => l.url);
+  
+  // Only include valid http(s) URLs for the "open all" action
+  const urls = links.map(l => l.url).filter(u => typeof u === 'string' && /^https?:\/\//i.test(u));
 
   if (!btn) return;
   btn.setAttribute('aria-pressed', 'false');
