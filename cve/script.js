@@ -16,26 +16,14 @@ document.addEventListener('DOMContentLoaded', async () => {
     if (!res.ok) throw new Error('Failed to fetch links.json: ' + res.status);
     links = await res.json();
   } catch (e) {
-    // Fetch failed (often happens when opening file:// pages). Try embedded JSON fallback.
-    console.warn('Could not fetch links.json, attempting embedded fallback', e);
-    const embedded = document.getElementById('links-json');
-    if (embedded && embedded.textContent.trim()) {
-      try {
-        links = JSON.parse(embedded.textContent);
-      } catch (e2) {
-        console.error('Embedded links JSON parse failed', e2);
-      }
-    }
-    if (!links || links.length === 0) {
-      console.error('Could not load links.json', e);
-      listContainer.innerHTML = '<div class="note">Failed to load link list. See console for details.</div>';
-      // still expose setLanguage
-      window.setLanguage = (lang) => {
-        document.body.setAttribute('data-lang', lang);
-        document.querySelectorAll('.lang-btn').forEach(b => b.classList.toggle('active', b.getAttribute('data-lang') === lang));
-      };
-      return;
-    }
+    console.error('Could not load links.json', e);
+    listContainer.innerHTML = '<div class="note">Failed to load link list. See console for details.</div>';
+    // still expose setLanguage
+    window.setLanguage = (lang) => {
+      document.body.setAttribute('data-lang', lang);
+      document.querySelectorAll('.lang-btn').forEach(b => b.classList.toggle('active', b.getAttribute('data-lang') === lang));
+    };
+    return;
   }
 
   // Render list
