@@ -1,0 +1,13 @@
+[
+  { "title": "devolutions — security advisories", "url": "https://devolutions.net/security/advisories/" },
+  { "title": "paessler — PRTG stable history", "url": "https://www.paessler.com/prtg/history/stable" },
+  { "title": "checkpoint — product alerts", "url": "https://support.checkpoint.com/product-alerts#" },
+  { "title": "fortinet — PSIRT / Security Advisories", "url": "https://www.fortiguard.com/psirt" },
+  { "title": "juniper — security advisories", "url": "https://www.juniper.net/support/security/advisories/" },
+  { "title": "OPNsense — security", "url": "https://opnsense.org/security/" },
+  { "title": "pfSense — security", "url": "https://www.pfsense.org/security/" },
+  { "title": "sonicwall — PSIRT vuln list", "url": "https://psirt.global.sonicwall.com/vuln-list" },
+  { "title": "sophos — security advisories", "url": "https://www.sophos.com/en-us/support/security-advisories" },
+  { "title": "watchguard — security advisories", "url": "https://www.watchguard.com/wgrd-security-advisories" },
+  { "title": "GIMP — Downloads", "url": "https://www.gimp.org/downloads/" }
+]

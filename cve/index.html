@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>lebon.info // Weekly CVE Check</title>
+  <link rel="stylesheet" href="../style.css">
+  <link rel="stylesheet" href="./cve.css">
+</head>
+<body class="terminal-bg" data-lang="en">
+  <div class="terminal-window">
+    <div class="terminal-header">
+      <span class="prompt-title">lebon.info:~/cve$</span>
+      <span class="prompt-blink">█</span>
+    </div>
+    <div class="terminal-body">
+      <div class="terminal-intro">
+        <span class="lang en">Weekly security feeds — open all monitored pages with one click.</span>
+      </div>
+
+      <div class="terminal-section">
+        <span class="section-label"># Weekly URLs</span>
+        <div class="cve-controls">
+          <button id="openAll" class="open-all-btn">Open all</button>
+          <div class="note">Opens each link in a new tab (small delay to reduce popup blocking)</div>
+        </div>
+
+        <div class="cve-list" id="cveList">
+          <div class="note">Loading links…</div>
+        </div>
+        <!-- Embedded fallback JSON for environments where fetch('./links.json') fails (eg. file://) -->
+        <script id="links-json" type="application/json">
+[
+  { "title": "devolutions — security advisories", "url": "https://devolutions.net/security/advisories/" },
+  { "title": "paessler — PRTG stable history", "url": "https://www.paessler.com/prtg/history/stable" },
+  { "title": "checkpoint — product alerts", "url": "https://support.checkpoint.com/product-alerts#" },
+  { "title": "fortinet — PSIRT / Security Advisories", "url": "https://www.fortiguard.com/psirt" },
+  { "title": "juniper — security advisories", "url": "https://www.juniper.net/support/security/advisories/" },
+  { "title": "OPNsense — security", "url": "https://opnsense.org/security/" },
+  { "title": "pfSense — security", "url": "https://www.pfsense.org/security/" },
+  { "title": "sonicwall — PSIRT vuln list", "url": "https://psirt.global.sonicwall.com/vuln-list" },
+  { "title": "sophos — security advisories", "url": "https://www.sophos.com/en-us/support/security-advisories" },
+  { "title": "watchguard — security advisories", "url": "https://www.watchguard.com/wgrd-security-advisories" },
+  { "title": "GIMP — Downloads", "url": "https://www.gimp.org/downloads/" }
+]
+        </script>
+      </div>
+
+      <div class="terminal-section terminal-hint">
+        <span class="lang en">Tip: If popups are blocked by your browser, allow popups for this site or open links individually.</span>
+      </div>
+    </div>
+    <footer class="terminal-footer">
+      <div class="language-selector">
+        <button onclick="setLanguage('en')" class="lang-btn active" data-lang="en">EN</button>
+        <button onclick="setLanguage('fr')" class="lang-btn" data-lang="fr">FR</button>
+        <button onclick="setLanguage('nl')" class="lang-btn" data-lang="nl">NL</button>
+      </div>
+    </footer>
+  </div>
+
+  <script src="./script.js" defer></script>
+</body>
+</html>
