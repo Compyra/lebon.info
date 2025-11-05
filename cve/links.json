@@ -17,6 +17,7 @@
   { "title_en": "N-able — security notices (status)", "url": "https://status.n-able.com/category/security-notices/" },
   { "title_en": "Netskope — security advisories", "url": "https://www.netskope.com/company/security-compliance-and-assurance/security-advisories-and-disclosures" },
   { "title_en": "Cloudflare — vulnerabilities blog", "url": "https://blog.cloudflare.com/tag/vulnerabilities/" },
+  { "title_en": "Chrome — releases", "url": "https://chromereleases.googleblog.com/" },
   { "title_en": "TrueNAS — CVE/security", "url": "https://security.truenas.com/categories/cve/" },
   { "title_en": "Debian — security", "url": "https://www.debian.org/security/" },
   { "title_en": "Ubuntu — security CVEs", "url": "https://ubuntu.com/security/cves" },
