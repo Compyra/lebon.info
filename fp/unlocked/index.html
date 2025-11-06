@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Military Alphabet - Keep Unlocked</title>
+    <link rel="stylesheet" href="../../style.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="terminal-bg">
+    <div class="terminal-window">
+        <div class="terminal-header">
+            <span class="prompt-title">military-alphabet --keep-unlocked</span>
+            <span class="prompt-blink">█</span>
+        </div>
+        <div class="terminal-body">
+            <div class="navbar">
+                <a href="../../" class="nav-link">← Back to lebon.info</a>
+            </div>
+
+            <div class="info-bar">
+                <div class="info-text">
+                    <span class="status-indicator"></span>
+                    <span>Display Active - System Unlocked</span>
+                </div>
+                <div class="info-text" style="font-size: 0.9rem; opacity: 0.7;">
+                    This page keeps your computer unlocked by preventing idle lock. Movement & activity detected.
+                </div>
+            </div>
+
+            <div class="military-alphabet-container">
+                <div class="terminal-section">
+                    <span class="section-label">Military Phonetic Alphabet</span>
+                </div>
+
+                <div class="controls">
+                    <button class="control-btn active" onclick="setMode('grid')">Grid View</button>
+                    <button class="control-btn" onclick="setMode('slideshow')">Slideshow</button>
+                    <button class="control-btn" onclick="setMode('speed')">Speed Mode</button>
+                    <button class="control-btn" onclick="toggleAutoPlay()">Auto Play: <span id="autoPlayStatus">OFF</span></button>
+                </div>
+
+                <div id="gridContainer" class="alphabet-grid"></div>
+                <div id="slideshowContainer" style="display: none; text-align: center;">
+                    <div id="slideshowCard" class="alphabet-card" style="max-width: 400px; margin: 50px auto;">
+                        <div class="letter" id="slideshowLetter">A</div>
+                        <div class="word" id="slideshowWord">Alpha</div>
+                        <div class="pronunciation" id="slideshowPronounciation">AL-fuh</div>
+                    </div>
+                    <div style="margin-top: 20px; gap: 10px; display: flex; justify-content: center;">
+                        <button class="control-btn" onclick="prevSlide()">← Previous</button>
+                        <button class="control-btn" onclick="nextSlide()">Next →</button>
+                        <button class="control-btn" onclick="toggleSlideshowPlay()">
+                            <span id="playbtnText">Play</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="terminal-section terminal-hint" style="margin-top: 30px;">
+                <span><b>💡 Tip:</b> Click on alphabet cards to select them. Use slideshow for full-screen learning.</span>
+            </div>
+        </div>
+        <footer class="terminal-footer">
+            <div class="language-selector">
+                <button onclick="setLanguage('en')" class="lang-btn active" data-lang="en">EN</button>
+            </div>
+            <div class="cookie-notice">
+                <span>By using this site you agree to cookie use. This page prevents system idle lock.</span>
+            </div>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
