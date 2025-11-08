@@ -8,13 +8,16 @@ body {
     border: 1px solid green;
     padding: 10px;
     max-width: 800px;
-    margin: auto;
+    margin: 0 auto 30px auto;
 }
 .greeting {
     font-size: 1.5em;
     margin-bottom: 20px;
 }
 .notes {
+    margin-bottom: 20px;
+}
+.links {
     margin-bottom: 20px;
 }
 .quotes {
@@ -31,4 +34,12 @@ button {
     border: 1px solid green;
     padding: 5px 10px;
     cursor: pointer;
+}
+a {
+    color: green;
+    text-decoration: none;
+}
+a:hover {
+    color: lime;
+    text-decoration: underline;
 }

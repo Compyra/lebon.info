@@ -1,0 +1,6 @@
+# Security.txt file for lebon.info
+# This file contains security-related information for this website
+
+Contact: mailto:security@lebon.info
+Expires: 2026-11-08T00:00:00.000Z
+Preferred-Languages: en
