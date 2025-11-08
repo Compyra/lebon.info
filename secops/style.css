@@ -1,0 +1,50 @@
+body {
+    background-color: #000000;
+    color: #00ff00;
+    font-family: 'Courier New', monospace;
+    margin: 0;
+    padding: 20px;
+    line-height: 1.6;
+}
+
+.terminals {
+    display: flex;
+    gap: 20px;
+}
+
+.terminal {
+    border: 1px solid #00ff00;
+    padding: 20px;
+    background-color: #001100;
+    box-shadow: 0 0 10px #00ff00;
+    flex: 1;
+}
+
+h1 {
+    color: #00ff00;
+    text-align: center;
+    text-shadow: 0 0 5px #00ff00;
+}
+
+.prompt {
+    color: #00ff00;
+}
+
+a {
+    color: #00ff00;
+    text-decoration: underline;
+}
+
+a:hover {
+    text-decoration: underline;
+    color: #ffffff;
+}
+
+.folder {
+    margin: 10px 0;
+}
+
+.description {
+    color: #888888;
+    font-size: 0.9em;
+}

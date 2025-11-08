@@ -4,60 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SecOps - Hacker Toolkit</title>
-    <style>
-        body {
-            background-color: #000000;
-            color: #00ff00;
-            font-family: 'Courier New', monospace;
-            margin: 0;
-            padding: 20px;
-            line-height: 1.6;
-        }
-        .terminals {
-            display: flex;
-            gap: 20px;
-        }
-        .terminal {
-            border: 1px solid #00ff00;
-            padding: 20px;
-            background-color: #001100;
-            box-shadow: 0 0 10px #00ff00;
-            flex: 1;
-        }
-        h1 {
-            color: #00ff00;
-            text-align: center;
-            text-shadow: 0 0 5px #00ff00;
-        }
-        .prompt {
-            color: #00ff00;
-        }
-        a {
-            color: #00ff00;
-            text-decoration: none;
-        }
-        a:hover {
-            text-decoration: underline;
-            color: #ffffff;
-        }
-        .folder {
-            margin: 10px 0;
-        }
-        .description {
-            color: #888888;
-            font-size: 0.9em;
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="terminals">
-        <div class="terminal">
-            <h1>IT Tools</h1>
-            <p class="prompt">$ ls -la /it-tools</p>
-            <div class="folder">
-                <a href="./it-tools/">it-tools/</a> <span class="description">- Clone of the GitHub project it-tools-chore-all-my-stuffs from local path c:\Users\rami.labidi\Downloads\it-tools-chore-all-my-stuffs\it-tools-chore-all-my-stuffs, taken on date 2025-11-08</span>
-            </div>
-        </div>
         <div class="terminal">
             <h1>SecOps Hacker Toolkit</h1>
             <p class="prompt">$ ls -la /useful-folders</p>
@@ -76,6 +26,16 @@
             <p class="prompt">$ cat README.md</p>
             <p>Welcome to the SecOps toolkit. Here you'll find useful folders and resources for security operations and development.</p>
             <p>Use at your own risk. Remember the laws of robotics.</p>
+        </div>
+        <div class="terminal">
+            <h1>IT Tools</h1>
+            <p class="prompt">$ ls -la /it-tools</p>
+            <div class="folder">
+                <a href="./it-tools/">it-tools/</a> <span class="description">- Clone of the GitHub project it-tools-chore-all-my-stuffs (https://github.com/sharevb/it-tools), taken on date 2025-11-08</span>
+            </div>
+            <div class="folder">
+                <a href="./CyberChef_v10.19.4" target="_blank">CyberChef/</a> <span class="description">- Web-based data manipulation and analysis tool from GCHQ (https://github.com/gchq/CyberChef), useful for cybersecurity tasks</span>
+            </div>
         </div>
     </div>
 </body>
