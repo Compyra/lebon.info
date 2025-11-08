@@ -1,0 +1,34 @@
+body {
+    background-color: black;
+    color: green;
+    font-family: 'Courier New', monospace;
+    padding: 20px;
+}
+.terminal {
+    border: 1px solid green;
+    padding: 10px;
+    max-width: 800px;
+    margin: auto;
+}
+.greeting {
+    font-size: 1.5em;
+    margin-bottom: 20px;
+}
+.notes {
+    margin-bottom: 20px;
+}
+.quotes {
+    margin-top: 50px;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    line-height: 1.8;
+}
+button {
+    background-color: black;
+    color: green;
+    border: 1px solid green;
+    padding: 5px 10px;
+    cursor: pointer;
+}

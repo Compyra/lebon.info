@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rami's Page</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="terminal">
+        <div class="greeting">
+            Welcome to Rami's page, visitor.
+        </div>
+        <div class="notes">
+            Quick notes:<br>
+            - Remember to stay curious.<br>
+            - Zero width space: ​ (invisible character)<br>
+        </div>
+        <button onclick="copyZeroWidthSpace()">Copy Zero Width Space</button>
+    </div>
+    <div class="quotes">
+        Quotes:<br>
+        "In the digital world, the price of silence is often your freedom." - timsux wales<br>
+        "My crime is that of curiosity." - Hackers Manifesto (<a href="https://phrack.org/issues/7/3">source</a>)<br>
+    </div>
+    <script>
+        function copyZeroWidthSpace() {
+            navigator.clipboard.writeText('\u200B');
+        }
+    </script>
+</body>
+</html>
