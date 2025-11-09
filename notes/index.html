@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notes & Todo</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        h1 {
+            color: #333;
+        }
+        .section {
+            background: white;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        textarea {
+            width: 100%;
+            height: 200px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            resize: vertical;
+        }
+        .todo-input {
+            display: flex;
+            margin-bottom: 10px;
+        }
+        input[type="text"] {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        button {
+            padding: 10px 15px;
+            background: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-left: 10px;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+        li {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            border-bottom: 1px solid #eee;
+        }
+        li:last-child {
+            border-bottom: none;
+        }
+        .todo-text {
+            flex: 1;
+        }
+        .completed {
+            text-decoration: line-through;
+            color: #888;
+        }
+    </style>
+</head>
+<body>
+    <h1>Notes & Todo Lists</h1>
+
+    <div class="section">
+        <h2>Notes</h2>
+        <textarea id="notes" placeholder="Write your notes here..."></textarea>
+        <button onclick="insertDateTime()">Insert Date/Time</button>
+    </div>
+
+    <div class="section">
+        <h2>Todo List</h2>
+        <div class="todo-input">
+            <input type="text" id="new-todo" placeholder="Add a new todo item...">
+            <button onclick="addTodo()">Add</button>
+        </div>
+        <ul id="todo-list"></ul>
+    </div>
+
+    <script>
+        // Load saved data on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            loadNotes();
+            loadTodos();
+        });
+
+        // Notes functionality
+        const notesTextarea = document.getElementById('notes');
+
+        function loadNotes() {
+            const savedNotes = localStorage.getItem('notes');
+            if (savedNotes) {
+                notesTextarea.value = savedNotes;
+            }
+        }
+
+        notesTextarea.addEventListener('input', function() {
+            localStorage.setItem('notes', notesTextarea.value);
+        });
+
+        function insertDateTime() {
+            const now = new Date();
+            const dt = now.toLocaleString();
+            notesTextarea.value += '\n' + dt;
+            localStorage.setItem('notes', notesTextarea.value);
+        }
+
+        // Todo functionality
+        const todoInput = document.getElementById('new-todo');
+        const todoList = document.getElementById('todo-list');
+
+        function loadTodos() {
+            const savedTodos = JSON.parse(localStorage.getItem('todos') || '[]');
+            savedTodos.forEach(todo => addTodoToList(todo.text, todo.completed));
+        }
+
+        function addTodo() {
+            const text = todoInput.value.trim();
+            if (text) {
+                addTodoToList(text, false);
+                saveTodos();
+                todoInput.value = '';
+            }
+        }
+
+        function addTodoToList(text, completed) {
+            const li = document.createElement('li');
+            const checkbox = document.createElement('input');
+            checkbox.type = 'checkbox';
+            checkbox.checked = completed;
+            checkbox.addEventListener('change', function() {
+                span.classList.toggle('completed');
+                saveTodos();
+            });
+
+            const span = document.createElement('span');
+            span.className = 'todo-text';
+            span.textContent = text;
+            if (completed) span.classList.add('completed');
+
+            const deleteBtn = document.createElement('button');
+            deleteBtn.textContent = 'Delete';
+            deleteBtn.onclick = function() {
+                li.remove();
+                saveTodos();
+            };
+
+            li.appendChild(checkbox);
+            li.appendChild(span);
+            li.appendChild(deleteBtn);
+            todoList.appendChild(li);
+        }
+
+        function saveTodos() {
+            const todos = [];
+            todoList.querySelectorAll('li').forEach(li => {
+                const text = li.querySelector('.todo-text').textContent;
+                const completed = li.querySelector('input[type="checkbox"]').checked;
+                todos.push({ text, completed });
+            });
+            localStorage.setItem('todos', JSON.stringify(todos));
+        }
+
+        // Allow adding todo with Enter key
+        todoInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                addTodo();
+            }
+        });
+    </script>
+</body>
+</html>
