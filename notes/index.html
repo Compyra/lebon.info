@@ -42,15 +42,15 @@
         }
         button {
             padding: 10px 15px;
-            background: #007bff;
-            color: white;
+            background: #DAA520;
+            color: black;
             border: none;
             border-radius: 4px;
             cursor: pointer;
             margin-left: 10px;
         }
         button:hover {
-            background: #0056b3;
+            background: #B8860B;
         }
         ul {
             list-style: none;
@@ -86,16 +86,64 @@
         .new-day-btn:hover {
             background: #c82333;
         }
+        .dark-mode-toggle {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            padding: 10px;
+            background: #DAA520;
+            color: black;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 18px;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .dark-mode-toggle:hover {
+            background: #B8860B;
+        }
+        body.dark-mode {
+            background-color: #222;
+            color: #fff;
+        }
+        body.dark-mode .section {
+            background: #333;
+            color: #fff;
+        }
+        body.dark-mode textarea,
+        body.dark-mode input[type="text"] {
+            background: #444;
+            color: #fff;
+            border: 1px solid #666;
+        }
+        body.dark-mode button {
+            background: #555;
+            color: #fff;
+        }
+        body.dark-mode button:hover {
+            background: #666;
+        }
+        body.dark-mode .completed {
+            color: #aaa;
+        }
+        body.dark-mode h1 {
+            color: #DAA520;
+        }
     </style>
 </head>
 <body>
     <h1>Notes & Todo Lists</h1>
+    <button class="dark-mode-toggle" onclick="toggleDarkMode()">☀️</button>
     <button class="new-day-btn" onclick="newDay()">New Day</button>
 
     <div class="section">
         <h2>Notes</h2>
         <textarea id="notes" placeholder="Write your notes here..." autofocus></textarea>
-        <button onclick="insertDateTime()">Insert Date/Time</button>
+        <button onclick="insertDateTime()" title="Insert Date/Time (or press ESC)">Insert Date/Time (or press ESC)</button>
     </div>
 
     <div class="section">
@@ -112,6 +160,9 @@
         document.addEventListener('DOMContentLoaded', function() {
             loadNotes();
             loadTodos();
+            if (localStorage.getItem('darkMode') === 'true') {
+                document.body.classList.add('dark-mode');
+            }
         });
 
         // Notes functionality
@@ -122,10 +173,12 @@
             if (savedNotes) {
                 notesTextarea.value = savedNotes;
             }
+            autoResizeTextarea();
         }
 
         notesTextarea.addEventListener('input', function() {
             localStorage.setItem('notes', notesTextarea.value);
+            autoResizeTextarea();
         });
 
         function insertDateTime() {
@@ -133,6 +186,14 @@
             const dt = now.toLocaleString();
             notesTextarea.value += '\n' + dt;
             localStorage.setItem('notes', notesTextarea.value);
+            autoResizeTextarea();
+        }
+
+        function autoResizeTextarea() {
+            notesTextarea.style.height = 'auto';
+            const maxHeight = window.innerHeight / 2;
+            const scrollHeight = notesTextarea.scrollHeight;
+            notesTextarea.style.height = Math.min(scrollHeight, maxHeight) + 'px';
         }
 
         function newDay() {
@@ -149,6 +210,11 @@
                 });
                 saveTodos();
             }
+        }
+
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark-mode');
+            localStorage.setItem('darkMode', document.body.classList.contains('dark-mode'));
         }
 
         // Todo functionality
@@ -183,6 +249,9 @@
             span.className = 'todo-text';
             span.textContent = text;
             if (completed) span.classList.add('completed');
+            span.addEventListener('click', function() {
+                checkbox.click();
+            });
 
             const deleteBtn = document.createElement('button');
             deleteBtn.textContent = 'Delete';
