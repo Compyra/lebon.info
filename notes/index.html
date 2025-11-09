@@ -133,6 +133,10 @@
         body.dark-mode h1 {
             color: #DAA520;
         }
+        body.dark-mode textarea[readonly] {
+            background: #555;
+            color: #fff;
+        }
     </style>
 </head>
 <body>
@@ -189,15 +193,18 @@
             autoResizeTextarea();
         }
 
-        function autoResizeTextarea() {
-            notesTextarea.style.height = 'auto';
+        function autoResizeTextarea(textarea = notesTextarea) {
+            textarea.style.height = 'auto';
             const maxHeight = window.innerHeight / 2;
-            const scrollHeight = notesTextarea.scrollHeight;
-            notesTextarea.style.height = Math.min(scrollHeight, maxHeight) + 'px';
+            const scrollHeight = textarea.scrollHeight;
+            const minHeight = textarea.id === 'last-day-notes' ? 250 : 0;
+            textarea.style.height = Math.max(minHeight, Math.min(scrollHeight, maxHeight)) + 'px';
         }
 
         function newDay() {
-            if (confirm("This will remove all notes and finished todos, but keep unfinished todos. Are you sure?")) {
+            if (confirm("This will move current notes to 'Last Day's Notes' and clear them, keeping unfinished todos. Are you sure?")) {
+                // Save current notes
+                localStorage.setItem('last_day_notes', notesTextarea.value);
                 // Clear notes
                 notesTextarea.value = '';
                 localStorage.setItem('notes', '');
@@ -209,12 +216,31 @@
                     }
                 });
                 saveTodos();
+                // Update last day section if visible
+                const textarea = document.getElementById('last-day-notes');
+                if (textarea) {
+                    textarea.value = localStorage.getItem('last_day_notes');
+                    autoResizeTextarea(textarea);
+                }
             }
         }
 
         function toggleDarkMode() {
             document.body.classList.toggle('dark-mode');
             localStorage.setItem('darkMode', document.body.classList.contains('dark-mode'));
+        }
+
+        function toggleLastDayNotes() {
+            const section = document.getElementById('last-day-section');
+            const textarea = document.getElementById('last-day-notes');
+            const lastNotes = localStorage.getItem('last_day_notes');
+            if (lastNotes) {
+                textarea.value = lastNotes;
+                autoResizeTextarea(textarea);
+                section.style.display = section.style.display === 'none' ? 'block' : 'none';
+            } else {
+                alert('No previous day\'s notes available.');
+            }
         }
 
         // Todo functionality
@@ -297,5 +323,13 @@
             }
         });
     </script>
+
+    <button onclick="toggleLastDayNotes()">Toggle Last Day's Notes</button>
+
+    <div class="section" id="last-day-section" style="display: none;">
+        <h2>Last Day's Notes</h2>
+        <textarea id="last-day-notes" readonly></textarea>
+    </div>
+
 </body>
 </html>
