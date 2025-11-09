@@ -137,6 +137,37 @@
             background: #555;
             color: #fff;
         }
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 12px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #DAA520;
+            border-radius: 6px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #B8860B;
+        }
+        body.dark-mode ::-webkit-scrollbar-track {
+            background: #333;
+        }
+        body.dark-mode ::-webkit-scrollbar-thumb {
+            background: #DAA520;
+        }
+        body.dark-mode ::-webkit-scrollbar-thumb:hover {
+            background: #B8860B;
+        }
+        /* Firefox scrollbar */
+        * {
+            scrollbar-width: thin;
+            scrollbar-color: #DAA520 #f1f1f1;
+        }
+        body.dark-mode * {
+            scrollbar-color: #DAA520 #333;
+        }
     </style>
 </head>
 <body>
