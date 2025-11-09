@@ -70,6 +70,17 @@ function setLanguage(lang) {
     // Save language preference
     localStorage.setItem('preferredLanguage', lang);
     
+    // Set cookie notice tooltip
+    const cookieNotice = document.querySelector('.cookie-notice');
+    if (cookieNotice) {
+        const tooltips = {
+            en: "We do not track users, but cookies are used for essential features like language preference and dark/light mode.",
+            fr: "Nous ne suivons pas les utilisateurs, mais les cookies sont utilisés pour des fonctionnalités essentielles comme la préférence de langue et le mode sombre/clair.",
+            nl: "We volgen gebruikers niet, maar cookies worden gebruikt voor essentiële functies zoals taalvoorkeur en donkere/lichte modus."
+        };
+        cookieNotice.title = tooltips[lang];
+    }
+    
     // Announce language change for accessibility
     announceLanguageChange(lang);
 }

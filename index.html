@@ -8,9 +8,10 @@
 </head>
 <body class="terminal-bg">
     <div class="terminal-window">
-        <div class="terminal-header">
+        <div class="terminal-header" style="position: relative;">
             <span class="prompt-title">lebon.info:~$</span>
             <span class="prompt-blink">█</span>
+            <a href="./itops/" style="position: absolute; right: 10px; top: 5px;"><img src="logoConsole.png" alt="ITOps Console" style="height: 30px;"></a>
         </div>
         <div class="terminal-body">
             <div class="terminal-intro">
@@ -59,32 +60,42 @@
                         <span class="lang fr">ms-resetpw</span>
                         <span class="lang nl">ms-resetpw</span>
                     </a>
-                    <a href="https://office.com" target="_blank" class="terminal-link">
-                        <span class="lang en">office365</span>
-                        <span class="lang fr">office365</span>
-                        <span class="lang nl">office365</span>
-                    </a>
                     <a href="https://outlook.office365.com/mail/" target="_blank" class="terminal-link">
                         <span class="lang en">outlook</span>
                         <span class="lang fr">outlook</span>
                         <span class="lang nl">outlook</span>
                     </a>
+                    <a href="https://office.com" target="_blank" class="terminal-link">
+                        <span class="lang en">office365</span>
+                        <span class="lang fr">office365</span>
+                        <span class="lang nl">office365</span>
+                    </a>
+
                 </div>
             </div>
             <div class="terminal-section">
                 <span class="section-label"># Management & Monitoring</span>
                 <div class="terminal-links">
                     <a href="https://msp.lebonitservices.be/" target="_blank" class="terminal-link">n-central</a>
-                    <a href="#" class="terminal-link">connectwise</a>
+                    <a href="https://eu.myconnectwise.net/" class="terminal-link">connectwise</a>
                     <a href="https://service.lebonit.be" target="_blank" class="terminal-link">cloudradial</a>
                 </div>
             </div>
             <div class="terminal-section">
                 <span class="section-label"># Security & Protection</span>
                 <div class="terminal-links">
-                    <a href="#" class="terminal-link">connectsecure</a>
+                    <a href="https://assets.lebonit.be/login" class="terminal-link">connectsecure</a>
                     <a href="https://euce1-exclusive.sentinelone.net/" target="_blank" class="terminal-link">sentinelone</a>
                     <a href="https://euce1-secutec.sentinelone.net/" target="_blank" class="terminal-link">sentinelone-24-7</a>
+                    <a href="https://cloud.elastic.co/" target="_blank" class="terminal-link">elastic</a>
+                </div>
+            </div>
+            <div class="terminal-section">
+                <span class="section-label"># Training & Awareness</span>
+                <div class="terminal-links">
+                    <a href="https://phishedacademy.io/nl/" target="_blank" class="terminal-link">phished-academy</a>
+                    <a href="https://app.phished.io/nl" target="_blank" class="terminal-link">phished-admin</a>
+                    <a href="#" target="_blank" class="terminal-link">outkept-academy --TODO</a>
                 </div>
             </div>
             <div class="terminal-section">
@@ -128,7 +139,7 @@
                 <button onclick="setLanguage('fr')" class="lang-btn" data-lang="fr">FR</button>
                 <button onclick="setLanguage('nl')" class="lang-btn" data-lang="nl">NL</button>
             </div>
-            <div class="cookie-notice">
+            <div class="cookie-notice" title="">
                 <span class="lang en">By using this site you agree to cookie use.</span>
                 <span class="lang fr">En utilisant ce site, vous acceptez l'utilisation de cookies.</span>
                 <span class="lang nl">Door deze site te gebruiken gaat u akkoord met het gebruik van cookies.</span>
