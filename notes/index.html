@@ -72,14 +72,29 @@
             text-decoration: line-through;
             color: #888;
         }
+        .new-day-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            padding: 10px 15px;
+            background: #dc3545;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .new-day-btn:hover {
+            background: #c82333;
+        }
     </style>
 </head>
 <body>
     <h1>Notes & Todo Lists</h1>
+    <button class="new-day-btn" onclick="newDay()">New Day</button>
 
     <div class="section">
         <h2>Notes</h2>
-        <textarea id="notes" placeholder="Write your notes here..."></textarea>
+        <textarea id="notes" placeholder="Write your notes here..." autofocus></textarea>
         <button onclick="insertDateTime()">Insert Date/Time</button>
     </div>
 
@@ -118,6 +133,22 @@
             const dt = now.toLocaleString();
             notesTextarea.value += '\n' + dt;
             localStorage.setItem('notes', notesTextarea.value);
+        }
+
+        function newDay() {
+            if (confirm("This will remove all notes and finished todos, but keep unfinished todos. Are you sure?")) {
+                // Clear notes
+                notesTextarea.value = '';
+                localStorage.setItem('notes', '');
+                // Remove completed todos
+                const lis = todoList.querySelectorAll('li');
+                lis.forEach(li => {
+                    if (li.querySelector('input[type="checkbox"]').checked) {
+                        li.remove();
+                    }
+                });
+                saveTodos();
+            }
         }
 
         // Todo functionality
@@ -180,6 +211,20 @@
         todoInput.addEventListener('keypress', function(e) {
             if (e.key === 'Enter') {
                 addTodo();
+            }
+        });
+
+        // Insert date/time on ESC key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                insertDateTime();
+            }
+        });
+
+        // Focus notes textarea when clicking elsewhere on the page
+        document.addEventListener('click', function(e) {
+            if (!e.target.matches('input, button, textarea')) {
+                notesTextarea.focus();
             }
         });
     </script>
