@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notes & Todo</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        h1 {
+            color: #333;
+        }
+        .section {
+            background: white;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        textarea {
+            width: 100%;
+            height: 200px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            resize: vertical;
+        }
+        .todo-input {
+            display: flex;
+            margin-bottom: 10px;
+        }
+        input[type="text"] {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        button {
+            padding: 10px 15px;
+            background: #DAA520;
+            color: black;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-left: 10px;
+        }
+        button:hover {
+            background: #B8860B;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+        li {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            border-bottom: 1px solid #eee;
+        }
+        li:last-child {
+            border-bottom: none;
+        }
+        .todo-text {
+            flex: 1;
+        }
+        .completed {
+            text-decoration: line-through;
+            color: #888;
+        }
+        .new-day-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            padding: 10px 15px;
+            background: #dc3545;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .new-day-btn:hover {
+            background: #c82333;
+        }
+        .dark-mode-toggle {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            padding: 10px;
+            background: #DAA520;
+            color: black;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 18px;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .dark-mode-toggle:hover {
+            background: #B8860B;
+        }
+        body.dark-mode {
+            background-color: #222;
+            color: #fff;
+        }
+        body.dark-mode .section {
+            background: #333;
+            color: #fff;
+        }
+        body.dark-mode textarea,
+        body.dark-mode input[type="text"] {
+            background: #444;
+            color: #fff;
+            border: 1px solid #666;
+        }
+        body.dark-mode button {
+            background: #555;
+            color: #fff;
+        }
+        body.dark-mode button:hover {
+            background: #666;
+        }
+        body.dark-mode .completed {
+            color: #aaa;
+        }
+        body.dark-mode h1 {
+            color: #DAA520;
+        }
+        body.dark-mode textarea[readonly] {
+            background: #555;
+            color: #fff;
+        }
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 12px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #DAA520;
+            border-radius: 6px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #B8860B;
+        }
+        body.dark-mode ::-webkit-scrollbar-track {
+            background: #333;
+        }
+        body.dark-mode ::-webkit-scrollbar-thumb {
+            background: #DAA520;
+        }
+        body.dark-mode ::-webkit-scrollbar-thumb:hover {
+            background: #B8860B;
+        }
+        /* Firefox scrollbar */
+        * {
+            scrollbar-width: thin;
+            scrollbar-color: #DAA520 #f1f1f1;
+        }
+        body.dark-mode * {
+            scrollbar-color: #DAA520 #333;
+        }
+        /* Image container styles */
+        #images-container {
+            margin-top: 15px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        #last-day-images-container {
+            margin-top: 15px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        .image-wrapper {
+            position: relative;
+            display: inline-block;
+            max-width: 100%;
+        }
+        .pasted-image {
+            max-width: 100%;
+            max-height: 400px;
+            border: 2px solid #ddd;
+            border-radius: 4px;
+            display: block;
+        }
+        body.dark-mode .pasted-image {
+            border-color: #666;
+        }
+        .delete-image-btn {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            padding: 5px 10px;
+            background: #dc3545;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+        .delete-image-btn:hover {
+            background: #c82333;
+        }
+        /* Image zoom modal */
+        .image-modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            cursor: zoom-out;
+        }
+        .image-modal img {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            max-width: 95%;
+            max-height: 95%;
+            object-fit: contain;
+        }
+        .image-modal .close-modal {
+            position: absolute;
+            top: 20px;
+            right: 35px;
+            color: #f1f1f1;
+            font-size: 40px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .image-modal .close-modal:hover {
+            color: #DAA520;
+        }
+        .pasted-image {
+            cursor: zoom-in;
+        }
+    </style>
+</head>
+<body>
+    <pre style="display: none;">
+  /\_/\  
+ ( o.o ) 
+  > ^ < 
+You're looking at my code! 😺
+Lovely to see you here.
+Have a great day!
+Rami
+    </pre>
+    <h1>Notes & Todo Lists</h1>
+    <button class="dark-mode-toggle" onclick="toggleDarkMode()">☀️</button>
+    <button class="new-day-btn" onclick="newDay()">New Day</button>
+
+    <!-- Image zoom modal -->
+    <div id="imageModal" class="image-modal" onclick="closeImageModal()">
+        <span class="close-modal">&times;</span>
+        <img id="modalImage" src="" alt="Zoomed image">
+    </div>
+
+    <div class="section">
+        <h2>Notes</h2>
+        <textarea id="notes" placeholder="Write your notes here... (Paste screenshots too!)" autofocus></textarea>
+        <button onclick="insertDateTime()" title="Insert Date/Time (or press ESC)">Insert Date/Time (or press ESC)</button>
+        <div id="images-container"></div>
+    </div>
+
+    <div class="section">
+        <h2>Todo List</h2>
+        <div class="todo-input">
+            <input type="text" id="new-todo" placeholder="Add a new todo item...">
+            <button onclick="addTodo()">Add</button>
+        </div>
+        <ul id="todo-list"></ul>
+    </div>
+
+    <script>
+        // Load saved data on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            loadNotes();
+            loadTodos();
+            loadImages();
+            if (localStorage.getItem('darkMode') === 'true') {
+                document.body.classList.add('dark-mode');
+            }
+        });
+
+        // Notes functionality
+        const notesTextarea = document.getElementById('notes');
+
+        function loadNotes() {
+            const savedNotes = localStorage.getItem('notes');
+            if (savedNotes) {
+                notesTextarea.value = savedNotes;
+            }
+            autoResizeTextarea();
+        }
+
+        notesTextarea.addEventListener('input', function() {
+            localStorage.setItem('notes', notesTextarea.value);
+            autoResizeTextarea();
+        });
+
+        function insertDateTime() {
+            const now = new Date();
+            const dt = now.toLocaleString();
+            notesTextarea.value += '\n' + dt;
+            localStorage.setItem('notes', notesTextarea.value);
+            autoResizeTextarea();
+        }
+
+        function autoResizeTextarea(textarea = notesTextarea) {
+            textarea.style.height = 'auto';
+            const maxHeight = window.innerHeight / 2;
+            const scrollHeight = textarea.scrollHeight;
+            const minHeight = textarea.id === 'last-day-notes' ? 250 : 0;
+            textarea.style.height = Math.max(minHeight, Math.min(scrollHeight, maxHeight)) + 'px';
+        }
+
+        function newDay() {
+            if (confirm("This will move current notes to 'Last Day's Notes' and clear them, keeping unfinished todos. Are you sure?")) {
+                // Save current notes
+                localStorage.setItem('last_day_notes', notesTextarea.value);
+                // Save current images
+                localStorage.setItem('last_day_images', JSON.stringify(pastedImages));
+                // Clear notes
+                notesTextarea.value = '';
+                localStorage.setItem('notes', '');
+                // Clear images
+                document.getElementById('images-container').innerHTML = '';
+                pastedImages = [];
+                localStorage.setItem('images', JSON.stringify([]));
+                // Remove completed todos
+                const lis = todoList.querySelectorAll('li');
+                lis.forEach(li => {
+                    if (li.querySelector('input[type="checkbox"]').checked) {
+                        li.remove();
+                    }
+                });
+                saveTodos();
+                // Update last day section if visible
+                const textarea = document.getElementById('last-day-notes');
+                if (textarea) {
+                    textarea.value = localStorage.getItem('last_day_notes');
+                    autoResizeTextarea(textarea);
+                }
+                // Update last day images if visible
+                const lastDayImagesContainer = document.getElementById('last-day-images-container');
+                if (lastDayImagesContainer) {
+                    loadLastDayImages();
+                }
+            }
+        }
+
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark-mode');
+            localStorage.setItem('darkMode', document.body.classList.contains('dark-mode'));
+        }
+
+        function toggleLastDayNotes() {
+            const section = document.getElementById('last-day-section');
+            const textarea = document.getElementById('last-day-notes');
+            const lastNotes = localStorage.getItem('last_day_notes');
+            if (lastNotes || localStorage.getItem('last_day_images')) {
+                textarea.value = lastNotes || '';
+                autoResizeTextarea(textarea);
+                loadLastDayImages();
+                section.style.display = section.style.display === 'none' ? 'block' : 'none';
+            } else {
+                alert('No previous day\'s notes or images available.');
+            }
+        }
+
+        function loadLastDayImages() {
+            const lastDayImagesContainer = document.getElementById('last-day-images-container');
+            lastDayImagesContainer.innerHTML = '';
+            const lastDayImages = JSON.parse(localStorage.getItem('last_day_images') || '[]');
+            lastDayImages.forEach((imageDataUrl) => {
+                const wrapper = document.createElement('div');
+                wrapper.className = 'image-wrapper';
+
+                const img = document.createElement('img');
+                img.src = imageDataUrl;
+                img.className = 'pasted-image';
+                img.onclick = function(e) {
+                    e.stopPropagation();
+                    openImageModal(imageDataUrl);
+                };
+
+                wrapper.appendChild(img);
+                lastDayImagesContainer.appendChild(wrapper);
+            });
+        }
+
+        // Todo functionality
+        const todoInput = document.getElementById('new-todo');
+        const todoList = document.getElementById('todo-list');
+
+        function loadTodos() {
+            const savedTodos = JSON.parse(localStorage.getItem('todos') || '[]');
+            savedTodos.forEach(todo => addTodoToList(todo.text, todo.completed));
+        }
+
+        function addTodo() {
+            const text = todoInput.value.trim();
+            if (text) {
+                addTodoToList(text, false);
+                saveTodos();
+                todoInput.value = '';
+            }
+        }
+
+        function addTodoToList(text, completed) {
+            const li = document.createElement('li');
+            const checkbox = document.createElement('input');
+            checkbox.type = 'checkbox';
+            checkbox.checked = completed;
+            checkbox.addEventListener('change', function() {
+                span.classList.toggle('completed');
+                saveTodos();
+            });
+
+            const span = document.createElement('span');
+            span.className = 'todo-text';
+            span.textContent = text;
+            if (completed) span.classList.add('completed');
+            span.addEventListener('click', function() {
+                checkbox.click();
+            });
+
+            const deleteBtn = document.createElement('button');
+            deleteBtn.textContent = 'Delete';
+            deleteBtn.onclick = function() {
+                li.remove();
+                saveTodos();
+            };
+
+            li.appendChild(checkbox);
+            li.appendChild(span);
+            li.appendChild(deleteBtn);
+            todoList.appendChild(li);
+        }
+
+        function saveTodos() {
+            const todos = [];
+            todoList.querySelectorAll('li').forEach(li => {
+                const text = li.querySelector('.todo-text').textContent;
+                const completed = li.querySelector('input[type="checkbox"]').checked;
+                todos.push({ text, completed });
+            });
+            localStorage.setItem('todos', JSON.stringify(todos));
+        }
+
+        // Allow adding todo with Enter key
+        todoInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                addTodo();
+            }
+        });
+
+        // Focus notes textarea when clicking elsewhere on the page
+        document.addEventListener('click', function(e) {
+            if (!e.target.matches('input, button, textarea')) {
+                notesTextarea.focus();
+            }
+        });
+
+        // Image paste functionality
+        const imagesContainer = document.getElementById('images-container');
+        let pastedImages = [];
+
+        function loadImages() {
+            const savedImages = JSON.parse(localStorage.getItem('images') || '[]');
+            pastedImages = savedImages;
+            savedImages.forEach((imageData, index) => {
+                displayImage(imageData, index);
+            });
+        }
+
+        function saveImages() {
+            localStorage.setItem('images', JSON.stringify(pastedImages));
+        }
+
+        function displayImage(imageDataUrl, index) {
+            const wrapper = document.createElement('div');
+            wrapper.className = 'image-wrapper';
+            wrapper.dataset.index = index;
+
+            const img = document.createElement('img');
+            img.src = imageDataUrl;
+            img.className = 'pasted-image';
+            img.onclick = function(e) {
+                e.stopPropagation();
+                openImageModal(imageDataUrl);
+            };
+
+            const deleteBtn = document.createElement('button');
+            deleteBtn.textContent = 'Delete';
+            deleteBtn.className = 'delete-image-btn';
+            deleteBtn.onclick = function(e) {
+                e.stopPropagation();
+                pastedImages.splice(index, 1);
+                saveImages();
+                // Refresh display
+                imagesContainer.innerHTML = '';
+                pastedImages.forEach((imgData, idx) => {
+                    displayImage(imgData, idx);
+                });
+            };
+
+            wrapper.appendChild(img);
+            wrapper.appendChild(deleteBtn);
+            imagesContainer.appendChild(wrapper);
+        }
+
+        // Handle paste event
+        document.addEventListener('paste', function(e) {
+            const items = e.clipboardData.items;
+            for (let i = 0; i < items.length; i++) {
+                if (items[i].type.indexOf('image') !== -1) {
+                    const blob = items[i].getAsFile();
+                    const reader = new FileReader();
+                    reader.onload = function(event) {
+                        const imageDataUrl = event.target.result;
+                        pastedImages.push(imageDataUrl);
+                        saveImages();
+                        displayImage(imageDataUrl, pastedImages.length - 1);
+                    };
+                    reader.readAsDataURL(blob);
+                    e.preventDefault();
+                    break;
+                }
+            }
+        });
+
+        // Image zoom modal functions
+        function openImageModal(imageDataUrl) {
+            const modal = document.getElementById('imageModal');
+            const modalImg = document.getElementById('modalImage');
+            modal.style.display = 'block';
+            modalImg.src = imageDataUrl;
+        }
+
+        function closeImageModal() {
+            document.getElementById('imageModal').style.display = 'none';
+        }
+
+        // Handle ESC key - close modal if open, otherwise insert date/time
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                const modal = document.getElementById('imageModal');
+                if (modal.style.display === 'block') {
+                    closeImageModal();
+                } else {
+                    insertDateTime();
+                }
+            }
+        });
+    </script>
+
+    <button onclick="toggleLastDayNotes()">Toggle Last Day's Notes</button>
+
+    <div class="section" id="last-day-section" style="display: none;">
+        <h2>Last Day's Notes</h2>
+        <textarea id="last-day-notes" readonly></textarea>
+        <div id="last-day-images-container"></div>
+    </div>
+
+</body>
+</html>
