@@ -22,8 +22,8 @@
   { "title_en": "Debian — security", "url": "https://www.debian.org/security/" },
   { "title_en": "Ubuntu — security CVEs", "url": "https://ubuntu.com/security/cves" },
   { "title_en": "Schneider Electric — security notifications", "url": "https://www.se.com/ww/en/work/support/cybersecurity/security-notifications.jsp" },
-  { "title_en": "Next UPS (add URL if known)", "url": "" },
-  { "title_en": "Scality (add URL if known)", "url": "" },
+  { "title_en": "Next UPS", "url": "" },
+  { "title_en": "Scality", "url": "" },
   { "title_en": "FastVue - Reporter for SonicWall Release notes", "url": "https://releasenotes.fastvue.co/product/reporter-for-sonicwall/" },
   { "title_en": "CIPP — releases (GitHub)", "url": "https://github.com/KelvinTegelaar/CIPP/releases" },
   { "title_en": "WatchGuard — PSIRT advisories", "url": "https://www.watchguard.com/wgrd-psirt/advisories" }
