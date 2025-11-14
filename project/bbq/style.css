@@ -1,0 +1,40 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f0f8ff;
+    font-family: Arial, sans-serif;
+    text-align: center;
+    margin: 0;
+}
+
+.container {
+    padding: 20px;
+}
+
+#snackButton {
+    background-color: #4CAF50; /* Green */
+    border: none;
+    color: white;
+    padding: 40px 80px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 24px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 12px;
+    transition-duration: 0.4s;
+    box-shadow: 0 9px #999;
+}
+
+#snackButton:hover {
+    background-color: #45a049;
+}
+
+#snackButton:active {
+    background-color: #3e8e41;
+    box-shadow: 0 5px #666;
+    transform: translateY(4px);
+}

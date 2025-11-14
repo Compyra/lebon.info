@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Markdown Editor</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <button class="dark-mode-toggle" onclick="toggleDarkMode()">☀️</button>
+    <div class="container">
+        <div class="editor-container">
+            <textarea id="markdown-input" placeholder="Enter your markdown here..."></textarea>
+        </div>
+        <div class="preview-container">
+            <div id="preview-output"></div>
+        </div>
+    </div>
+    <button id="toggle-preview">Toggle Preview</button>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/showdown/1.9.1/showdown.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
