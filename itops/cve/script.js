@@ -3,7 +3,30 @@
 // - Opens each link in a new tab with a small delay to reduce popup-blocking heuristics
 // - If popups are blocked, copies the URLs to the clipboard as a fallback
 
+function getWeekNumber(d) {
+    // Copy date so don't modify original
+    d = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
+    // Set to nearest Thursday: current date + 4 - current day number
+    // Make Sunday's day number 7
+    d.setUTCDate(d.getUTCDate() + 4 - (d.getUTCDay()||7));
+    // Get first day of year
+    var yearStart = new Date(Date.UTC(d.getUTCFullYear(),0,1));
+    // Calculate full weeks to nearest Thursday
+    var weekNo = Math.ceil(( ( (d - yearStart) / 86400000) + 1)/7);
+    // Return array of year and week number
+    return weekNo;
+}
+
 document.addEventListener('DOMContentLoaded', async () => {
+  // Update intro text with week number
+  const now = new Date();
+  const week = getWeekNumber(now);
+  const year = now.getFullYear();
+  document.querySelectorAll('.terminal-intro .lang[data-text-template]').forEach(span => {
+    const template = span.getAttribute('data-text-template');
+    span.textContent = template.replace('{week}', week).replace('{year}', year);
+  });
+
   const listContainer = document.getElementById('cveList');
   const btn = document.getElementById('openAll');
 
