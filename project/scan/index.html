@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Network Scanner</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Local Network Scanner</h1>
+        
+        <div class="section">
+            <h2>Current Device IP Addresses</h2>
+            <div id="localIps" class="info-box">
+                <p class="loading">Detecting local IP addresses...</p>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Network Scan</h2>
+            <div class="scan-controls">
+                <div class="input-group">
+                    <label for="networkBase">Network Base (e.g., 192.168.1):</label>
+                    <input type="text" id="networkBase" placeholder="192.168.1">
+                </div>
+                
+                <div class="input-group">
+                    <label for="startRange">Start IP:</label>
+                    <input type="number" id="startRange" min="1" max="254" value="1">
+                </div>
+                
+                <div class="input-group">
+                    <label for="endRange">End IP:</label>
+                    <input type="number" id="endRange" min="1" max="254" value="254">
+                </div>
+                
+                <div class="input-group">
+                    <label for="timeout">Timeout (ms):</label>
+                    <input type="number" id="timeout" min="100" max="5000" value="1000" step="100">
+                </div>
+                
+                <button id="scanBtn" class="btn-primary">Start Scan</button>
+                <button id="stopBtn" class="btn-secondary" disabled>Stop Scan</button>
+            </div>
+            
+            <div class="progress-container" id="progressContainer" style="display: none;">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+                <p class="progress-text" id="progressText">Scanning: 0/254</p>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Scan Results</h2>
+            <div class="results-summary" id="resultsSummary">
+                <span>Active Hosts: <strong id="activeCount">0</strong></span>
+                <span>Scanned: <strong id="scannedCount">0</strong></span>
+            </div>
+            <div id="results" class="results-box">
+                <p class="placeholder">No scan results yet. Start a scan to discover devices on your network.</p>
+            </div>
+            <button id="exportBtn" class="btn-secondary" style="display: none;">Export Results</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
