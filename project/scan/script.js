@@ -96,6 +96,79 @@ async function scanIP(ip, timeout) {
     });
 }
 
+// Try to get hostname and check ports
+async function getHostInfo(ip) {
+    const info = {
+        hostname: null,
+        ports: {
+            http: false,
+            https: false
+        }
+    };
+
+    // Check HTTP port (80)
+    try {
+        const httpPromise = new Promise((resolve) => {
+            const img = new Image();
+            const timeout = setTimeout(() => {
+                img.src = '';
+                resolve(false);
+            }, 2000);
+            
+            img.onload = img.onerror = () => {
+                clearTimeout(timeout);
+                resolve(true);
+            };
+            
+            img.src = `http://${ip}:80/favicon.ico?t=${Date.now()}`;
+        });
+        
+        info.ports.http = await httpPromise;
+    } catch (e) {
+        info.ports.http = false;
+    }
+
+    // Check HTTPS port (443)
+    try {
+        const httpsPromise = new Promise((resolve) => {
+            const img = new Image();
+            const timeout = setTimeout(() => {
+                img.src = '';
+                resolve(false);
+            }, 2000);
+            
+            img.onload = img.onerror = () => {
+                clearTimeout(timeout);
+                resolve(true);
+            };
+            
+            img.src = `https://${ip}:443/favicon.ico?t=${Date.now()}`;
+        });
+        
+        info.ports.https = await httpsPromise;
+    } catch (e) {
+        info.ports.https = false;
+    }
+
+    // Try to get hostname (browser limitations apply)
+    try {
+        // Attempt to fetch with hostname resolution hint
+        const response = await fetch(`http://${ip}/`, {
+            method: 'HEAD',
+            mode: 'no-cors',
+            cache: 'no-cache'
+        }).catch(() => null);
+        
+        // Browser security prevents direct hostname lookup
+        // This is a placeholder for potential future enhancement
+        info.hostname = 'N/A';
+    } catch (e) {
+        info.hostname = 'N/A';
+    }
+
+    return info;
+}
+
 // Perform network scan
 async function performScan() {
     const networkBase = document.getElementById('networkBase').value.trim();
@@ -144,15 +217,21 @@ async function performScan() {
 
         const results = await Promise.all(batch);
         
-        results.forEach(result => {
+        // Process results and get additional info for active hosts
+        for (const result of results) {
             scannedCount++;
             if (result.active) {
-                activeHosts.push(result);
+                // Get additional host information
+                const hostInfo = await getHostInfo(result.ip);
+                activeHosts.push({
+                    ...result,
+                    ...hostInfo
+                });
+                updateResults(); // Update after each active host is found
             }
-        });
+        }
 
         updateProgress(scannedCount, totalIPs);
-        updateResults();
     }
 
     // Scan complete
@@ -182,9 +261,33 @@ function updateResults() {
         const resultsDiv = document.getElementById('results');
         resultsDiv.innerHTML = activeHosts.map(host => `
             <div class="result-item">
-                <span class="ip-address">${host.ip}</span>
-                <span class="status active">Active</span>
-                ${host.responseTime ? `<span class="response-time">${host.responseTime}ms</span>` : ''}
+                <div class="host-main-info">
+                    <span class="ip-address">${host.ip}</span>
+                    <span class="status active">Active</span>
+                    ${host.responseTime ? `<span class="response-time">${host.responseTime}ms</span>` : ''}
+                </div>
+                <div class="host-details">
+                    ${host.hostname ? `<div class="detail-item"><span class="detail-label">Hostname:</span> <span class="detail-value">${host.hostname}</span></div>` : ''}
+                    <div class="detail-item">
+                        <span class="detail-label">MAC Address:</span> 
+                        <span class="detail-value mac-note">Not accessible from browser</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Quick Access:</span>
+                        <div class="port-buttons">
+                            <button class="port-btn ${host.ports?.http ? 'port-open' : 'port-unknown'}" 
+                                    onclick="window.open('http://${host.ip}', '_blank')" 
+                                    title="Open HTTP (port 80)">
+                                <span class="port-icon">🌐</span> HTTP:80
+                            </button>
+                            <button class="port-btn ${host.ports?.https ? 'port-open' : 'port-unknown'}" 
+                                    onclick="window.open('https://${host.ip}', '_blank')" 
+                                    title="Open HTTPS (port 443)">
+                                <span class="port-icon">🔒</span> HTTPS:443
+                            </button>
+                        </div>
+                    </div>
+                </div>
             </div>
         `).join('');
     }
@@ -202,7 +305,9 @@ function exportResults() {
         totalScanned: scannedCount,
         activeHosts: activeHosts.map(h => ({
             ip: h.ip,
-            responseTime: h.responseTime
+            hostname: h.hostname,
+            responseTime: h.responseTime,
+            ports: h.ports
         }))
     };
 
