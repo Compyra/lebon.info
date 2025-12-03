@@ -132,74 +132,114 @@ async function scanIP(ip, timeout) {
     });
 }
 
-// Try to get hostname and check ports
+// Try to get HTTP status and headers
 async function getHostInfo(ip) {
     const info = {
-        hostname: null,
+        httpStatus: null,
+        httpsStatus: null,
+        headers: {},
         ports: {
             http: false,
             https: false
         }
     };
 
-    // Check HTTP port (80)
+    // Check HTTP port (80) with status and headers
     try {
-        const httpPromise = new Promise((resolve) => {
-            const img = new Image();
-            const timeout = setTimeout(() => {
-                img.src = '';
-                resolve(false);
-            }, 2000);
-            
-            img.onload = img.onerror = () => {
-                clearTimeout(timeout);
-                resolve(true);
-            };
-            
-            img.src = `http://${ip}:80/favicon.ico?t=${Date.now()}`;
+        const httpResponse = await fetch(`http://${ip}/`, {
+            method: 'HEAD',
+            mode: 'cors',
+            cache: 'no-cache'
+        }).catch(async () => {
+            // Try no-cors mode if CORS fails
+            return await fetch(`http://${ip}/`, {
+                method: 'GET',
+                mode: 'no-cors',
+                cache: 'no-cache'
+            }).catch(() => null);
         });
         
-        info.ports.http = await httpPromise;
+        if (httpResponse) {
+            info.ports.http = true;
+            if (httpResponse.type !== 'opaque') {
+                info.httpStatus = httpResponse.status;
+                // Get useful headers
+                const headerKeys = ['server', 'content-type', 'x-powered-by', 'location'];
+                headerKeys.forEach(key => {
+                    const value = httpResponse.headers.get(key);
+                    if (value) {
+                        info.headers[key] = value;
+                    }
+                });
+            } else {
+                info.httpStatus = 'Accessible (CORS blocked)';
+            }
+        } else {
+            // Fallback to image test
+            const imgTest = await new Promise((resolve) => {
+                const img = new Image();
+                const timeout = setTimeout(() => {
+                    img.src = '';
+                    resolve(false);
+                }, 2000);
+                
+                img.onload = img.onerror = () => {
+                    clearTimeout(timeout);
+                    resolve(true);
+                };
+                
+                img.src = `http://${ip}:80/favicon.ico?t=${Date.now()}`;
+            });
+            info.ports.http = imgTest;
+            if (imgTest) info.httpStatus = 'Responding';
+        }
     } catch (e) {
         info.ports.http = false;
     }
 
-    // Check HTTPS port (443)
+    // Check HTTPS port (443) with status and headers
     try {
-        const httpsPromise = new Promise((resolve) => {
-            const img = new Image();
-            const timeout = setTimeout(() => {
-                img.src = '';
-                resolve(false);
-            }, 2000);
-            
-            img.onload = img.onerror = () => {
-                clearTimeout(timeout);
-                resolve(true);
-            };
-            
-            img.src = `https://${ip}:443/favicon.ico?t=${Date.now()}`;
+        const httpsResponse = await fetch(`https://${ip}/`, {
+            method: 'HEAD',
+            mode: 'cors',
+            cache: 'no-cache'
+        }).catch(async () => {
+            // Try no-cors mode if CORS fails
+            return await fetch(`https://${ip}/`, {
+                method: 'GET',
+                mode: 'no-cors',
+                cache: 'no-cache'
+            }).catch(() => null);
         });
         
-        info.ports.https = await httpsPromise;
+        if (httpsResponse) {
+            info.ports.https = true;
+            if (httpsResponse.type !== 'opaque') {
+                info.httpsStatus = httpsResponse.status;
+            } else {
+                info.httpsStatus = 'Accessible (CORS blocked)';
+            }
+        } else {
+            // Fallback to image test
+            const imgTest = await new Promise((resolve) => {
+                const img = new Image();
+                const timeout = setTimeout(() => {
+                    img.src = '';
+                    resolve(false);
+                }, 2000);
+                
+                img.onload = img.onerror = () => {
+                    clearTimeout(timeout);
+                    resolve(true);
+                };
+                
+                img.src = `https://${ip}:443/favicon.ico?t=${Date.now()}`;
+            });
+            info.ports.https = imgTest;
+            if (imgTest) info.httpsStatus = 'Responding';
+        }
     } catch (e) {
         info.ports.https = false;
-    }
-
-    // Try to get hostname (browser limitations apply)
-    try {
-        // Attempt to fetch with hostname resolution hint
-        const response = await fetch(`http://${ip}/`, {
-            method: 'HEAD',
-            mode: 'no-cors',
-            cache: 'no-cache'
-        }).catch(() => null);
-        
-        // Browser security prevents direct hostname lookup
-        // This is a placeholder for potential future enhancement
-        info.hostname = 'N/A';
-    } catch (e) {
-        info.hostname = 'N/A';
     }
 
     return info;
@@ -328,6 +368,16 @@ function updateResults() {
             const firstSeen = host.firstSeen ? new Date(host.firstSeen).toLocaleString() : 'N/A';
             const lastSeen = host.lastSeen ? new Date(host.lastSeen).toLocaleString() : 'N/A';
             
+            // Format headers for display
+            let headersHTML = '';
+            if (host.headers && Object.keys(host.headers).length > 0) {
+                headersHTML = '<div class="detail-item"><span class="detail-label">Headers:</span><div class="headers-list">';
+                for (const [key, value] of Object.entries(host.headers)) {
+                    headersHTML += `<div class="header-entry"><strong>${key}:</strong> ${value}</div>`;
+                }
+                headersHTML += '</div></div>';
+            }
+            
             return `
             <div class="result-item">
                 <div class="host-main-info">
@@ -336,7 +386,9 @@ function updateResults() {
                     ${host.responseTime ? `<span class="response-time">${host.responseTime}ms</span>` : ''}
                 </div>
                 <div class="host-details">
-                    ${host.hostname ? `<div class="detail-item"><span class="detail-label">Hostname:</span> <span class="detail-value">${host.hostname}</span></div>` : ''}
+                    ${host.httpStatus ? `<div class="detail-item"><span class="detail-label">HTTP Status:</span> <span class="detail-value status-code">${host.httpStatus}</span></div>` : ''}
+                    ${host.httpsStatus ? `<div class="detail-item"><span class="detail-label">HTTPS Status:</span> <span class="detail-value status-code">${host.httpsStatus}</span></div>` : ''}
+                    ${headersHTML}
                     <div class="detail-item">
                         <span class="detail-label">First Seen:</span> 
                         <span class="detail-value">${firstSeen}</span>

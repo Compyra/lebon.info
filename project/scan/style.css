@@ -43,6 +43,22 @@ h2 {
     margin-bottom: 35px;
 }
 
+.main-layout {
+    display: flex;
+    gap: 30px;
+    align-items: flex-start;
+}
+
+.left-panel {
+    flex: 0 0 450px;
+    max-width: 450px;
+}
+
+.right-panel {
+    flex: 1;
+    min-width: 0;
+}
+
 .info-box {
     background: #f8f9fa;
     border: 1px solid #e0e0e0;
@@ -315,7 +331,7 @@ h2 {
     border: 1px solid #e0e0e0;
     border-radius: 8px;
     padding: 20px;
-    max-height: 400px;
+    max-height: 600px;
     overflow-y: auto;
     margin-bottom: 15px;
 }
@@ -370,6 +386,29 @@ h2 {
 
 .detail-value {
     color: #333;
+}
+
+.status-code {
+    font-weight: 600;
+    color: #667eea;
+}
+
+.headers-list {
+    margin-top: 5px;
+    padding-left: 10px;
+    border-left: 2px solid #e0e0e0;
+}
+
+.header-entry {
+    font-size: 0.9em;
+    color: #555;
+    margin-bottom: 4px;
+    word-break: break-all;
+}
+
+.header-entry strong {
+    color: #667eea;
+    margin-right: 5px;
 }
 
 .mac-note {
@@ -479,6 +518,20 @@ h2 {
 
     h1 {
         font-size: 2em;
+    }
+
+    .main-layout {
+        flex-direction: column;
+    }
+
+    .left-panel {
+        flex: 1;
+        max-width: 100%;
+    }
+
+    .right-panel {
+        flex: 1;
+        width: 100%;
     }
 
     .btn-primary,
