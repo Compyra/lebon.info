@@ -4,68 +4,102 @@ let activeHosts = [];
 let scannedCount = 0;
 let autoRepeatInterval = null;
 let hostsMap = new Map(); // Store hosts by IP for persistence
+let rangeScanActive = false;
 
-// Get local IP addresses
-async function getLocalIPAddresses() {
-    const localIpsDiv = document.getElementById('localIps');
-    const ips = [];
+// Scan IP ranges for .1 addresses
+async function scanIPRange(baseIP) {
+    if (rangeScanActive) {
+        alert('A range scan is already in progress. Please wait.');
+        return;
+    }
 
-    try {
-        // Use WebRTC to get local IP addresses
-        const pc = new RTCPeerConnection({
-            iceServers: []
-        });
-
-        pc.createDataChannel('');
+    rangeScanActive = true;
+    const resultsDiv = document.getElementById('rangeResults');
+    const buttons = document.querySelectorAll('.btn-range');
+    
+    // Disable all buttons during scan
+    buttons.forEach(btn => btn.disabled = true);
+    
+    resultsDiv.innerHTML = '<p class="loading">Scanning for gateway addresses...</p>';
+    
+    let rangeStart, rangeEnd, ipBase;
+    
+    // Determine the range based on the network
+    if (baseIP === '192.168') {
+        rangeStart = 0;
+        rangeEnd = 255;
+        ipBase = '192.168';
+    } else if (baseIP === '172.16') {
+        rangeStart = 16;
+        rangeEnd = 31;
+        ipBase = '172';
+    } else if (baseIP === '10.0') {
+        rangeStart = 0;
+        rangeEnd = 255;
+        ipBase = '10';
+    }
+    
+    const foundIPs = [];
+    const batchSize = 10;
+    
+    for (let i = rangeStart; i <= rangeEnd; i += batchSize) {
+        const batch = [];
+        const batchEnd = Math.min(i + batchSize - 1, rangeEnd);
         
-        const offer = await pc.createOffer();
-        await pc.setLocalDescription(offer);
-
-        return new Promise((resolve) => {
-            pc.onicecandidate = (ice) => {
-                if (!ice || !ice.candidate || !ice.candidate.candidate) {
-                    if (ips.length === 0) {
-                        localIpsDiv.innerHTML = '<p class="warning">Unable to detect local IP addresses. You may need to enable WebRTC or check browser permissions.</p>';
-                    }
-                    pc.close();
-                    resolve(ips);
-                    return;
-                }
-
-                const candidateParts = ice.candidate.candidate.split(' ');
-                const ip = candidateParts[4];
-
-                if (ip && ip.match(/^(\d{1,3}\.){3}\d{1,3}$/) && !ips.includes(ip)) {
-                    // Filter out non-private IPs
-                    if (ip.startsWith('192.168.') || 
-                        ip.startsWith('10.') || 
-                        ip.match(/^172\.(1[6-9]|2[0-9]|3[0-1])\./)) {
-                        ips.push(ip);
-                        displayLocalIPs(ips);
-                        prefillNetworkBase(ip);
-                    }
-                }
-            };
+        for (let j = i; j <= batchEnd; j++) {
+            let ip;
+            if (baseIP === '192.168') {
+                ip = `${ipBase}.${j}.1`;
+            } else if (baseIP === '172.16') {
+                ip = `${ipBase}.${j}.0.1`;
+            } else if (baseIP === '10.0') {
+                ip = `${ipBase}.${j}.0.1`;
+            }
+            batch.push(scanIP(ip, 1000));
+        }
+        
+        const results = await Promise.all(batch);
+        
+        results.forEach(result => {
+            if (result.active) {
+                foundIPs.push(result.ip);
+            }
         });
-    } catch (error) {
-        console.error('Error getting local IPs:', error);
-        localIpsDiv.innerHTML = '<p class="error">Error detecting IP addresses. Please enter network details manually.</p>';
-        return [];
+        
+        // Update progress
+        const progress = Math.round(((i - rangeStart + batchSize) / (rangeEnd - rangeStart + 1)) * 100);
+        resultsDiv.innerHTML = `<p class="loading">Scanning... ${Math.min(progress, 100)}%</p>`;
     }
+    
+    // Display results
+    if (foundIPs.length > 0) {
+        resultsDiv.innerHTML = `
+            <p class="success">Found ${foundIPs.length} active gateway(s):</p>
+            <div class="found-ips">
+                ${foundIPs.map(ip => {
+                    const networkBase = ip.substring(0, ip.lastIndexOf('.'));
+                    return `
+                        <div class="found-ip-item">
+                            <span class="ip-address">${ip}</span>
+                            <button class="btn-use" onclick="useNetwork('${networkBase}')">Use ${networkBase}</button>
+                        </div>
+                    `;
+                }).join('')}
+            </div>
+        `;
+    } else {
+        resultsDiv.innerHTML = '<p class="warning">No active gateways found in this range.</p>';
+    }
+    
+    // Re-enable buttons
+    buttons.forEach(btn => btn.disabled = false);
+    rangeScanActive = false;
 }
 
-function displayLocalIPs(ips) {
-    const localIpsDiv = document.getElementById('localIps');
-    if (ips.length > 0) {
-        localIpsDiv.innerHTML = ips.map(ip => 
-            `<div class="ip-item"><span class="ip-label">IPv4:</span> <strong>${ip}</strong></div>`
-        ).join('');
-    }
-}
-
-function prefillNetworkBase(ip) {
-    const networkBase = ip.substring(0, ip.lastIndexOf('.'));
+function useNetwork(networkBase) {
     document.getElementById('networkBase').value = networkBase;
+    // Optionally scroll to the scan section
+    document.querySelector('.section:nth-child(2)').scrollIntoView({ behavior: 'smooth' });
 }
 
 // Scan a single IP address
@@ -392,8 +426,6 @@ function exportResults() {
 
 // Event listeners
 document.addEventListener('DOMContentLoaded', () => {
-    getLocalIPAddresses();
-
     document.getElementById('scanBtn').addEventListener('click', performScan);
     document.getElementById('stopBtn').addEventListener('click', stopScan);
     document.getElementById('clearBtn').addEventListener('click', clearResults);
