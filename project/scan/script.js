@@ -40,9 +40,11 @@ async function scanIPRange(baseIP) {
     }
     
     const foundIPs = [];
-    const batchSize = 10;
+    const batchSize = 5; // Reduced batch size for more reliable scanning
     
     for (let i = rangeStart; i <= rangeEnd; i += batchSize) {
+        if (!rangeScanActive) break; // Allow cancellation
+        
         const batch = [];
         const batchEnd = Math.min(i + batchSize - 1, rangeEnd);
         
@@ -55,7 +57,7 @@ async function scanIPRange(baseIP) {
             } else if (baseIP === '10.0') {
                 ip = `${ipBase}.${j}.0.1`;
             }
-            batch.push(scanIP(ip, 1000));
+            batch.push(scanIP(ip, 2000)); // Increased timeout for gateway detection
         }
         
         const results = await Promise.all(batch);
@@ -68,7 +70,7 @@ async function scanIPRange(baseIP) {
         
         // Update progress
         const progress = Math.round(((i - rangeStart + batchSize) / (rangeEnd - rangeStart + 1)) * 100);
-        resultsDiv.innerHTML = `<p class="loading">Scanning... ${Math.min(progress, 100)}%</p>`;
+        resultsDiv.innerHTML = `<p class="loading">Scanning... ${Math.min(progress, 100)}% (Found: ${foundIPs.length})</p>`;
     }
     
     // Display results
@@ -104,32 +106,54 @@ function useNetwork(networkBase) {
 
 // Scan a single IP address
 async function scanIP(ip, timeout) {
-    return new Promise((resolve) => {
-        const startTime = Date.now();
-        const img = new Image();
-        let responded = false;
-
-        const timeoutId = setTimeout(() => {
-            if (!responded) {
-                responded = true;
-                img.src = '';
-                resolve({ ip, active: false });
+    const startTime = Date.now();
+    
+    // Try HTTPS first, then HTTP
+    const protocols = ['https', 'http'];
+    
+    for (const protocol of protocols) {
+        try {
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), timeout);
+            
+            // Start the fetch request
+            const fetchPromise = fetch(`${protocol}://${ip}/`, {
+                method: 'HEAD',
+                mode: 'no-cors',
+                cache: 'no-cache',
+                signal: controller.signal
+            });
+            
+            // Add minimum wait time to ensure we don't return too quickly
+            const minWaitPromise = new Promise(resolve => setTimeout(resolve, 50));
+            
+            // Wait for both the fetch and minimum wait time
+            const [response] = await Promise.all([fetchPromise, minWaitPromise]);
+            
+            clearTimeout(timeoutId);
+            const responseTime = Date.now() - startTime;
+            
+            // If we got any response (even opaque), the host is active
+            return { ip, active: true, responseTime, protocol };
+        } catch (error) {
+            // Wait minimum time even on error to avoid false negatives
+            const elapsed = Date.now() - startTime;
+            if (elapsed < 50) {
+                await new Promise(resolve => setTimeout(resolve, 50 - elapsed));
             }
-        }, timeout);
-
-        img.onload = img.onerror = () => {
-            if (!responded) {
-                responded = true;
-                clearTimeout(timeoutId);
-                const responseTime = Date.now() - startTime;
-                // If we got a response quickly, the host is likely active
-                resolve({ ip, active: responseTime < timeout, responseTime });
+            
+            // Continue to next protocol or return inactive
+            if (error.name === 'AbortError') {
+                // Timeout - try next protocol
+                continue;
             }
-        };
-
-        // Try to load a common resource
-        img.src = `http://${ip}/favicon.ico?t=${Date.now()}`;
-    });
+            // Network errors - try next protocol
+            continue;
+        }
+    }
+    
+    // If both protocols failed, host is inactive
+    return { ip, active: false };
 }
 
 // Try to get HTTP status and headers
@@ -146,18 +170,25 @@ async function getHostInfo(ip) {
 
     // Check HTTP port (80) with status and headers
     try {
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 3000);
+        
         const httpResponse = await fetch(`http://${ip}/`, {
             method: 'HEAD',
             mode: 'cors',
-            cache: 'no-cache'
+            cache: 'no-cache',
+            signal: controller.signal
         }).catch(async () => {
             // Try no-cors mode if CORS fails
             return await fetch(`http://${ip}/`, {
                 method: 'GET',
                 mode: 'no-cors',
-                cache: 'no-cache'
+                cache: 'no-cache',
+                signal: controller.signal
             }).catch(() => null);
         });
+        
+        clearTimeout(timeoutId);
         
         if (httpResponse) {
             info.ports.http = true;
@@ -174,43 +205,33 @@ async function getHostInfo(ip) {
             } else {
                 info.httpStatus = 'Accessible (CORS blocked)';
             }
-        } else {
-            // Fallback to image test
-            const imgTest = await new Promise((resolve) => {
-                const img = new Image();
-                const timeout = setTimeout(() => {
-                    img.src = '';
-                    resolve(false);
-                }, 2000);
-                
-                img.onload = img.onerror = () => {
-                    clearTimeout(timeout);
-                    resolve(true);
-                };
-                
-                img.src = `http://${ip}:80/favicon.ico?t=${Date.now()}`;
-            });
-            info.ports.http = imgTest;
-            if (imgTest) info.httpStatus = 'Responding';
         }
     } catch (e) {
+        // HTTP port not accessible
         info.ports.http = false;
     }
 
     // Check HTTPS port (443) with status and headers
     try {
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 3000);
+        
         const httpsResponse = await fetch(`https://${ip}/`, {
             method: 'HEAD',
             mode: 'cors',
-            cache: 'no-cache'
+            cache: 'no-cache',
+            signal: controller.signal
         }).catch(async () => {
             // Try no-cors mode if CORS fails
             return await fetch(`https://${ip}/`, {
                 method: 'GET',
                 mode: 'no-cors',
-                cache: 'no-cache'
+                cache: 'no-cache',
+                signal: controller.signal
             }).catch(() => null);
         });
+        
+        clearTimeout(timeoutId);
         
         if (httpsResponse) {
             info.ports.https = true;
@@ -219,26 +240,9 @@ async function getHostInfo(ip) {
             } else {
                 info.httpsStatus = 'Accessible (CORS blocked)';
             }
-        } else {
-            // Fallback to image test
-            const imgTest = await new Promise((resolve) => {
-                const img = new Image();
-                const timeout = setTimeout(() => {
-                    img.src = '';
-                    resolve(false);
-                }, 2000);
-                
-                img.onload = img.onerror = () => {
-                    clearTimeout(timeout);
-                    resolve(true);
-                };
-                
-                img.src = `https://${ip}:443/favicon.ico?t=${Date.now()}`;
-            });
-            info.ports.https = imgTest;
-            if (imgTest) info.httpsStatus = 'Responding';
         }
     } catch (e) {
+        // HTTPS port not accessible
         info.ports.https = false;
     }
 
@@ -283,7 +287,7 @@ async function performScan() {
     }
 
     const totalIPs = endRange - startRange + 1;
-    const batchSize = 10; // Scan 10 IPs at a time
+    const batchSize = 5; // Reduced batch size for more reliable scanning
 
     for (let i = startRange; i <= endRange && scanActive; i += batchSize) {
         const batch = [];
