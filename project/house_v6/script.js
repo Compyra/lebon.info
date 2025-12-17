@@ -1,31 +1,5 @@
 // House Inspection Checklist Application - Belgium Edition
 
-// Checklist data structure with deadline info
-const deadlineInfo = {
-    'epc': {
-        title: 'EPC (Energieprestatiecertificaat)',
-        deadline: 'Binnen 6 jaar na de notariële akte voor E- of F-label woningen',
-        description: 'Renovatieplicht: Als nieuwe eigenaar van een E- of F-label woning moet je binnen 6 jaar na de akte renoveren naar minimaal label D. Termijn: De 6-jarige termijn begint te lopen vanaf de datum van de notariële akte.',
-        source: 'https://www.vlaanderen.be/energieprestatiecertificaten-epcs',
-        sourceWal: 'https://energie.wallonie.be/fr/certificat-peb.html',
-        sourceBrussels: 'https://leefmilieu.brussels/pro/regelgeving-en-inspectie/wetteksten/regelgeving-betreffende-de-energieprestatie-van-gebouwen-epb'
-    },
-    'electrical': {
-        title: 'Elektrische Keuring',
-        deadline: 'Binnen 18 maanden na aankoop indien ouder dan 25 jaar of niet conform',
-        description: 'De elektrische installatie moet gekeurd worden bij verkoop als deze ouder is dan 25 jaar. Indien niet conform, moet de installatie binnen 18 maanden in orde gebracht worden.',
-        source: 'https://economie.fgov.be/nl/themas/energie/elektriciteit/elektriciteit-controles-en',
-        additionalInfo: 'Bij niet-conformiteit kan de verkoper verplicht worden de installatie aan te passen voor verkoop, of er komt een korting op de prijs.'
-    },
-    'asbestos': {
-        title: 'Asbestcertificaat',
-        deadline: 'Verwijdering verplicht bij renovatie',
-        description: 'Asbestcertificaat is verplicht bij verkoop. Bij aanwezigheid van asbest moet dit verwijderd worden indien u renovatiewerken plant.',
-        source: 'OVAM: https://www.ovam.be/asbest',
-        additionalInfo: 'Verwijdering moet door een erkende asbestverwijderaar gebeuren.'
-    }
-};
-
 // Checklist data structure
 const checklistData = [
     {
@@ -33,9 +7,9 @@ const checklistData = [
         title: 'Documents & Certificates (Belgium)',
         icon: 'fa-file-contract',
         items: [
-            { text: 'Request EPC (Energy Performance Certificate) - mandatory for sale', tags: ['documents', 'renovation'], deadline: 'epc' },
-            { text: 'Check asbestos certificate (verplicht asbest-attest)', tags: ['documents', 'asbestos', 'renovation'], deadline: 'asbestos' },
-            { text: 'Verify electrical installation certificate (keuring elektrische installatie) - max 25 years old', tags: ['documents', 'electrical'], deadline: 'electrical' },
+            { text: 'Request EPC (Energy Performance Certificate) - mandatory for sale', tags: ['documents', 'renovation'] },
+            { text: 'Check asbestos certificate (verplicht asbest-attest)', tags: ['documents', 'asbestos', 'renovation'] },
+            { text: 'Verify electrical installation certificate (keuring elektrische installatie) - max 25 years old', tags: ['documents', 'electrical'] },
             { text: 'Check soil certificate (bodematttest) if applicable', tags: ['documents'] },
             { text: 'Review conformity certificate for heating/boiler (stookkeuring)', tags: ['documents', 'hvac'] },
             { text: 'Verify building permit for renovations (bouwvergunning)', tags: ['documents', 'renovation'] },
@@ -226,7 +200,7 @@ const checklistData = [
         title: 'Electrical Systems (Elektriciteit)',
         icon: 'fa-bolt',
         items: [
-            { text: 'Verify elektrische keuring (electrical inspection) is valid - required every 25 years', tags: ['electrical', 'documents'], deadline: 'electrical' },
+            { text: 'Verify elektrische keuring (electrical inspection) is valid - required every 25 years', tags: ['electrical', 'documents'] },
             { text: 'Inspect verdeelkast (electrical panel/fuse box)', tags: ['electrical', 'basement'] },
             { text: 'Check if zekeringkast meets current standards (min 40A, prefer 63A+)', tags: ['electrical', 'renovation'] },
             { text: 'Verify aardlekschakelaar (earth leakage circuit breaker/differentieelschakelaar) 300mA', tags: ['electrical'] },
@@ -394,16 +368,6 @@ const helpModal = document.getElementById('helpModal');
 const closeHelpModal = document.getElementById('closeHelpModal');
 const helpTabs = document.querySelectorAll('.help-tab');
 const helpTabContents = document.querySelectorAll('.help-tab-content');
-
-// Deadline Modal Elements
-const deadlineModal = document.getElementById('deadlineModal');
-const closeDeadlineModal = document.getElementById('closeDeadlineModal');
-const deadlineTitle = document.getElementById('deadlineTitle');
-const deadlineText = document.getElementById('deadlineText');
-const deadlineDescription = document.getElementById('deadlineDescription');
-const deadlineAdditionalInfo = document.getElementById('deadlineAdditionalInfo');
-const deadlineSources = document.getElementById('deadlineSources');
-const additionalInfoSection = document.getElementById('additionalInfoSection');
 
 // Toggle All Button
 const toggleAllBtn = document.getElementById('toggleAllBtn');
@@ -609,7 +573,6 @@ function renderChecklist() {
                 <div class="item-content">
                     <div class="item-text ${isOK ? 'checked' : ''} ${needsRenovation ? 'needs-renovation' : ''}" id="text-${itemKey}">
                         ${item.text}
-                        ${item.deadline ? `<button class="info-deadline-btn" data-deadline="${item.deadline}" title="Click voor deadline informatie"><i class="fas fa-info-circle"></i></button>` : ''}
                     </div>
                     <div class="item-tags">
                         ${item.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
@@ -839,26 +802,6 @@ function setupEventListeners() {
     
     // Toggle All Categories
     toggleAllBtn.addEventListener('click', toggleAllCategories);
-    
-    // Deadline Modal
-    closeDeadlineModal.addEventListener('click', () => {
-        deadlineModal.classList.remove('show');
-    });
-    
-    deadlineModal.addEventListener('click', (e) => {
-        if (e.target === deadlineModal) {
-            deadlineModal.classList.remove('show');
-        }
-    });
-    
-    // Deadline info buttons - delegated event
-    checklistContainer.addEventListener('click', (e) => {
-        if (e.target.closest('.info-deadline-btn')) {
-            const btn = e.target.closest('.info-deadline-btn');
-            const deadlineKey = btn.dataset.deadline;
-            showDeadlineInfo(deadlineKey);
-        }
-    });
 }
 
 // Filter checklist
@@ -914,45 +857,6 @@ function filterChecklist(category) {
             }
         }
     });
-}
-
-// Show deadline information
-function showDeadlineInfo(deadlineKey) {
-    const info = deadlineInfo[deadlineKey];
-    if (!info) return;
-    
-    deadlineTitle.textContent = info.title;
-    deadlineText.textContent = info.deadline;
-    deadlineDescription.textContent = info.description;
-    
-    // Show additional info if available
-    if (info.additionalInfo) {
-        deadlineAdditionalInfo.textContent = info.additionalInfo;
-        additionalInfoSection.style.display = 'block';
-    } else {
-        additionalInfoSection.style.display = 'none';
-    }
-    
-    // Build sources HTML
-    let sourcesHTML = '';
-    if (info.source) {
-        sourcesHTML += `<a href="${info.source}" target="_blank" rel="noopener">
-            <i class="fas fa-external-link-alt"></i> ${info.source.includes('vlaanderen') ? 'Vlaanderen' : info.source.includes('fgov') ? 'FOD Economie' : info.source.includes('ovam') ? 'OVAM' : 'Officiële bron'}
-        </a>`;
-    }
-    if (info.sourceWal) {
-        sourcesHTML += `<a href="${info.sourceWal}" target="_blank" rel="noopener">
-            <i class="fas fa-external-link-alt"></i> Wallonië
-        </a>`;
-    }
-    if (info.sourceBrussels) {
-        sourcesHTML += `<a href="${info.sourceBrussels}" target="_blank" rel="noopener">
-            <i class="fas fa-external-link-alt"></i> Brussels Gewest
-        </a>`;
-    }
-    
-    deadlineSources.innerHTML = sourcesHTML;
-    deadlineModal.classList.add('show');
 }
 
 // Update progress
@@ -1038,24 +942,22 @@ function generateReport() {
         });
     });
     
-    // Documents to request - MOVED HERE FIRST
-    if (documentsRequested.length > 0) {
-        reportHTML += `
-            <div class="report-section">
-                <h3><i class="fas fa-file-alt"></i> Documents to Request (${documentsRequested.length})</h3>
-                <ul>
-                    ${documentsRequested.map(item => `
-                        <li>
-                            <strong>${item.category}:</strong> ${item.text}
-                            ${item.note ? `<div class="report-note"><strong>Note:</strong> ${item.note}</div>` : ''}
-                        </li>
-                    `).join('')}
-                </ul>
-            </div>
-        `;
-    }
+    // OK items section
+    reportHTML += `
+        <div class="report-section">
+            <h3><i class="fas fa-check-circle"></i> Items Checked OK (${okItems.length})</h3>
+            <ul>
+                ${okItems.map(item => `
+                    <li>
+                        <strong>${item.category}:</strong> ${item.text}
+                        ${item.note ? `<div class="report-note"><strong>Note:</strong> ${item.note}</div>` : ''}
+                    </li>
+                `).join('')}
+            </ul>
+        </div>
+    `;
     
-    // Issues/Renovation needed section - SECOND
+    // Issues/Renovation needed section
     if (issueItems.length > 0) {
         reportHTML += `
             <div class="report-section">
@@ -1072,20 +974,22 @@ function generateReport() {
         `;
     }
     
-    // OK items section - THIRD
-    reportHTML += `
-        <div class="report-section">
-            <h3><i class="fas fa-check-circle"></i> Items Checked OK (${okItems.length})</h3>
-            <ul>
-                ${okItems.map(item => `
-                    <li>
-                        <strong>${item.category}:</strong> ${item.text}
-                        ${item.note ? `<div class="report-note"><strong>Note:</strong> ${item.note}</div>` : ''}
-                    </li>
-                `).join('')}
-            </ul>
-        </div>
-    `;
+    // Documents to request
+    if (documentsRequested.length > 0) {
+        reportHTML += `
+            <div class="report-section">
+                <h3><i class="fas fa-file-alt"></i> Documents to Request (${documentsRequested.length})</h3>
+                <ul>
+                    ${documentsRequested.map(item => `
+                        <li>
+                            <strong>${item.category}:</strong> ${item.text}
+                            ${item.note ? `<div class="report-note"><strong>Note:</strong> ${item.note}</div>` : ''}
+                        </li>
+                    `).join('')}
+                </ul>
+            </div>
+        `;
+    }
     
     // Unchecked items section
     reportHTML += `
