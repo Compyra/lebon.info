@@ -378,8 +378,6 @@ const copyReport = document.getElementById('copyReport');
 const globalNotesTextarea = document.getElementById('globalNotes');
 const progressFill = document.getElementById('progressFill');
 const checkedCount = document.getElementById('checkedCount');
-const issueCount = document.getElementById('issueCount');
-const requestCount = document.getElementById('requestCount');
 const totalCount = document.getElementById('totalCount');
 const percentComplete = document.getElementById('percentComplete');
 
@@ -572,11 +570,10 @@ function renderChecklist() {
             let checkboxHTML = '';
             if (isDocument) {
                 checkboxHTML = `
-                    <div class="checkbox-wrapper" style="${docRequested ? 'opacity: 0.5;' : ''}">
+                    <div class="checkbox-wrapper">
                         <input type="checkbox" 
                                id="item-${itemKey}" 
                                ${isOK ? 'checked' : ''}
-                               ${docRequested ? 'disabled' : ''}
                                data-key="${itemKey}">
                         <span class="checkbox-label ok-label">✓ Have</span>
                     </div>
@@ -721,34 +718,15 @@ function handleDocumentRequest(e) {
     const key = e.target.dataset.key;
     state.documentRequests[key] = !state.documentRequests[key];
     
-    const haveCheckbox = document.getElementById(`item-${key}`);
-    
     if (state.documentRequests[key]) {
         e.target.classList.add('requested');
         e.target.textContent = '✓ Requested';
-        // Uncheck and disable the Have checkbox
-        state.checklist[key] = false;
-        if (haveCheckbox) {
-            haveCheckbox.checked = false;
-            haveCheckbox.disabled = true;
-            haveCheckbox.parentElement.style.opacity = '0.5';
-        }
-        const textElement = document.getElementById(`text-${key}`);
-        if (textElement) {
-            textElement.classList.remove('checked');
-        }
     } else {
         e.target.classList.remove('requested');
         e.target.textContent = 'Request';
-        // Re-enable the Have checkbox
-        if (haveCheckbox) {
-            haveCheckbox.disabled = false;
-            haveCheckbox.parentElement.style.opacity = '1';
-        }
     }
     
     saveState();
-    updateProgress();
 }
 
 // Handle note change
@@ -980,26 +958,12 @@ function showDeadlineInfo(deadlineKey) {
 // Update progress
 function updateProgress() {
     const totalItems = checklistData.reduce((sum, cat) => sum + cat.items.length, 0);
-    
-    // Count OK items (not including those that also have issues)
-    const okOnlyItems = Object.keys(state.checklist).filter(key => 
-        state.checklist[key] && !state.renovationNeeded[key]
-    ).length;
-    
-    // Count items with issues (whether or not they're also marked OK)
-    const issueItems = Object.values(state.renovationNeeded).filter(v => v).length;
-    
-    // Count document requests
-    const requestItems = Object.values(state.documentRequests).filter(v => v).length;
-    
-    // Total checked = OK-only + issues
-    const checkedItems = okOnlyItems + issueItems;
-    const percentage = totalItems > 0 ? Math.round((checkedItems / totalItems) * 100) : 0;
+    const checkedItems = Object.values(state.checklist).filter(v => v).length + 
+                         Object.values(state.renovationNeeded).filter(v => v).length;
+    const percentage = totalItems > 0 ? Math.round((checkedItems / (totalItems * 2)) * 100) : 0;
     
     progressFill.style.width = `${percentage}%`;
-    checkedCount.textContent = okOnlyItems;
-    issueCount.textContent = issueItems;
-    requestCount.textContent = requestItems;
+    checkedCount.textContent = checkedItems;
     totalCount.textContent = totalItems;
     percentComplete.textContent = `${percentage}%`;
 }

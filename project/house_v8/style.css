@@ -390,14 +390,6 @@ body {
     color: var(--accent-color);
 }
 
-.progress-stats .issue-stat strong {
-    color: #ff9800;
-}
-
-.progress-stats .request-stat strong {
-    color: #2196F3;
-}
-
 /* Checklist Section */
 .checklist-section {
     margin-bottom: 40px;
