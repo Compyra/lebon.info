@@ -4,59 +4,878 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IT Toolkit</title>
+    <title>IT Toolkit - Lebon.info</title>
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
-    <div class="terminals">
-        <div class="terminal">
+    <div class="container">
+        <div class="header">
             <h1>IT Toolkit</h1>
             <p class="prompt">$ cat README.md</p>
-            <p>Welcome. Here you'll find useful folders and resources for IT / security operations and
-                development.</p>
-            <p>Use at your own risk.</p>
-            <br>
-            <p class="prompt">$ ls -la /useful-folders</p>
-            <div class="folder">
-                <a href="../project/">project/</a> <span class="description">- Development projects and tools</span>
+            <p class="intro">Welcome. Here you'll find useful tools and resources for IT / security operations and development.</p>
+            <p class="warning">Use at your own risk.</p>
+        </div>
+
+        <!-- Search Bar -->
+        <div class="search-container">
+            <p class="prompt">$ grep -i</p>
+            <input type="text" id="searchInput" placeholder="Search tools..." onkeyup="filterTools()">
+        </div>
+
+        <!-- Filter Buttons -->
+        <div class="filter-container">
+            <p class="prompt">$ filter --category</p>
+            <div class="filter-buttons">
+                <button class="filter-btn active" onclick="filterCategory('all')">All Tools</button>
+                <button class="filter-btn" onclick="filterCategory('online')">🌐 Online Only</button>
+                <button class="filter-btn" onclick="filterCategory('download')">💾 Download</button>
+                <button class="filter-btn" onclick="filterCategory('network')">🔌 Network</button>
+                <button class="filter-btn" onclick="filterCategory('security')">🔒 Security</button>
+                <button class="filter-btn" onclick="filterCategory('development')">💻 Development</button>
+                <button class="filter-btn" onclick="filterCategory('system')">⚙️ System Tools</button>
+                <button class="filter-btn" onclick="filterCategory('entra')">🔐 Entra ID</button>
+                <button class="filter-btn" onclick="filterCategory('docker')">🐳 Docker</button>
+                <button class="filter-btn" onclick="filterCategory('browser')">🌍 Browsers</button>
+                <button class="filter-btn" onclick="filterCategory('forensics')">🔍 Forensics</button>
             </div>
-            <div class="folder">
-                <a href="../failed-project/">failed-project/</a> <span class="description">- Archive of experimental
-                    projects</span>
+        </div>
+
+        <!-- View Controls -->
+        <div class="filter-container">
+            <p class="prompt">$ view --mode</p>
+            <div class="view-controls">
+                <button class="view-btn active" id="gridViewBtn" onclick="toggleView('grid')">🟨 Grid View</button>
+                <button class="view-btn" id="compactViewBtn" onclick="toggleView('compact')">🟩 Compact View</button>
+                <div class="sort-controls" id="sortControls" style="display: none;">
+                    <span class="prompt" style="margin-left: 20px;">Sort by:</span>
+                    <select id="sortSelect" onchange="sortTools()">
+                        <option value="name">Name (A-Z)</option>
+                        <option value="name-desc">Name (Z-A)</option>
+                        <option value="category">Category</option>
+                        <option value="type">Type (Online/Download)</option>
+                        <option value="price">Price</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tools List -->
+        <div class="tools-grid" id="toolsGrid">
+            
+            <!-- ONLINE TOOLS -->
+            <div class="tool-card" data-category="online security forensics">
+                <h3>CyberChef <span class="badge lebon">📍 lebon.info</span></h3>
+                <div class="tool-type">
+                    <span class="badge online">Online Only</span>
+                    <span class="badge free">💚 Free</span>
+                </div>
+                <p class="tool-desc">Swiss army knife for data transformation, encoding/decoding, encryption, and cybersecurity analysis tasks.</p>
+                <div class="tool-links">
+                    <a href="./CyberChef_v10.19.4" target="_blank">🔗 Open Tool</a>
+                    <a href="https://github.com/gchq/CyberChef" target="_blank">📦 GitHub</a>
+                    <a href="https://gchq.github.io/CyberChef/" target="_blank">🌐 Official Site</a>
+                </div>
             </div>
 
+            <div class="tool-card" data-category="online" data-price="free">
+                <h3>IT Tools Collection</h3>
+                <div class="tool-type">
+                    <span class="badge online">Online Only</span>
+                    <span class="badge free">💚 Free</span>
+                </div>
+                <p class="tool-desc">Comprehensive collection of web-based utilities for developers and IT professionals.</p>
+                <div class="tool-links">
+                    <a href="https://sharevb-it-tools.vercel.app/" target="_blank">🔗 Open Tool</a>
+                    <a href="https://github.com/sharevb/it-tools" target="_blank">📦 GitHub</a>
+                </div>
+            </div>
+
+            <div class="tool-card" data-category="online security" data-price="free">
+                <h3>CVE Database <span class="badge lebon">📍 lebon.info</span></h3>
+                <div class="tool-type">
+                    <span class="badge online">Online Only</span>
+                    <span class="badge free">💚 Free</span>
+                </div>
+                <p class="tool-desc">Browse Common Vulnerabilities and Exposures database for security research.</p>
+                <div class="tool-links">
+                    <a href="./cve/" target="_blank">🔗 Open Tool</a>
+                </div>
+            </div>
+
+            <div class="tool-card" data-category="online network" data-price="free">
+                <h3>Network Scanner <span class="badge lebon">📍 lebon.info</span></h3>
+                <div class="tool-type">
+                    <span class="badge online">Online Only</span>
+                    <span class="badge free">💚 Free</span>
+                </div>
+                <p class="tool-desc">Scan local network for port 80 and 443 (Work in progress).</p>
+                <div class="tool-links">
+                    <a href="http://scan.lebon.info" target="_blank">🔗 Open Tool</a>
+                    <a href="https://github.com/Compyra/scan.lebon.info" target="_blank">📦 GitHub</a>
+                </div>
+            </div>
+
+            <!-- NETWORK TOOLS -->
+            <div class="tool-card" data-category="download network" data-price="free">
+                <h3>Nmap</h3>
+                <div class="tool-type">
+                    <span class="badge download">Download Required</span>
+                    <span class="badge free">💚 Free</span>
+                </div>
+                <p class="tool-desc">Network discovery and security auditing tool for scanning hosts and services.</p>
+                <div class="tool-links">
+                    <a href="https://nmap.org/" target="_blank">🌐 Official Site</a>
+                    <a href="https://github.com/nmap/nmap" target="_blank">📦 GitHub</a>
+                    <a href="https://nmap.org/download.html" target="_blank">⬇️ Download</a>
+                </div>
+            </div>
+
+            <div class="tool-card" data-category="download network" data-price="free">
+                <h3>Wireshark</h3>
+                <div class="tool-type">
+                    <span class="badge download">Download Required</span>
+                    <span class="badge free">💚 Free</span>
+                </div>
+                <p class="tool-desc">Network protocol analyzer for troubleshooting, analysis, and security investigations.</p>
+                <div class="tool-links">
+                    <a href="https://www.wireshark.org/" target="_blank">🌐 Official Site</a>
+                    <a href="https://gitlab.com/wireshark/wireshark" target="_blank">📦 GitLab</a>
+                    <a href="https://www.wireshark.org/download.html" target="_blank">⬇️ Download</a>
+                </div>
+            </div>
+
+            <div class="tool-card" data-category="download network" data-price="free">
+                <h3>FileZilla Client</h3>
+                <div class="tool-type">
+                    <span class="badge download">Download Required</span>
+                    <span class="badge free">💚 Free</span>
+                </div>
+                <p class="tool-desc">Fast and reliable FTP, FTPS and SFTP client with intuitive user interface.</p>
+                <div class="tool-links">
+                    <a href="https://filezilla-project.org/" target="_blank">🌐 Official Site</a>
+                    <a href="https://sourceforge.net/projects/filezilla/" target="_blank">📦 SourceForge</a>
+                    <a href="https://filezilla-project.org/download.php?type=client" target="_blank">⬇️ Download</a>
+                </div>
+            </div>
+
+            <div class="tool-card" data-category="download network" data-price="free">
+                <h3>FileZilla Server</h3>
+                <div class="tool-type">
+                    <span class="badge download">Download Required</span>
+                    <span class="badge free">💚 Free</span>
+                </div>
+                <p class="tool-desc">FTP server supporting FTP and FTPS protocols for secure file transfers.</p>
+                <div class="tool-links">
+                    <a href="https://filezilla-project.org/" target="_blank">🌐 Official Site</a>
+                    <a href="https://sourceforge.net/projects/filezilla/" target="_blank">📦 SourceForge</a>
+                    <a href="https://filezilla-project.org/download.php?type=server" target="_blank">⬇️ Download</a>
+                </div>
+            </div>
+
+            <div class="tool-card" data-category="download network" data-price="free">
+                <h3>WinSCP</h3>
+                <div class="tool-type">
+                    <span class="badge download">Download Required</span>
+                    <span class="badge free">💚 Free</span>
+                </div>
+                <p class="tool-desc">SFTP, SCP, and FTP client for Windows with file synchronization capabilities.</p>
+                <div class="tool-links">
+                    <a href="https://winscp.net/" target="_blank">🌐 Official Site</a>
+                    <a href="https://github.com/winscp/winscp" target="_blank">📦 GitHub</a>
+                    <a href="https://winscp.net/eng/download.php" target="_blank">⬇️ Download</a>
+                </div>
+            </div>
+
+            <div class="tool-card" data-category="download network" data-price="free">
+                <h3>PuTTY</h3>
+                <div class="tool-type">
+                    <span class="badge download">Download Required</span>
+                    <span class="badge free">💚 Free</span>
+                </div>
+                <p class="tool-desc">Free SSH and telnet client for Windows with terminal emulation.</p>
+                <div class="tool-links">
+                    <a href="https://www.putty.org/" target="_blank">🌐 Official Site</a>
+                    <a href="https://github.com/github/putty" target="_blank">📦 GitHub</a>
+                    <a href="https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html" target="_blank">⬇️ Download</a>
+                </div>
+            </div>
+
+            <div class="tool-card" data-category="download network" data-price="free">
+                <h3>mRemoteNG</h3>
+                <div class="tool-type">
+                    <span class="badge download">Download Required</span>
+                    <span class="badge free">💚 Free</span>
+                </div>
+                <p class="tool-desc">Multi-protocol remote connections manager supporting RDP, VNC, SSH, and more.</p>
+                <div class="tool-links">
+                    <a href="https://mremoteng.org/" target="_blank">🌐 Official Site</a>
+                    <a href="https://github.com/mRemoteNG/mRemoteNG" target="_blank">📦 GitHub</a>
+                    <a href="https://mremoteng.org/download" target="_blank">⬇️ Download</a>
+                </div>
+            </div>
+
+            <div class="tool-card" data-category="download network" data-price="free">
+                <h3>TeamViewer QS</h3>
+                <div class="tool-type">
+                    <span class="badge download">Download Required</span>
+                    <span class="badge free">💚 Free</span>
+                </div>
+                <p class="tool-desc">Quick support version for remote desktop access and technical support.</p>
+                <div class="tool-links">
+                    <a href="https://www.teamviewer.com/" target="_blank">🌐 Official Site</a>
+                    <a href="https://www.teamviewer.com/en/download/windows/" target="_blank">⬇️ Download</a>
+                </div>
+            </div>
+
+            <!-- SYSTEM TOOLS -->
+            <div class="tool-card" data-category="download system" data-price="free">
+                <h3>7-Zip</h3>
+                <div class="tool-type">
+                    <span class="badge download">Download Required</span>
+                    <span class="badge free">💚 Free</span>
+                </div>
+                <p class="tool-desc">High-ratio file archiver with support for multiple compression formats.</p>
+                <div class="tool-links">
+                    <a href="https://www.7-zip.org/" target="_blank">🌐 Official Site</a>
+                    <a href="https://sourceforge.net/projects/sevenzip/" target="_blank">📦 SourceForge</a>
+                    <a href="https://www.7-zip.org/download.html" target="_blank">⬇️ Download</a>
+                </div>
+            </div>
+
+            <div class="tool-card" data-category="download system" data-price="free">
+                <h3>Process Explorer</h3>
+                <div class="tool-type">
+                    <span class="badge download">Download Required</span>
+                    <span class="badge free">💚 Free</span>
+                </div>
+                <p class="tool-desc">Advanced system monitor showing detailed information about running processes.</p>
+                <div class="tool-links">
+                    <a href="https://learn.microsoft.com/en-us/sysinternals/downloads/process-explorer" target="_blank">🌐 Official Site</a>
+                    <a href="https://download.sysinternals.com/files/ProcessExplorer.zip" target="_blank">⬇️ Download</a>
+                </div>
+            </div>
+
+            <div class="tool-card" data-category="download system" data-price="free">
+                <h3>TreeSize Free</h3>
+                <div class="tool-type">
+                    <span class="badge download">Download Required</span>
+                    <span class="badge free">💚 Free</span>
+                </div>
+                <p class="tool-desc">Disk space manager showing folder sizes in a tree view.</p>
+                <div class="tool-links">
+                    <a href="https://www.jam-software.com/treesize_free" target="_blank">🌐 Official Site</a>
+                    <a href="https://www.jam-software.com/treesize_free/download" target="_blank">⬇️ Download</a>
+                </div>
+            </div>
+
+            <div class="tool-card" data-category="download system" data-price="free">
+                <h3>Rufus</h3>
+                <div class="tool-type">
+                    <span class="badge download">Download Required</span>
+                    <span class="badge free">💚 Free</span>
+                </div>
+                <p class="tool-desc">USB bootable media creator for ISO images and formatting USB drives.</p>
+                <div class="tool-links">
+                    <a href="https://rufus.ie/" target="_blank">🌐 Official Site</a>
+                    <a href="https://github.com/pbatard/rufus" target="_blank">📦 GitHub</a>
+                    <a href="https://rufus.ie/downloads/" target="_blank">⬇️ Download</a>
+                </div>
+            </div>
+
+            <div class="tool-card" data-category="download system" data-price="free">
+                <h3>Agent Ransack</h3>
+                <div class="tool-type">
+                    <span class="badge download">Download Required</span>
+                    <span class="badge free">💚 Free</span>
+                </div>
+                <p class="tool-desc">Fast file search tool with advanced filtering and content search capabilities.</p>
+                <div class="tool-links">
+                    <a href="https://www.mythicsoft.com/agentransack/" target="_blank">🌐 Official Site</a>
+                    <a href="https://www.mythicsoft.com/agentransack/download/" target="_blank">⬇️ Download</a>
+                </div>
+            </div>
+
+            <div class="tool-card" data-category="download system" data-price="free">
+                <h3>Belarc Advisor</h3>
+                <div class="tool-type">
+                    <span class="badge download">Download Required</span>
+                    <span class="badge free">💚 Free</span>
+                </div>
+                <p class="tool-desc">System inventory and benchmark tool for detailed PC profile analysis.</p>
+                <div class="tool-links">
+                    <a href="https://www.belarc.com/products/belarc-advisor" target="_blank">🌐 Official Site</a>
+                    <a href="https://www.belarc.com/free_download.html" target="_blank">⬇️ Download</a>
+                </div>
+            </div>
+
+            <div class="tool-card" data-category="download system" data-price="free">
+                <h3>RCSetup (Recuva)</h3>
+                <div class="tool-type">
+                    <span class="badge download">Download Required</span>
+                    <span class="badge free">💚 Free</span>
+                </div>
+                <p class="tool-desc">File recovery tool to restore accidentally deleted files from hard drives.</p>
+                <div class="tool-links">
+                    <a href="https://www.ccleaner.com/recuva" target="_blank">🌐 Official Site</a>
+                    <a href="https://www.ccleaner.com/recuva/download" target="_blank">⬇️ Download</a>
+                </div>
+            </div>
+
+            <!-- DEVELOPMENT TOOLS -->
+            <div class="tool-card" data-category="download development" data-price="free">
+                <h3>Visual Studio Code</h3>
+                <div class="tool-type">
+                    <span class="badge download">Download Required</span>
+                    <span class="badge free">💚 Free</span>
+                </div>
+                <p class="tool-desc">Lightweight but powerful source code editor with extensive extension ecosystem.</p>
+                <div class="tool-links">
+                    <a href="https://code.visualstudio.com/" target="_blank">🌐 Official Site</a>
+                    <a href="https://github.com/microsoft/vscode" target="_blank">📦 GitHub</a>
+                    <a href="https://code.visualstudio.com/download" target="_blank">⬇️ Download</a>
+                </div>
+            </div>
+
+            <div class="tool-card" data-category="download development" data-price="free">
+                <h3>Notepad++</h3>
+                <div class="tool-type">
+                    <span class="badge download">Download Required</span>
+                    <span class="badge free">💚 Free</span>
+                </div>
+                <p class="tool-desc">Free source code editor supporting multiple programming languages with syntax highlighting.</p>
+                <div class="tool-links">
+                    <a href="https://notepad-plus-plus.org/" target="_blank">🌐 Official Site</a>
+                    <a href="https://github.com/notepad-plus-plus/notepad-plus-plus" target="_blank">📦 GitHub</a>
+                    <a href="https://notepad-plus-plus.org/downloads/" target="_blank">⬇️ Download</a>
+                </div>
+            </div>
+
+            <div class="tool-card" data-category="download development" data-price="free">
+                <h3>SQL Server 2022 Developer</h3>
+                <div class="tool-type">
+                    <span class="badge download">Download Required</span>
+                    <span class="badge free">💚 Free</span>
+                </div>
+                <p class="tool-desc">Free full-featured database engine for development and testing purposes.</p>
+                <div class="tool-links">
+                    <a href="https://www.microsoft.com/en-us/sql-server/sql-server-downloads" target="_blank">🌐 Official Site</a>
+                    <a href="https://www.microsoft.com/en-us/sql-server/sql-server-downloads" target="_blank">⬇️ Download</a>
+                </div>
+            </div>
+
+            <!-- SECURITY & FORENSICS -->
+            <div class="tool-card" data-category="download security forensics" data-price="free">
+                <h3>ShadowExplorer</h3>
+                <div class="tool-type">
+                    <span class="badge download">Download Required</span>
+                    <span class="badge free">💚 Free</span>
+                </div>
+                <p class="tool-desc">Browse and restore files from Windows shadow copies for data recovery.</p>
+                <div class="tool-links">
+                    <a href="https://www.shadowexplorer.com/" target="_blank">🌐 Official Site</a>
+                    <a href="https://www.shadowexplorer.com/downloads.html" target="_blank">⬇️ Download</a>
+                </div>
+            </div>
+
+            <div class="tool-card" data-category="download security" data-price="free">
+                <h3>ShareX</h3>
+                <div class="tool-type">
+                    <span class="badge download">Download Required</span>
+                    <span class="badge free">💚 Free</span>
+                </div>
+                <p class="tool-desc">Screen capture, file sharing, and productivity tool with workflow automation.</p>
+                <div class="tool-links">
+                    <a href="https://getsharex.com/" target="_blank">🌐 Official Site</a>
+                    <a href="https://github.com/ShareX/ShareX" target="_blank">📦 GitHub</a>
+                    <a href="https://getsharex.com/downloads/" target="_blank">⬇️ Download</a>
+                </div>
+            </div>
+
+            <!-- BROWSERS -->
+            <div class="tool-card" data-category="download browser" data-price="free">
+                <h3>Google Chrome</h3>
+                <div class="tool-type">
+                    <span class="badge download">Download Required</span>
+                    <span class="badge free">💚 Free</span>
+                </div>
+                <p class="tool-desc">Fast, secure web browser from Google with extensive extension support.</p>
+                <div class="tool-links">
+                    <a href="https://www.google.com/chrome/" target="_blank">🌐 Official Site</a>
+                    <a href="https://www.google.com/chrome/" target="_blank">⬇️ Download</a>
+                </div>
+            </div>
+
+            <div class="tool-card" data-category="download browser" data-price="free">
+                <h3>Brave Browser</h3>
+                <div class="tool-type">
+                    <span class="badge download">Download Required</span>
+                    <span class="badge free">💚 Free</span>
+                </div>
+                <p class="tool-desc">Privacy-focused browser blocking ads and trackers by default.</p>
+                <div class="tool-links">
+                    <a href="https://brave.com/" target="_blank">🌐 Official Site</a>
+                    <a href="https://github.com/brave/brave-browser" target="_blank">📦 GitHub</a>
+                    <a href="https://brave.com/download/" target="_blank">⬇️ Download</a>
+                </div>
+            </div>
+
+            <div class="tool-card" data-category="download browser" data-price="free">
+                <h3>Firefox Portable</h3>
+                <div class="tool-type">
+                    <span class="badge download">Download Required</span>
+                    <span class="badge free">💚 Free</span>
+                </div>
+                <p class="tool-desc">Portable version of Firefox browser that runs from USB without installation.</p>
+                <div class="tool-links">
+                    <a href="https://www.mozilla.org/firefox/" target="_blank">🌐 Official Site</a>
+                    <a href="https://portableapps.com/apps/internet/firefox_portable" target="_blank">⬇️ Download</a>
+                </div>
+            </div>
+
+            <!-- ENTRA ID TOOLS -->
+            <div class="tool-card" data-category="online entra" data-price="free">
+                <h3>Azure AD Portal</h3>
+                <div class="tool-type">
+                    <span class="badge online">Online Only</span>
+                    <span class="badge free">💚 Free</span>
+                </div>
+                <p class="tool-desc">Manage users, groups, applications, and authentication in Microsoft Entra ID.</p>
+                <div class="tool-links">
+                    <a href="https://portal.azure.com/#view/Microsoft_AAD_IAM/ActiveDirectoryMenuBlade/~/Overview" target="_blank">🔗 Open Tool</a>
+                    <a href="https://learn.microsoft.com/en-us/entra/identity/" target="_blank">📚 Documentation</a>
+                </div>
+            </div>
+
+            <div class="tool-card" data-category="online entra" data-price="free">
+                <h3>Microsoft Entra Admin Center</h3>
+                <div class="tool-type">
+                    <span class="badge online">Online Only</span>
+                    <span class="badge free">💚 Free</span>
+                </div>
+                <p class="tool-desc">Unified admin center for identity and access management across Microsoft 365.</p>
+                <div class="tool-links">
+                    <a href="https://entra.microsoft.com/" target="_blank">🔗 Open Tool</a>
+                    <a href="https://learn.microsoft.com/en-us/entra/" target="_blank">📚 Documentation</a>
+                </div>
+            </div>
+
+            <div class="tool-card" data-category="download entra" data-price="free">
+                <h3>Azure AD PowerShell</h3>
+                <div class="tool-type">
+                    <span class="badge download">Download Required</span>
+                    <span class="badge free">💚 Free</span>
+                </div>
+                <p class="tool-desc">PowerShell module for managing Azure Active Directory/Entra ID resources.</p>
+                <div class="tool-links">
+                    <a href="https://learn.microsoft.com/en-us/powershell/azure/active-directory/install-adv2" target="_blank">🌐 Official Site</a>
+                    <a href="https://www.powershellgallery.com/packages/AzureAD/" target="_blank">⬇️ Download</a>
+                </div>
+            </div>
+
+            <div class="tool-card" data-category="download entra" data-price="free">
+                <h3>Microsoft Graph PowerShell</h3>
+                <div class="tool-type">
+                    <span class="badge download">Download Required</span>
+                    <span class="badge free">💚 Free</span>
+                </div>
+                <p class="tool-desc">PowerShell SDK for Microsoft Graph API to manage Microsoft 365 services.</p>
+                <div class="tool-links">
+                    <a href="https://learn.microsoft.com/en-us/powershell/microsoftgraph/" target="_blank">🌐 Official Site</a>
+                    <a href="https://github.com/microsoftgraph/msgraph-sdk-powershell" target="_blank">📦 GitHub</a>
+                    <a href="https://www.powershellgallery.com/packages/Microsoft.Graph/" target="_blank">⬇️ Download</a>
+                </div>
+            </div>
+
+            <div class="tool-card" data-category="online entra" data-price="free">
+                <h3>Graph Explorer</h3>
+                <div class="tool-type">
+                    <span class="badge online">Online Only</span>
+                    <span class="badge free">💚 Free</span>
+                </div>
+                <p class="tool-desc">Interactive web tool to test and explore Microsoft Graph API calls.</p>
+                <div class="tool-links">
+                    <a href="https://developer.microsoft.com/en-us/graph/graph-explorer" target="_blank">🔗 Open Tool</a>
+                    <a href="https://github.com/microsoftgraph/microsoft-graph-explorer-v4" target="_blank">📦 GitHub</a>
+                </div>
+            </div>
+
+            <div class="tool-card" data-category="download entra" data-price="free">
+                <h3>Azure CLI</h3>
+                <div class="tool-type">
+                    <span class="badge download">Download Required</span>
+                    <span class="badge free">💚 Free</span>
+                </div>
+                <p class="tool-desc">Cross-platform command-line tool for managing Azure resources and Entra ID.</p>
+                <div class="tool-links">
+                    <a href="https://learn.microsoft.com/en-us/cli/azure/" target="_blank">🌐 Official Site</a>
+                    <a href="https://github.com/Azure/azure-cli" target="_blank">📦 GitHub</a>
+                    <a href="https://learn.microsoft.com/en-us/cli/azure/install-azure-cli" target="_blank">⬇️ Download</a>
+                </div>
+            </div>
+
+            <div class="tool-card" data-category="online entra" data-price="free">
+                <h3>Microsoft 365 Admin Center</h3>
+                <div class="tool-type">
+                    <span class="badge online">Online Only</span>
+                    <span class="badge free">💚 Free</span>
+                </div>
+                <p class="tool-desc">Centralized portal for managing Microsoft 365 services and user accounts.</p>
+                <div class="tool-links">
+                    <a href="https://admin.microsoft.com/" target="_blank">🔗 Open Tool</a>
+                    <a href="https://learn.microsoft.com/en-us/microsoft-365/admin/" target="_blank">📚 Documentation</a>
+                </div>
+            </div>
+
+            <!-- DOCKER TOOLS -->
+            <div class="tool-card" data-category="download docker" data-price="freemium">
+                <h3>Docker Desktop</h3>
+                <div class="tool-type">
+                    <span class="badge download">Download Required</span>
+                    <span class="badge freemium">💛 Freemium</span>
+                </div>
+                <p class="tool-desc">Complete containerization platform for building, sharing, and running applications.</p>
+                <div class="tool-links">
+                    <a href="https://www.docker.com/products/docker-desktop/" target="_blank">🌐 Official Site</a>
+                    <a href="https://github.com/docker/docker-ce" target="_blank">📦 GitHub</a>
+                    <a href="https://www.docker.com/products/docker-desktop/" target="_blank">⬇️ Download</a>
+                </div>
+            </div>
+
+            <div class="tool-card" data-category="online docker" data-price="freemium">
+                <h3>Docker Hub</h3>
+                <div class="tool-type">
+                    <span class="badge online">Online Only</span>
+                    <span class="badge freemium">💛 Freemium</span>
+                </div>
+                <p class="tool-desc">Cloud-based registry for finding and sharing container images.</p>
+                <div class="tool-links">
+                    <a href="https://hub.docker.com/" target="_blank">🔗 Open Tool</a>
+                    <a href="https://docs.docker.com/docker-hub/" target="_blank">📚 Documentation</a>
+                </div>
+            </div>
+
+            <div class="tool-card" data-category="download docker" data-price="free">
+                <h3>Docker Compose</h3>
+                <div class="tool-type">
+                    <span class="badge download">Download Required</span>
+                    <span class="badge free">💚 Free</span>
+                </div>
+                <p class="tool-desc">Tool for defining and running multi-container Docker applications using YAML.</p>
+                <div class="tool-links">
+                    <a href="https://docs.docker.com/compose/" target="_blank">🌐 Official Site</a>
+                    <a href="https://github.com/docker/compose" target="_blank">📦 GitHub</a>
+                    <a href="https://docs.docker.com/compose/install/" target="_blank">⬇️ Download</a>
+                </div>
+            </div>
+
+            <div class="tool-card" data-category="online docker" data-price="free">
+                <h3>Play with Docker</h3>
+                <div class="tool-type">
+                    <span class="badge online">Online Only</span>
+                    <span class="badge free">💚 Free</span>
+                </div>
+                <p class="tool-desc">Free online Docker playground for testing and learning Docker commands.</p>
+                <div class="tool-links">
+                    <a href="https://labs.play-with-docker.com/" target="_blank">🔗 Open Tool</a>
+                    <a href="https://github.com/play-with-docker/play-with-docker" target="_blank">📦 GitHub</a>
+                </div>
+            </div>
+
+            <div class="tool-card" data-category="download docker" data-price="freemium">
+                <h3>Portainer</h3>
+                <div class="tool-type">
+                    <span class="badge download">Download Required</span>
+                    <span class="badge freemium">💛 Freemium</span>
+                </div>
+                <p class="tool-desc">Lightweight management UI for Docker environments with container visualization.</p>
+                <div class="tool-links">
+                    <a href="https://www.portainer.io/" target="_blank">🌐 Official Site</a>
+                    <a href="https://github.com/portainer/portainer" target="_blank">📦 GitHub</a>
+                    <a href="https://docs.portainer.io/start/install" target="_blank">⬇️ Download</a>
+                </div>
+            </div>
+
+            <div class="tool-card" data-category="download docker" data-price="free">
+                <h3>Lazydocker</h3>
+                <div class="tool-type">
+                    <span class="badge download">Download Required</span>
+                    <span class="badge free">💚 Free</span>
+                </div>
+                <p class="tool-desc">Terminal UI for Docker and Docker Compose with simple keyboard navigation.</p>
+                <div class="tool-links">
+                    <a href="https://github.com/jesseduffield/lazydocker" target="_blank">🌐 Official Site</a>
+                    <a href="https://github.com/jesseduffield/lazydocker" target="_blank">📦 GitHub</a>
+                    <a href="https://github.com/jesseduffield/lazydocker/releases" target="_blank">⬇️ Download</a>
+                </div>
+            </div>
+
+            <div class="tool-card" data-category="download docker" data-price="free">
+                <h3>Watchtower</h3>
+                <div class="tool-type">
+                    <span class="badge download">Download Required</span>
+                    <span class="badge free">💚 Free</span>
+                </div>
+                <p class="tool-desc">Automatically updates running Docker containers to the latest available image.</p>
+                <div class="tool-links">
+                    <a href="https://containrrr.dev/watchtower/" target="_blank">🌐 Official Site</a>
+                    <a href="https://github.com/containrrr/watchtower" target="_blank">📦 GitHub</a>
+                    <a href="https://hub.docker.com/r/containrrr/watchtower" target="_blank">🐳 Docker Hub</a>
+                </div>
+            </div>
+
+            <!-- PROJECT FOLDERS -->
+            <div class="tool-card" data-category="development" data-price="free">
+                <h3>Project Folder <span class="badge lebon">📍 lebon.info</span></h3>
+                <div class="tool-type">
+                    <span class="badge online">Online Only</span>
+                    <span class="badge free">💚 Free</span>
+                </div>
+                <p class="tool-desc">Development projects and tools collection.</p>
+                <div class="tool-links">
+                    <a href="../project/" target="_blank">🔗 Open Folder</a>
+                </div>
+            </div>
+
+            <div class="tool-card" data-category="development" data-price="free">
+                <h3>Failed Projects Archive <span class="badge lebon">📍 lebon.info</span></h3>
+                <div class="tool-type">
+                    <span class="badge online">Online Only</span>
+                    <span class="badge free">💚 Free</span>
+                </div>
+                <p class="tool-desc">Archive of experimental projects for reference and learning.</p>
+                <div class="tool-links">
+                    <a href="../failed-project/" target="_blank">🔗 Open Folder</a>
+                </div>
+            </div>
+
+            <div class="tool-card" data-category="online" data-price="free">
+                <h3>Notes <span class="badge lebon">📍 lebon.info</span></h3>
+                <div class="tool-type">
+                    <span class="badge online">Online Only</span>
+                    <span class="badge free">💚 Free</span>
+                </div>
+                <p class="tool-desc">Local storage notes and todo list manager.</p>
+                <div class="tool-links">
+                    <a href="../notes/" target="_blank">🔗 Open Tool</a>
+                    <a href="https://github.com/Compyra/note.lebon.info" target="_blank">📦 GitHub</a>
+                </div>
+            </div>
 
         </div>
-        <div class="terminal">
-            <h1>Local/Trusted Tools</h1>
-            <p class="prompt">$ ls -la /local-tools</p>
-            <div class="folder">
-                <a href="../notes/">Notes/</a> <span class="description">- Local storage notes and todo list</span>
-            </div>
-            <div class="folder">
-                <a href="http://scan.lebon.info">Scan/</a> <span class="description">- Scan local network for port 80 and 443. Use http version. (Work in progress)</span>
-            </div>
-            <div class="folder">
-                <a href="./cve/">cve/</a> <span class="description">- Common Vulnerabilities and Exposures
-                    database</span>
-            </div>
-            <div class="folder">
-                <a href="./CyberChef_v10.19.4" target="_blank">CyberChef/</a> <span class="description">- Clone (
-                    2025-11-08 ) of github.com/gchq/CyberChef, useful for performing data transformations,
-                    encoding/decoding, encryption, and analysis tasks in cybersecurity and digital forensics</span>
-            </div>
+
+        <!-- Compact Table View -->
+        <div class="tools-table" id="toolsTable" style="display: none;">
+            <table id="compactTable">
+                <thead>
+                    <tr>
+                        <th>Tool Name</th>
+                        <th>Type</th>
+                        <th>Price</th>
+                        <th>Category</th>
+                        <th>Description</th>
+                        <th>Links</th>
+                    </tr>
+                </thead>
+                <tbody id="tableBody">
+                    <!-- Table rows will be generated dynamically -->
+                </tbody>
+            </table>
         </div>
-        <div class="terminal">
-            <h1>External Tools</h1>
-            <p class="prompt">$ ls -la /external-tools</p>
-            <div class="folder">
-                <a href="https://sharevb-it-tools.vercel.app/" target="_blank">it-tools/</a> <span class="description">-
-                    GitHub project containing a collection of web-based utilities
-                    (https://github.com/sharevb/it-tools)</span>
-            </div>
-        </div>
+
+        <footer>
+            <p class="prompt">$ echo "Total tools: <span id="toolCount"></span>"</p>
+            <p class="footer-text">Use at your own risk. Always verify downloads from official sources.</p>
+        </footer>
     </div>
+
+    <script>
+        // View mode management
+        let currentView = localStorage.getItem('viewMode') || 'grid';
+        let toolsData = [];
+
+        // Toggle between grid and compact view
+        function toggleView(mode) {
+            currentView = mode;
+            localStorage.setItem('viewMode', mode);
+            
+            const gridView = document.getElementById('toolsGrid');
+            const tableView = document.getElementById('toolsTable');
+            const sortControls = document.getElementById('sortControls');
+            const gridBtn = document.getElementById('gridViewBtn');
+            const compactBtn = document.getElementById('compactViewBtn');
+            
+            if (mode === 'compact') {
+                gridView.style.display = 'none';
+                tableView.style.display = 'block';
+                sortControls.style.display = 'inline-block';
+                gridBtn.classList.remove('active');
+                compactBtn.classList.add('active');
+                generateTableView();
+            } else {
+                gridView.style.display = 'grid';
+                tableView.style.display = 'none';
+                sortControls.style.display = 'none';
+                gridBtn.classList.add('active');
+                compactBtn.classList.remove('active');
+            }
+        }
+
+        // Generate table view from cards
+        function generateTableView() {
+            const cards = Array.from(document.querySelectorAll('.tool-card'));
+            const tableBody = document.getElementById('tableBody');
+            tableBody.innerHTML = '';
+            
+            toolsData = cards.map(card => {
+                const name = card.querySelector('h3').textContent;
+                const type = card.querySelector('.badge.online, .badge.download').textContent;
+                const priceEl = card.querySelector('.badge.free, .badge.freemium, .badge.paid');
+                const price = priceEl ? priceEl.textContent : 'N/A';
+                const desc = card.querySelector('.tool-desc').textContent;
+                const category = card.dataset.category;
+                const links = Array.from(card.querySelectorAll('.tool-links a'));
+                const isVisible = card.style.display !== 'none';
+                
+                return { name, type, price, desc, category, links, isVisible, element: card };
+            });
+            
+            sortTools();
+        }
+
+        // Sort tools in table view
+        function sortTools() {
+            const sortBy = document.getElementById('sortSelect').value;
+            const tableBody = document.getElementById('tableBody');
+            
+            let sorted = [...toolsData].filter(tool => tool.isVisible);
+            
+            switch(sortBy) {
+                case 'name':
+                    sorted.sort((a, b) => a.name.localeCompare(b.name));
+                    break;
+                case 'name-desc':
+                    sorted.sort((a, b) => b.name.localeCompare(a.name));
+                    break;
+                case 'category':
+                    sorted.sort((a, b) => a.category.localeCompare(b.category));
+                    break;
+                case 'type':
+                    sorted.sort((a, b) => a.type.localeCompare(b.type));
+                    break;
+                case 'price':
+                    sorted.sort((a, b) => a.price.localeCompare(b.price));
+                    break;
+            }
+            
+            tableBody.innerHTML = '';
+            sorted.forEach(tool => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td class="tool-name">${tool.name}</td>
+                    <td class="tool-type-cell">${tool.type}</td>
+                    <td class="tool-price-cell">${tool.price}</td>
+                    <td class="tool-category">${formatCategory(tool.category)}</td>
+                    <td class="tool-description">${tool.desc}</td>
+                    <td class="tool-links-cell">${tool.links.map(link => {
+                        const icon = link.innerHTML.split(' ')[0];
+                        const text = link.innerHTML.split(' ').slice(1).join(' ');
+                        return `<a href="${link.href}" target="_blank">${icon}</a>`;
+                    }).join(' ')}</td>
+                `;
+                tableBody.appendChild(row);
+            });
+            
+            updateToolCount(sorted.length);
+        }
+
+        // Format category for display
+        function formatCategory(category) {
+            const cats = category.split(' ');
+            const icons = {
+                'online': '🌐',
+                'download': '💾',
+                'network': '🔌',
+                'security': '🔒',
+                'development': '💻',
+                'system': '⚙️',
+                'entra': '🔐',
+                'docker': '🐳',
+                'browser': '🌍',
+                'forensics': '🔍'
+            };
+            return cats.map(c => icons[c] ? `${icons[c]} ${c}` : c).join(', ');
+        }
+
+        // Filter by category
+        function filterCategory(category) {
+            const cards = document.querySelectorAll('.tool-card');
+            const buttons = document.querySelectorAll('.filter-btn');
+            
+            // Update active button
+            buttons.forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            // Filter cards
+            let visibleCount = 0;
+            cards.forEach(card => {
+                if (category === 'all' || card.dataset.category.includes(category)) {
+                    card.style.display = 'block';
+                    visibleCount++;
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+            
+            updateToolCount(visibleCount);
+            
+            // Update table view if in compact mode
+            if (currentView === 'compact') {
+                generateTableView();
+            }
+        }
+
+        // Search filter
+        function filterTools() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const cards = document.querySelectorAll('.tool-card');
+            let visibleCount = 0;
+            
+            cards.forEach(card => {
+                const title = card.querySelector('h3').textContent.toLowerCase();
+                const desc = card.querySelector('.tool-desc').textContent.toLowerCase();
+                const category = card.dataset.category.toLowerCase();
+                
+                if (title.includes(searchTerm) || desc.includes(searchTerm) || category.includes(searchTerm)) {
+                    card.style.display = 'block';
+                    visibleCount++;
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+            
+            updateToolCount(visibleCount);
+            
+            // Update table view if in compact mode
+            if (currentView === 'compact') {
+                generateTableView();
+            }
+        }
+
+        // Update tool count
+        function updateToolCount(count) {
+            document.getElementById('toolCount').textContent = count || document.querySelectorAll('.tool-card').length;
+        }
+
+        // Initialize on load
+        window.onload = function() {
+            updateToolCount();
+            // Restore saved view mode
+            if (currentView === 'compact') {
+                toggleView('compact');
+            }
+        };
+    </script>
 </body>
 
 </html>
