@@ -242,6 +242,12 @@ h1 {
     border: 1px solid #ffcc00;
 }
 
+.badge.trial {
+    background-color: #ff9900;
+    color: #ffffff;
+    border: 1px solid #ffbb00;
+}
+
 .badge.paid {
     background-color: #cc0000;
     color: #ffffff;
