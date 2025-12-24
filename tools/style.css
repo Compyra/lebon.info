@@ -464,3 +464,199 @@ footer {
         font-size: 16px;
     }
 }
+
+/* Expandable Links Section */
+.links-expandable {
+    margin-top: 10px;
+}
+
+.links-expandable summary {
+    cursor: pointer;
+    color: #00ff00;
+    padding: 8px;
+    background-color: #001a00;
+    border: 1px solid #00ff00;
+    border-radius: 3px;
+    list-style: none;
+    user-select: none;
+    transition: all 0.3s ease;
+}
+
+.links-expandable summary:hover {
+    background-color: #002200;
+    box-shadow: 0 0 5px #00ff00;
+}
+
+.links-expandable summary::-webkit-details-marker {
+    display: none;
+}
+
+.links-expandable summary::before {
+    content: '▶ ';
+    display: inline-block;
+    transition: transform 0.3s ease;
+}
+
+.links-expandable[open] summary::before {
+    transform: rotate(90deg);
+}
+
+.links-expandable .expandable-content {
+    margin-top: 10px;
+    padding: 10px;
+    border: 1px solid #00ff00;
+    border-radius: 3px;
+    background-color: #000a00;
+}
+
+.links-expandable .expandable-content a {
+    display: inline-block;
+    margin: 3px;
+    padding: 4px 8px;
+    font-size: 12px;
+}
+
+.link-section {
+    margin-bottom: 10px;
+}
+
+.link-section-title {
+    color: #00cc00;
+    font-size: 11px;
+    text-transform: uppercase;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+/* Portal Details Expandable Section */
+.portal-details {
+    margin-top: 8px;
+    width: 100%;
+}
+
+.portal-details summary {
+    cursor: pointer;
+    color: #00ff00;
+    padding: 6px 10px;
+    background-color: #001a00;
+    border: 1px solid #00ff00;
+    border-radius: 3px;
+    list-style: none;
+    user-select: none;
+    transition: all 0.3s ease;
+    font-size: 13px;
+    display: inline-block;
+}
+
+.portal-details summary:hover {
+    background-color: #003300;
+    box-shadow: 0 0 5px #00ff00;
+}
+
+.portal-details summary::-webkit-details-marker {
+    display: none;
+}
+
+.portal-details summary::before {
+    content: '▶ ';
+    display: inline-block;
+    transition: transform 0.3s ease;
+}
+
+.portal-details[open] summary::before {
+    transform: rotate(90deg);
+}
+
+.portal-details .portal-links {
+    margin-top: 8px;
+    padding: 8px;
+    border: 1px solid #00ff00;
+    border-radius: 3px;
+    background-color: #000a00;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+}
+
+.portal-details .portal-links a {
+    display: inline-block;
+    padding: 4px 8px;
+    font-size: 14px;
+    background-color: #001100;
+    border: 1px solid #00aa00;
+    border-radius: 2px;
+    transition: all 0.2s ease;
+}
+
+.portal-details .portal-links a:hover {
+    background-color: #003300;
+    box-shadow: 0 0 8px #00ff00;
+    transform: scale(1.1);
+}
+
+/* Portal Details for Compact Table View */
+.portal-details-compact {
+    display: inline-block;
+    margin-left: 4px;
+    vertical-align: middle;
+}
+
+.portal-details-compact summary {
+    cursor: pointer;
+    color: #00ff00;
+    padding: 2px 6px;
+    background-color: #001a00;
+    border: 1px solid #00ff00;
+    border-radius: 3px;
+    list-style: none;
+    user-select: none;
+    transition: all 0.3s ease;
+    font-size: 12px;
+    display: inline-block;
+}
+
+.portal-details-compact summary:hover {
+    background-color: #003300;
+    box-shadow: 0 0 5px #00ff00;
+}
+
+.portal-details-compact summary::-webkit-details-marker {
+    display: none;
+}
+
+.portal-details-compact[open] summary {
+    margin-bottom: 4px;
+}
+
+.portal-details-compact .portal-links-compact {
+    position: absolute;
+    z-index: 100;
+    margin-top: 4px;
+    padding: 8px;
+    border: 1px solid #00ff00;
+    border-radius: 3px;
+    background-color: #001a00;
+    box-shadow: 0 0 10px #00ff00;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    max-width: 300px;
+}
+
+.portal-details-compact .portal-links-compact a {
+    display: inline-block;
+    padding: 4px 6px;
+    font-size: 13px;
+    background-color: #001100;
+    border: 1px solid #00aa00;
+    border-radius: 2px;
+    transition: all 0.2s ease;
+    color: #00ff00;
+    text-decoration: none;
+}
+
+.portal-details-compact .portal-links-compact a:hover {
+    background-color: #003300;
+    box-shadow: 0 0 5px #00ff00;
+    transform: scale(1.05);
+}
