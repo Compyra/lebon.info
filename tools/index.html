@@ -1877,13 +1877,14 @@
                 const priceEl = card.querySelector('.badge.free, .badge.freemium, .badge.trial, .badge.paid');
                 const price = priceEl ? priceEl.textContent : 'N/A';
                 const desc = card.querySelector('.tool-desc').textContent;
+                const warning = card.querySelector('.warning') ? card.querySelector('.warning').textContent : '';
                 const category = card.dataset.category;
                 // Get only direct links, not those inside details/expandable sections
                 const toolLinksDiv = card.querySelector('.tool-links');
                 const links = toolLinksDiv ? Array.from(toolLinksDiv.querySelectorAll(':scope > a, :scope > .portal-details > .portal-links > a')) : [];
                 const isVisible = card.style.display !== 'none';
                 
-                return { name, type, price, desc, category, links, isVisible, element: card };
+                return { name, type, price, desc, warning, category, links, isVisible, element: card };
             });
             
             sortTools();
@@ -1946,7 +1947,7 @@
                     <td class="tool-type-cell">${tool.type}</td>
                     <td class="tool-price-cell">${tool.price}</td>
                     <td class="tool-category">${formatCategory(tool.category)}</td>
-                    <td class="tool-description">${tool.desc}</td>
+                    <td class="tool-description">${tool.desc}${tool.warning ? '<br><span class="warning" style="font-size: 11px;">' + tool.warning + '</span>' : ''}</td>
                     <td class="tool-links-cell">${linksHtml}</td>
                 `;
                 tableBody.appendChild(row);
