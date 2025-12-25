@@ -2675,8 +2675,7 @@
                         <summary>⚙️</summary>
                         <div class="portal-links-compact">
                             ${specificLinks.map(link => {
-                                const icon = link.innerHTML.split(' ')[0];
-                                return `<a href="${link.href}" target="_blank">${icon}</a>`;
+                                return `<a href="${link.href}" target="_blank">${link.innerHTML}</a>`;
                             }).join(' ')}
                         </div>
                     </details>`;
