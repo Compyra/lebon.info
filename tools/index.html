@@ -2825,6 +2825,9 @@
             const cards = document.querySelectorAll('.tool-card');
             const buttons = document.querySelectorAll('.filter-btn');
             
+            // Clear search input when using category filter
+            document.getElementById('searchInput').value = '';
+            
             // Update active button
             buttons.forEach(btn => btn.classList.remove('active'));
             event.target.classList.add('active');
@@ -2853,6 +2856,11 @@
             const searchTerm = document.getElementById('searchInput').value.toLowerCase();
             const cards = document.querySelectorAll('.tool-card');
             let visibleCount = 0;
+            
+            // Reset filter buttons to "All Tools" when searching
+            const buttons = document.querySelectorAll('.filter-btn');
+            buttons.forEach(btn => btn.classList.remove('active'));
+            buttons[0].classList.add('active'); // First button is "All Tools"
             
             cards.forEach(card => {
                 const title = card.querySelector('h3').textContent.toLowerCase();
