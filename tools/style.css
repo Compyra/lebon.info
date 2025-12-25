@@ -230,6 +230,12 @@ h1 {
     border: 1px solid #ff9933;
 }
 
+.badge.browser {
+    background-color: #6600cc;
+    color: #ffffff;
+    border: 1px solid #9933ff;
+}
+
 .badge.free {
     background-color: #00cc00;
     color: #ffffff;
