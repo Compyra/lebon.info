@@ -21,6 +21,12 @@
         <div class="search-container">
             <p class="prompt">$ grep -i</p>
             <input type="text" id="searchInput" placeholder="Search tools..." onkeyup="filterTools()">
+            <div class="search-options">
+                <label class="checkbox-label">
+                    <input type="checkbox" id="advancedSearch" onchange="saveSearchPreference(); filterTools()">
+                    <span>Advanced Search (includes links & URLs)</span>
+                </label>
+            </div>
         </div>
 
         <!-- Filter Buttons -->
@@ -2249,7 +2255,7 @@
                 <h3>Microsoft Defender / Security</h3>
                 <div class="tool-type">
                     <span class="badge online">Online</span>
-                    <span class="badge free">Free</span>
+                    <span class="badge free">💚 Free</span>
                 </div>
                 <p class="tool-desc">Unified security portal for Microsoft Defender services and threat protection.</p>
                 <div class="tool-links">
@@ -2749,6 +2755,7 @@
         // Search filter
         function filterTools() {
             const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const advancedSearch = document.getElementById('advancedSearch').checked;
             const cards = document.querySelectorAll('.tool-card');
             let visibleCount = 0;
             
@@ -2762,7 +2769,21 @@
                 const desc = card.querySelector('.tool-desc').textContent.toLowerCase();
                 const category = card.dataset.category.toLowerCase();
                 
-                if (title.includes(searchTerm) || desc.includes(searchTerm) || category.includes(searchTerm)) {
+                let matches = title.includes(searchTerm) || desc.includes(searchTerm) || category.includes(searchTerm);
+                
+                // If advanced search is enabled, also search link text and href values
+                if (advancedSearch && !matches && searchTerm) {
+                    const links = card.querySelectorAll('a');
+                    links.forEach(link => {
+                        const linkText = link.textContent.toLowerCase();
+                        const linkHref = link.href.toLowerCase();
+                        if (linkText.includes(searchTerm) || linkHref.includes(searchTerm)) {
+                            matches = true;
+                        }
+                    });
+                }
+                
+                if (matches) {
                     card.style.display = 'block';
                     visibleCount++;
                 } else {
@@ -2778,6 +2799,12 @@
             }
         }
 
+        // Save search preference
+        function saveSearchPreference() {
+            const advancedSearch = document.getElementById('advancedSearch').checked;
+            localStorage.setItem('advancedSearch', advancedSearch);
+        }
+
         // Update tool count
         function updateToolCount(count) {
             document.getElementById('toolCount').textContent = count || document.querySelectorAll('.tool-card').length;
@@ -2789,6 +2816,11 @@
             // Restore saved view mode
             if (currentView === 'compact') {
                 toggleView('compact');
+            }
+            // Restore advanced search preference
+            const savedAdvancedSearch = localStorage.getItem('advancedSearch');
+            if (savedAdvancedSearch === 'true') {
+                document.getElementById('advancedSearch').checked = true;
             }
         };
     </script>
