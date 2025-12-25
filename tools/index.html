@@ -224,7 +224,7 @@
                 </div>
             </div>
 
-            <div class="tool-card" data-category="online" data-price="freemium">
+            <div class="tool-card" data-category="online" data-price="freemium" data-verified="true">
                 <h3>ChatGPT</h3>
                 <div class="tool-type">
                     <span class="badge online">Online Only</span>
@@ -1049,7 +1049,7 @@
             </div>
 
             <!-- DEVELOPMENT TOOLS -->
-            <div class="tool-card" data-category="download development" data-price="free">
+            <div class="tool-card" data-category="download development" data-price="free" data-verified="true">
                 <h3>Visual Studio Code</h3>
                 <div class="tool-type">
                     <span class="badge download">Download Required</span>
@@ -1063,7 +1063,7 @@
                 </div>
             </div>
 
-            <div class="tool-card" data-category="download development" data-price="free">
+            <div class="tool-card" data-category="download development" data-price="free" data-verified="true">
                 <h3>Notepad++</h3>
                 <div class="tool-type">
                     <span class="badge download">Download Required</span>
@@ -2588,12 +2588,13 @@
                 const desc = card.querySelector('.tool-desc').textContent;
                 const warning = card.querySelector('.warning') ? card.querySelector('.warning').textContent : '';
                 const category = card.dataset.category;
+                const verified = card.dataset.verified === 'true';
                 // Get only direct links, not those inside details/expandable sections
                 const toolLinksDiv = card.querySelector('.tool-links');
                 const links = toolLinksDiv ? Array.from(toolLinksDiv.querySelectorAll(':scope > a, :scope > .portal-details > .portal-links > a')) : [];
                 const isVisible = card.style.display !== 'none';
                 
-                return { name, type, price, desc, warning, category, links, isVisible, element: card };
+                return { name, type, price, desc, warning, category, links, isVisible, verified, element: card };
             });
             
             sortTools();
@@ -2651,8 +2652,9 @@
                 }
                 
                 const row = document.createElement('tr');
+                const verifiedStamp = tool.verified ? '<span class="verified-stamp">CHECKED</span>' : '';
                 row.innerHTML = `
-                    <td class="tool-name">${tool.name}</td>
+                    <td class="tool-name">${tool.name}${verifiedStamp}</td>
                     <td class="tool-type-cell">${tool.type}</td>
                     <td class="tool-price-cell">${tool.price}</td>
                     <td class="tool-category">${formatCategory(tool.category)}</td>
