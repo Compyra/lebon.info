@@ -11,10 +11,15 @@
 <body>
     <div class="container">
         <div class="header">
+            <div class="theme-dropdown">
+                <button class="theme-dropdown-btn" id="themeDropdownBtn">🖼️ Theme ▼</button>
+                <div class="theme-dropdown-content" id="themeDropdownContent">
+                    <button class="theme-option" onclick="toggleTheme()">💡 Toggle Borders</button>
+                </div>
+            </div>
             <h1>IT Toolkit</h1>
             <p class="prompt">$ cat README.md</p>
-            <p class="intro">Welcome. Here you'll find useful tools and resources for IT / security operations and
-                development.</p>
+            <p class="intro">Welcome. Here you'll find useful tools and resources for IT.</p>
             <p class="warning">Use at your own risk.</p>
         </div>
 
@@ -2942,6 +2947,17 @@
             localStorage.setItem('advancedSearch', advancedSearch);
         }
 
+        // Toggle theme (remove/add borders and shadows)
+        function toggleTheme() {
+            const body = document.body;
+            body.classList.toggle('clean-theme');
+            const isCleanTheme = body.classList.contains('clean-theme');
+            localStorage.setItem('cleanTheme', isCleanTheme);
+            
+            // Close dropdown after selection
+            document.getElementById('themeDropdownContent').classList.remove('show');
+        }
+
         // Update tool count
         function updateToolCount(count) {
             document.getElementById('toolCount').textContent = count || document.querySelectorAll('.tool-card').length;
@@ -2959,7 +2975,25 @@
             if (savedAdvancedSearch === 'true') {
                 document.getElementById('advancedSearch').checked = true;
             }
+            // Restore theme preference
+            const savedTheme = localStorage.getItem('cleanTheme');
+            if (savedTheme === 'true') {
+                document.body.classList.add('clean-theme');
+            }
         };
+
+        // Toggle dropdown menu
+        document.getElementById('themeDropdownBtn').addEventListener('click', function(e) {
+            e.stopPropagation();
+            const dropdown = document.getElementById('themeDropdownContent');
+            dropdown.classList.toggle('show');
+        });
+
+        // Close dropdown when clicking outside
+        window.addEventListener('click', function() {
+            const dropdown = document.getElementById('themeDropdownContent');
+            dropdown.classList.remove('show');
+        });
     </script>
 </body>
 

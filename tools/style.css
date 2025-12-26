@@ -20,6 +20,67 @@ body {
     background-color: #001100;
     box-shadow: 0 0 10px #00ff00;
     margin-bottom: 20px;
+    position: relative;
+}
+
+.theme-dropdown {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+}
+
+.theme-dropdown-btn {
+    background-color: #000000;
+    color: #00ff00;
+    border: 1px solid #00ff00;
+    padding: 8px 16px;
+    font-family: 'Courier New', monospace;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.theme-dropdown-btn:hover {
+    background-color: #003300;
+    box-shadow: 0 0 10px #00ff00;
+}
+
+.theme-dropdown-content {
+    display: none;
+    position: absolute;
+    right: 0;
+    background-color: #000000;
+    min-width: 200px;
+    box-shadow: 0 0 10px #00ff00;
+    border: 1px solid #00ff00;
+    z-index: 1000;
+    margin-top: 5px;
+}
+
+.theme-dropdown-content.show {
+    display: block;
+}
+
+.theme-option {
+    background-color: #000000;
+    color: #00ff00;
+    border: none;
+    border-bottom: 1px solid #003300;
+    padding: 12px 16px;
+    font-family: 'Courier New', monospace;
+    font-size: 14px;
+    cursor: pointer;
+    width: 100%;
+    text-align: left;
+    transition: all 0.3s ease;
+}
+
+.theme-option:last-child {
+    border-bottom: none;
+}
+
+.theme-option:hover {
+    background-color: #003300;
 }
 
 h1 {
@@ -762,4 +823,36 @@ footer {
     background-color: #003300;
     box-shadow: 0 0 5px #00ff00;
     transform: scale(1.05);
+}
+
+/* Clean Theme - Remove borders and shadows */
+body.clean-theme .header,
+body.clean-theme .search-container,
+body.clean-theme .filter-container,
+body.clean-theme .tool-card,
+body.clean-theme #searchInput,
+body.clean-theme .view-btn,
+body.clean-theme .filter-btn,
+body.clean-theme .tool-links a,
+body.clean-theme .portal-details,
+body.clean-theme .portal-links,
+body.clean-theme .portal-links a,
+body.clean-theme .portal-details-compact,
+body.clean-theme .portal-links-compact,
+body.clean-theme .portal-links-compact a,
+body.clean-theme .tools-table {
+    border: none !important;
+    box-shadow: none !important;
+}
+
+body.clean-theme h1 {
+    text-shadow: none !important;
+}
+
+body.clean-theme .tool-links a:hover,
+body.clean-theme .filter-btn:hover,
+body.clean-theme .view-btn:hover,
+body.clean-theme .portal-links a:hover,
+body.clean-theme .portal-links-compact a:hover {
+    box-shadow: none !important;
 }
