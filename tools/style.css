@@ -618,6 +618,16 @@ footer {
         padding: 10px;
     }
     
+    /* Show only emoji for theme button on small screens */
+    .theme-dropdown-btn .btn-text {
+        display: none;
+    }
+    
+    .theme-dropdown-btn {
+        font-size: 20px;
+        padding: 8px 12px;
+    }
+    
     /* Make table scrollable on mobile */
     .tools-table {
         overflow-x: auto;
@@ -897,11 +907,11 @@ body.bright-theme .container {
 
 body.bright-theme .header {
     border: none;
-    border-bottom: 1px solid #c8c6c4;
-    padding: 20px;
-    background-color: #0078d4;
+    border-bottom: 2px solid #005a9e;
+    padding: 30px 20px;
+    background: linear-gradient(135deg, #0078d4 0%, #106ebe 100%);
     color: #ffffff;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 12px rgba(0, 120, 212, 0.25);
 }
 
 body.bright-theme h1 {
@@ -914,17 +924,19 @@ body.bright-theme h1 {
 body.bright-theme .prompt {
     color: #ffffff;
     opacity: 0.9;
+    font-weight: bold;
 }
 
 body.bright-theme .intro,
 body.bright-theme .warning {
     color: #323130;
     opacity: 1;
+    font-weight: bold;
 }
 
 body.bright-theme .prompt {
     color: #323130;
-    font-weight: 600;
+    font-weight: bold;
 }
 
 body.bright-theme .search-container {

@@ -12,10 +12,10 @@
     <div class="container">
         <div class="header">
             <div class="theme-dropdown">
-                <button class="theme-dropdown-btn" id="themeDropdownBtn">🎨 Theme ▼</button>
+                <button class="theme-dropdown-btn" id="themeDropdownBtn">🎨<span class="btn-text"> Theme ▼</span></button>
                 <div class="theme-dropdown-content" id="themeDropdownContent">
                     <button class="theme-option" onclick="toggleTheme()">💡 Toggle Borders</button>
-                    <button class="theme-option" onclick="toggleBrightTheme()">☀️ I like it bright</button>
+                    <button class="theme-option" id="brightThemeBtn" onclick="toggleBrightTheme()">☀️ I like it bright</button>
                 </div>
             </div>
             <h1>IT Toolkit</h1>
@@ -2966,6 +2966,14 @@
             const isBrightTheme = body.classList.contains('bright-theme');
             localStorage.setItem('brightTheme', isBrightTheme);
             
+            // Update button text
+            const btn = document.getElementById('brightThemeBtn');
+            if (isBrightTheme) {
+                btn.textContent = '🌑 Join the dark side';
+            } else {
+                btn.textContent = '☀️ I like it bright';
+            }
+            
             // Close dropdown after selection
             document.getElementById('themeDropdownContent').classList.remove('show');
         }
@@ -2996,6 +3004,7 @@
             const savedBrightTheme = localStorage.getItem('brightTheme');
             if (savedBrightTheme === 'true') {
                 document.body.classList.add('bright-theme');
+                document.getElementById('brightThemeBtn').textContent = '🌘 Join the dark side';
             }
         };
 
