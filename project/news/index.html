@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IT News & Resources - Lebon.info</title>
+    <link rel="stylesheet" href="../../Tools/style.css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <a href="../../" class="back-btn">←<span class="btn-text"> Home</span></a>
+            <div class="theme-dropdown">
+                <button class="theme-dropdown-btn" id="themeDropdownBtn">🎨<span class="btn-text"> Theme
+                        ▼</span></button>
+                <div class="theme-dropdown-content" id="themeDropdownContent">
+                    <button class="theme-option" onclick="toggleTheme()">💡 Toggle Borders</button>
+                    <button class="theme-option" id="brightThemeBtn" onclick="toggleBrightTheme()">☀️ I like it
+                        bright</button>
+                </div>
+            </div>
+            <h1>IT News & Resources</h1>
+            <p class="prompt">$ cat README.md</p>
+            <p class="intro">Welcome. Here you'll find curated news sources, blogs, podcasts, and security resources for
+                IT professionals.</p>
+            <p class="intro">Stay informed with the latest developments in cybersecurity, cloud computing, and IT
+                infrastructure.</p>
+            <p class="warning">Always verify information from multiple sources.</p>
+        </div>
+
+        <!-- Search Bar -->
+        <div class="search-container">
+            <p class="prompt">$ grep -i</p>
+            <input type="text" id="searchInput" placeholder="Search resources..." onkeyup="filterTools()">
+            <div class="search-options">
+                <label class="checkbox-label">
+                    <input type="checkbox" id="advancedSearch" onchange="saveSearchPreference(); filterTools()">
+                    <span>Advanced Search (includes links & URLs)</span>
+                </label>
+            </div>
+        </div>
+
+        <!-- Filter Buttons -->
+        <div class="filter-container">
+            <p class="prompt">$ filter --category</p>
+            <div class="filter-buttons">
+                <button class="filter-btn active" onclick="filterCategory('all')">All Resources</button>
+                <button class="filter-btn" onclick="filterCategory('microsoft')">🔷 Microsoft</button>
+                <button class="filter-btn" onclick="filterCategory('security')">🔒 Security & Threats</button>
+                <button class="filter-btn" onclick="filterCategory('forum')">💬 Forums & Communities</button>
+                <button class="filter-btn" onclick="filterCategory('newsletter')">📰 Newsletters</button>
+                <button class="filter-btn" onclick="filterCategory('podcast')">🎧 Podcasts</button>
+            </div>
+        </div>
+
+        <!-- View Controls -->
+        <div class="filter-container">
+            <p class="prompt">$ view --mode</p>
+            <div class="view-controls">
+                <button class="view-btn active" id="gridViewBtn" onclick="toggleView('grid')">Grid View</button>
+                <button class="view-btn" id="compactViewBtn" onclick="toggleView('compact')">Compact View</button>
+                <div class="sort-controls" id="sortControls" style="display: none;">
+                    <span class="prompt" style="margin-left: 20px;">Sort by:</span>
+                    <select id="sortSelect" onchange="sortTools()">
+                        <option value="name">Name (A-Z)</option>
+                        <option value="name-desc">Name (Z-A)</option>
+                        <option value="category">Category</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <!-- Resources Grid -->
+        <div class="tools-grid" id="toolsGrid">
+
+            <!-- MICROSOFT CATEGORY -->
+            <div class="tool-card" data-category="microsoft">
+                <h3>Entra News</h3>
+                <div class="tool-type">
+                    <span class="badge online">Online Only</span>
+                    <span class="badge free">💚 Free</span>
+                </div>
+                <p class="tool-desc">Latest news and updates about Microsoft Entra ID (formerly Azure AD), identity
+                    management, and authentication.</p>
+                <div class="tool-links">
+                    <a href="https://entra.news/" target="_blank">🌐 Main Site</a>
+                    <details class="portal-details">
+                        <summary>📌 Additional Resources</summary>
+                        <div class="portal-links">
+                            <a href="https://entra.news/podcast" target="_blank">🎧 Podcast</a>
+                        </div>
+                    </details>
+                </div>
+            </div>
+
+            <div class="tool-card" data-category="microsoft">
+                <h3>Merill's Blog</h3>
+                <div class="tool-type">
+                    <span class="badge online">Online Only</span>
+                    <span class="badge free">💚 Free</span>
+                </div>
+                <p class="tool-desc">Insights on Microsoft 365, Azure, Entra ID, and cloud technologies. Written by
+                    Merill Fernando, a Microsoft MVP.</p>
+                <div class="tool-links">
+                    <a href="https://blog.merill.net/" target="_blank">🌐 Visit Blog</a>
+                </div>
+            </div>
+
+            <!-- SECURITY & THREATS CATEGORY -->
+            <div class="tool-card" data-category="security">
+                <h3>SANS Internet Storm Center</h3>
+                <div class="tool-type">
+                    <span class="badge online">Online Only</span>
+                    <span class="badge free">💚 Free</span>
+                </div>
+                <p class="tool-desc">Free cybersecurity threat intelligence and analysis from the SANS Institute.
+                    Monitor current internet security threats and vulnerabilities.</p>
+                <div class="tool-links">
+                    <a href="https://isc.sans.edu/" target="_blank">🌐 Main Site</a>
+                    <details class="portal-details">
+                        <summary>📌 Additional Resources</summary>
+                        <div class="portal-links">
+                            <a href="https://isc.sans.edu/today.html" target="_blank">📅 Today's Activity</a>
+                            <a href="https://open.spotify.com/show/6oeUmMwv1AQpdYNHmOE4A0" target="_blank">🎧 Listen on
+                                Spotify</a>
+                            <a href="https://isc.sans.edu/podcast.html" target="_blank">🎧 Podcast Page</a>
+                        </div>
+                    </details>
+                </div>
+            </div>
+
+            <div class="tool-card" data-category="security">
+                <h3>BleepingComputer</h3>
+                <div class="tool-type">
+                    <span class="badge online">Online Only</span>
+                    <span class="badge free">💚 Free</span>
+                </div>
+                <p class="tool-desc">Leading technology news website focused on cybersecurity, data breaches, vulnerabilities, and malware analysis.</p>
+                <div class="tool-links">
+                    <a href="https://www.bleepingcomputer.com/" target="_blank">🌐 Main Site</a>
+                    <details class="portal-details">
+                        <summary>📌 Additional Resources</summary>
+                        <div class="portal-links">
+                            <a href="https://www.bleepingcomputer.com/tag/zero-day/" target="_blank">🔴 Zero-Day News</a>
+                        </div>
+                    </details>
+                </div>
+            </div>
+
+            <div class="tool-card" data-category="security">
+                <h3>Tenable Blog</h3>
+                <div class="tool-type">
+                    <span class="badge online">Online Only</span>
+                    <span class="badge free">💚 Free</span>
+                </div>
+                <p class="tool-desc">Security insights, vulnerability research, and threat analysis from Tenable's cybersecurity experts.</p>
+                <div class="tool-links">
+                    <a href="https://www.tenable.com/blog" target="_blank">🌐 Visit Blog</a>
+                </div>
+            </div>
+
+            <div class="tool-card" data-category="security">
+                <h3>Sekoia.io Blog</h3>
+                <div class="tool-type">
+                    <span class="badge online">Online Only</span>
+                    <span class="badge free">💚 Free</span>
+                </div>
+                <p class="tool-desc">Threat intelligence, cybersecurity research, and analysis from the Sekoia.io team.</p>
+                <div class="tool-links">
+                    <a href="https://blog.sekoia.io/" target="_blank">🌐 Visit Blog</a>
+                </div>
+            </div>
+
+            <div class="tool-card" data-category="security">
+                <h3>CVExploits</h3>
+                <div class="tool-type">
+                    <span class="badge online">Online Only</span>
+                    <span class="badge free">💚 Free</span>
+                </div>
+                <p class="tool-desc">Database of CVE exploits and vulnerabilities with detailed information and proof-of-concept code.</p>
+                <div class="tool-links">
+                    <a href="https://cvexploits.io/" target="_blank">🌐 Main Site</a>
+                </div>
+            </div>
+
+            <div class="tool-card" data-category="microsoft">
+                <h3>Microsoft Security Blog</h3>
+                <div class="tool-type">
+                    <span class="badge online">Online Only</span>
+                    <span class="badge free">💚 Free</span>
+                </div>
+                <p class="tool-desc">Threat intelligence insights and security research from Microsoft's security experts and teams.</p>
+                <div class="tool-links">
+                    <a href="https://www.microsoft.com/en-us/security/blog/topic/threat-intelligence/" target="_blank">🌐 Threat Intelligence</a>
+                </div>
+            </div>
+
+            <!-- FORUMS & COMMUNITIES CATEGORY -->
+            <div class="tool-card" data-category="forum">
+                <h3>CompTIA ISAO Forum</h3>
+                <div class="tool-type">
+                    <span class="badge online">Online Only</span>
+                    <span class="badge free">💚 Free</span>
+                </div>
+                <p class="tool-desc">Information Sharing and Analysis Organization (ISAO) forum for cybersecurity professionals to collaborate and share threat intelligence.</p>
+                <div class="tool-links">
+                    <a href="https://forum.comptiaisao.org/forums/-/list" target="_blank">🌐 Visit Forum</a>
+                </div>
+            </div>
+
+            <!-- NEWSLETTERS CATEGORY -->
+            <div class="tool-card" data-category="newsletter">
+                <h3>LinkedIn Security Newsletter</h3>
+                <div class="tool-type">
+                    <span class="badge online">Online Only</span>
+                    <span class="badge free">💚 Free</span>
+                </div>
+                <p class="tool-desc">Curated cybersecurity news and insights delivered via LinkedIn newsletter.</p>
+                <div class="tool-links">
+                    <a href="https://www.linkedin.com/newsletters/7171622245864337409/" target="_blank">🌐 Subscribe</a>
+                </div>
+            </div>
+
+            <!-- PODCASTS CATEGORY -->
+
+
+        </div>
+
+        <!-- Compact Table View -->
+        <div class="tools-table" id="toolsTable" style="display: none;">
+            <table id="compactTable">
+                <thead>
+                    <tr>
+                        <th>Resource Name</th>
+                        <th>Type</th>
+                        <th>Category</th>
+                        <th>Description</th>
+                        <th>Links</th>
+                    </tr>
+                </thead>
+                <tbody id="tableBody">
+                    <!-- Table rows will be generated dynamically -->
+                </tbody>
+            </table>
+        </div>
+
+        <footer>
+            <p class="prompt">$ echo "Total resources: <span id="toolCount"></span>"</p>
+            <p class="footer-text">Stay informed. Always verify information from multiple sources.</p>
+        </footer>
+    </div>
+
+    <script>
+        // View mode management
+        let currentView = localStorage.getItem('viewMode') || 'grid';
+        let toolsData = [];
+
+        // Toggle between grid and compact view
+        function toggleView(mode) {
+            currentView = mode;
+            localStorage.setItem('viewMode', mode);
+
+            const gridView = document.getElementById('toolsGrid');
+            const tableView = document.getElementById('toolsTable');
+            const sortControls = document.getElementById('sortControls');
+            const gridBtn = document.getElementById('gridViewBtn');
+            const compactBtn = document.getElementById('compactViewBtn');
+
+            if (mode === 'compact') {
+                gridView.style.display = 'none';
+                tableView.style.display = 'block';
+                sortControls.style.display = 'inline-block';
+                gridBtn.classList.remove('active');
+                compactBtn.classList.add('active');
+                generateTableView();
+            } else {
+                gridView.style.display = 'grid';
+                tableView.style.display = 'none';
+                sortControls.style.display = 'none';
+                gridBtn.classList.add('active');
+                compactBtn.classList.remove('active');
+            }
+        }
+
+        // Generate table view from cards
+        function generateTableView() {
+            const cards = Array.from(document.querySelectorAll('.tool-card'));
+            const tableBody = document.getElementById('tableBody');
+            tableBody.innerHTML = '';
+
+            toolsData = cards.map(card => {
+                const name = card.querySelector('h3').textContent;
+                const type = card.querySelector('.badge.online, .badge.download, .badge.browser').textContent;
+                const desc = card.querySelector('.tool-desc').textContent;
+                const category = card.dataset.category;
+                const toolLinksDiv = card.querySelector('.tool-links');
+                const links = toolLinksDiv ? Array.from(toolLinksDiv.querySelectorAll(':scope > a, :scope > .portal-details > .portal-links > a')) : [];
+                const isVisible = card.style.display !== 'none';
+
+                return { name, type, desc, category, links, isVisible, element: card };
+            });
+
+            sortTools();
+        }
+
+        // Sort tools in table view
+        function sortTools() {
+            const sortBy = document.getElementById('sortSelect').value;
+            const tableBody = document.getElementById('tableBody');
+
+            let sorted = [...toolsData].filter(tool => tool.isVisible);
+
+            switch (sortBy) {
+                case 'name':
+                    sorted.sort((a, b) => a.name.localeCompare(b.name));
+                    break;
+                case 'name-desc':
+                    sorted.sort((a, b) => b.name.localeCompare(a.name));
+                    break;
+                case 'category':
+                    sorted.sort((a, b) => a.category.localeCompare(b.category));
+                    break;
+            }
+
+            tableBody.innerHTML = '';
+            sorted.forEach(tool => {
+                const mainLink = tool.links[0];
+                const specificLinks = tool.links.slice(1);
+
+                let linksHtml = '';
+                if (mainLink) {
+                    const mainIcon = mainLink.innerHTML.split(' ')[0];
+                    linksHtml = `<a href="${mainLink.href}" target="_blank">${mainIcon}</a>`;
+                }
+
+                if (specificLinks.length > 0) {
+                    linksHtml += `<details class="portal-details-compact">
+                        <summary>⚙️</summary>
+                        <div class="portal-links-compact">
+                            ${specificLinks.map(link => {
+                        return `<a href="${link.href}" target="_blank">${link.innerHTML}</a>`;
+                    }).join(' ')}
+                        </div>
+                    </details>`;
+                }
+
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td class="tool-name">${tool.name}</td>
+                    <td class="tool-type-cell">${tool.type}</td>
+                    <td class="tool-category">${formatCategory(tool.category)}</td>
+                    <td class="tool-description">${tool.desc}</td>
+                    <td class="tool-links-cell">${linksHtml}</td>
+                `;
+                tableBody.appendChild(row);
+            });
+        }
+
+        // Format category for display
+        function formatCategory(category) {
+            const categoryMap = {
+                'microsoft': '🔷 Microsoft, Entra & Azure',
+                'security': '🔒 Security & Threats',
+                'forum': '💬 Forums & Communities',
+                'newsletter': '📰 Newsletters',
+                'podcast': '🎧 Podcasts'
+            };
+            return categoryMap[category] || category;
+        }
+
+        // Filter by category
+        function filterCategory(category) {
+            const cards = document.querySelectorAll('.tool-card');
+            const filterButtons = document.querySelectorAll('.filter-btn');
+
+            // Update active button
+            filterButtons.forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+
+            // Filter cards
+            cards.forEach(card => {
+                if (category === 'all' || card.dataset.category.includes(category)) {
+                    card.style.display = 'flex';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+
+            updateToolCount();
+            if (currentView === 'compact') {
+                generateTableView();
+            }
+        }
+
+        // Filter tools based on search
+        function filterTools() {
+            const input = document.getElementById('searchInput').value.toLowerCase();
+            const advancedSearch = document.getElementById('advancedSearch').checked;
+            const cards = document.querySelectorAll('.tool-card');
+            let visibleCount = 0;
+
+            cards.forEach(card => {
+                const title = card.querySelector('h3').textContent.toLowerCase();
+                const desc = card.querySelector('.tool-desc').textContent.toLowerCase();
+                let links = '';
+
+                if (advancedSearch) {
+                    const linkElements = card.querySelectorAll('.tool-links a');
+                    linkElements.forEach(link => {
+                        links += link.textContent.toLowerCase() + ' ' + link.href.toLowerCase() + ' ';
+                    });
+                }
+
+                const searchText = title + ' ' + desc + ' ' + links;
+
+                if (searchText.includes(input)) {
+                    card.style.display = 'flex';
+                    visibleCount++;
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+
+            updateToolCount();
+            if (currentView === 'compact') {
+                generateTableView();
+            }
+        }
+
+        // Save search preference
+        function saveSearchPreference() {
+            const advancedSearch = document.getElementById('advancedSearch').checked;
+            localStorage.setItem('advancedSearch', advancedSearch);
+        }
+
+        // Update tool count
+        function updateToolCount() {
+            const cards = document.querySelectorAll('.tool-card');
+            const visibleCards = Array.from(cards).filter(card => card.style.display !== 'none');
+            document.getElementById('toolCount').textContent = visibleCards.length;
+        }
+
+        // Toggle clean theme
+        function toggleTheme() {
+            document.body.classList.toggle('clean-theme');
+            const isClean = document.body.classList.contains('clean-theme');
+            localStorage.setItem('cleanTheme', isClean);
+        }
+
+        // Toggle bright theme
+        function toggleBrightTheme() {
+            document.body.classList.toggle('bright-theme');
+            const isBright = document.body.classList.contains('bright-theme');
+            localStorage.setItem('brightTheme', isBright);
+
+            const btn = document.getElementById('brightThemeBtn');
+            if (isBright) {
+                btn.textContent = '🌘 Join the dark side';
+            } else {
+                btn.textContent = '☀️ I like it bright';
+            }
+        }
+
+        // Initialize on page load
+        window.onload = function () {
+            updateToolCount();
+
+            // Restore view mode
+            if (currentView === 'compact') {
+                toggleView('compact');
+            }
+
+            // Restore advanced search preference
+            const savedAdvancedSearch = localStorage.getItem('advancedSearch');
+            if (savedAdvancedSearch === 'true') {
+                document.getElementById('advancedSearch').checked = true;
+            }
+
+            // Restore theme preference
+            const savedTheme = localStorage.getItem('cleanTheme');
+            if (savedTheme === 'true') {
+                document.body.classList.add('clean-theme');
+            }
+
+            // Restore Bright theme preference
+            const savedBrightTheme = localStorage.getItem('brightTheme');
+            if (savedBrightTheme === 'true') {
+                document.body.classList.add('bright-theme');
+                document.getElementById('brightThemeBtn').textContent = '🌘 Join the dark side';
+            }
+        };
+
+        // Toggle dropdown menu
+        document.getElementById('themeDropdownBtn').addEventListener('click', function (e) {
+            e.stopPropagation();
+            const dropdown = document.getElementById('themeDropdownContent');
+            dropdown.classList.toggle('show');
+        });
+
+        // Close dropdown when clicking outside
+        window.addEventListener('click', function () {
+            const dropdown = document.getElementById('themeDropdownContent');
+            dropdown.classList.remove('show');
+        });
+    </script>
+</body>
+
+</html>
