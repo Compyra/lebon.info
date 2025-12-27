@@ -15,6 +15,33 @@
     --card-shadow: 0 2px 12px #001a  ;
 }
 
+/* Custom Scrollbar - Terminal Theme */
+::-webkit-scrollbar {
+    width: 12px;
+}
+
+::-webkit-scrollbar-track {
+    background-color: var(--terminal-bg);
+    border-left: 1px solid var(--terminal-green);
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: var(--terminal-gray);
+    border: 1px solid var(--terminal-green);
+    border-radius: 2px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: #2a2f2d;
+    box-shadow: 0 0 5px var(--terminal-green);
+}
+
+/* Firefox scrollbar */
+* {
+    scrollbar-width: thin;
+    scrollbar-color: var(--terminal-gray) var(--terminal-bg);
+}
+
 body.terminal-bg {
     background: var(--terminal-bg);
     color: var(--terminal-green);
