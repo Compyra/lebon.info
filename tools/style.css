@@ -649,6 +649,16 @@ footer {
         padding: 8px 12px;
     }
     
+    /* Make back button compact on small screens */
+    .back-btn {
+        padding: 8px 12px;
+        font-size: 16px;
+    }
+    
+    .back-btn .btn-text {
+        display: none;
+    }
+    
     /* Make table scrollable on mobile */
     .tools-table {
         overflow-x: auto;
