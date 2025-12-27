@@ -945,6 +945,20 @@ body.bright-theme .header {
     box-shadow: 0 4px 12px rgba(0, 120, 212, 0.25);
 }
 
+body.bright-theme .back-btn {
+    background-color: #ffffff;
+    color: #0078d4;
+    border: 1px solid #ffffff;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+body.bright-theme .back-btn:hover {
+    background-color: #f3f2f1;
+    color: #005a9e;
+    border-color: #f3f2f1;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
 body.bright-theme h1 {
     color: #ffffff;
     text-shadow: none;
