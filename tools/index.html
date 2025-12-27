@@ -23,9 +23,8 @@
             <p class="prompt">$ cat README.md</p>
             <p class="intro">Welcome. Here you'll find useful tools and resources for IT.</p>
             <p class="intro">Here are tools me and my friends have come across. I have not checked all of them for correctness.</p>
-            <p class="intro">The "CHECKED" mark: I've personally checked if the written information and links on this page are correct. You still need to check for yourself if they are GDPR compliant or if there are security risks.</p>
-            <p class="intro">When I have time, I'll check for these risks, for privacy and for GDPR compliance and mark them as such.</p>
-            <p class="intro">The "📍 lebon.info" shows tools created by me or a copy of the tool hosted here.</p>
+            <p class="intro">- "CHECKED": I've personally checked if the written information and links on this page are correct. You still need to check for yourself if they are GDPR compliant or if there are security risks. When I have time, I'll check for these risks, for privacy and for GDPR compliance and mark them as such.</p>
+            <p class="intro">- "📍 lebon.info": shows tools created by me or a copy of the tool hosted here.</p>
             <p class="warning">Use at your own risk.</p>
         </div>
 
@@ -58,6 +57,7 @@
                 <button class="filter-btn" onclick="filterCategory('browser')">🌍 Browsers</button>
                 <button class="filter-btn" onclick="filterCategory('forensics')">🔍 Forensics</button>
                 <button class="filter-btn" onclick="filterCategory('microsoft')">🪟 Microsoft Portals</button>
+                <button class="filter-btn" onclick="filterCategory('rdh')">🌐 Registrar, DNS & Hosting</button>
             </div>
         </div>
 
@@ -222,7 +222,7 @@
                 </div>
             </div>
 
-            <div class="tool-card" data-category="online development" data-price="freemium" data-verified="true">
+            <div class="tool-card" data-category="online development rdh" data-price="freemium" data-verified="true">
                 <h3>Lovable</h3>
                 <div class="tool-type">
                     <span class="badge online">Online Only</span>
@@ -238,7 +238,7 @@
                 </div>
             </div>
 
-            <div class="tool-card" data-category="online development" data-price="freemium">
+            <div class="tool-card" data-category="online development rdh" data-price="freemium">
                 <h3>Vercel</h3>
                 <div class="tool-type">
                     <span class="badge online">Online Only</span>
@@ -1758,19 +1758,19 @@
             </div>
 
             <!-- DNS & DOMAIN TOOLS -->
-            <div class="tool-card" data-category="online" data-price="free">
-                <h3>TransIP</h3>
+            <div class="tool-card" data-category="online rdh" data-price="free">
+                <h3>TransIP (NL)</h3>
                 <div class="tool-type">
                     <span class="badge online">Online Only</span>
                     <span class="badge free">💚 Free</span>
                 </div>
-                <p class="tool-desc">Domain registrar and hosting provider based in the Netherlands.</p>
+                <p class="tool-desc">Dutch domain registrar and hosting provider offering various TLDs and web hosting services.</p>
                 <div class="tool-links">
                     <a href="https://www.transip.be/" target="_blank">🌐 Official Site</a>
                 </div>
             </div>
 
-            <div class="tool-card" data-category="online" data-price="free">
+            <div class="tool-card" data-category="online rdh" data-price="free">
                 <h3>Dynu</h3>
                 <div class="tool-type">
                     <span class="badge online">Online Only</span>
@@ -1782,7 +1782,7 @@
                 </div>
             </div>
 
-            <div class="tool-card" data-category="online" data-price="free">
+            <div class="tool-card" data-category="online rdh" data-price="free">
                 <h3>deSEC</h3>
                 <div class="tool-type">
                     <span class="badge online">Online Only</span>
@@ -2866,6 +2866,106 @@
                                 documentation</a>
                         </div>
                     </details>
+                </div>
+            </div>
+
+            <!-- REGISTRAR, DNS AND HOSTING -->
+            <div class="tool-card" data-category="online rdh" data-price="freemium">
+                <h3>Render</h3>
+                <div class="tool-type">
+                    <span class="badge online">Online Only</span>
+                    <span class="badge freemium">💚 Freemium</span>
+                </div>
+                <p class="tool-desc">Cloud platform for hosting web services, static sites, databases, and more with automatic deployments.</p>
+                <div class="tool-links">
+                    <a href="https://render.com/" target="_blank">🌐 Official Site</a>
+                </div>
+            </div>
+
+            <div class="tool-card" data-category="online rdh" data-price="paid">
+                <h3>TransIP</h3>
+                <div class="tool-type">
+                    <span class="badge online">Online Only</span>
+                    <span class="badge paid">💰 Paid</span>
+                </div>
+                <p class="tool-desc">Belgian domain registrar and hosting provider offering .be domains and web hosting services.</p>
+                <div class="tool-links">
+                    <a href="https://www.transip.be/domeinnaam-extensie/be/" target="_blank">🌐 Official Site</a>
+                </div>
+            </div>
+
+            <div class="tool-card" data-category="online rdh" data-price="paid">
+                <h3>Namecheap</h3>
+                <div class="tool-type">
+                    <span class="badge online">Online Only</span>
+                    <span class="badge paid">💰 Paid</span>
+                </div>
+                <p class="tool-desc">Domain registrar and web hosting provider with competitive pricing for domain names and SSL certificates.</p>
+                <div class="tool-links">
+                    <a href="https://www.namecheap.com/" target="_blank">🌐 Official Site</a>
+                </div>
+            </div>
+
+            <div class="tool-card" data-category="online rdh" data-price="paid">
+                <h3>Kinamo</h3>
+                <div class="tool-type">
+                    <span class="badge online">Online Only</span>
+                    <span class="badge paid">💰 Paid</span>
+                </div>
+                <p class="tool-desc">Belgian domain registrar and hosting provider offering domain registration, web hosting, and cloud services.</p>
+                <p class="warning">⚠️ Potential issues: Need to contact support to change certain values like NS.</p>
+                <div class="tool-links">
+                    <a href="https://www.kinamo.be/en" target="_blank">🌐 Official Site</a>
+                </div>
+            </div>
+
+            <div class="tool-card" data-category="online rdh" data-price="paid">
+                <h3>Unstoppable Domains</h3>
+                <div class="tool-type">
+                    <span class="badge online">Online Only</span>
+                    <span class="badge paid">💰 Paid</span>
+                </div>
+                <p class="tool-desc">Blockchain-based domain names for decentralized websites and cryptocurrency wallet addresses. Also supports certain ICANN domains now.</p>
+                <div class="tool-links">
+                    <a href="https://unstoppabledomains.com/" target="_blank">🌐 Official Site</a>
+                </div>
+            </div>
+
+            <div class="tool-card" data-category="online rdh" data-price="paid">
+                <h3>Combell</h3>
+                <div class="tool-type">
+                    <span class="badge online">Online Only</span>
+                    <span class="badge paid">💰 Paid</span>
+                </div>
+                <p class="tool-desc">Belgian and European hosting provider offering domain registration, web hosting, and cloud services.</p>
+                <div class="tool-links">
+                    <a href="https://www.combell.com/" target="_blank">🌐 Official Site</a>
+                </div>
+            </div>
+
+            <div class="tool-card" data-category="online development rdh" data-price="freemium">
+                <h3>GitHub</h3>
+                <div class="tool-type">
+                    <span class="badge online">Online Only</span>
+                    <span class="badge freemium">💛 Freemium</span>
+                </div>
+                <p class="tool-desc">Version control platform with Git repositories, collaboration tools, and GitHub Pages for static site hosting. Free for public repositories with unlimited collaborators.</p>
+                <div class="tool-links">
+                    <a href="https://github.com/" target="_blank">🌐 Official Site</a>
+                    <a href="https://docs.github.com/pages" target="_blank">📚 GitHub Pages Docs</a>
+                </div>
+            </div>
+
+            <div class="tool-card" data-category="online rdh network security" data-price="freemium">
+                <h3>Cloudflare</h3>
+                <div class="tool-type">
+                    <span class="badge online">Online Only</span>
+                    <span class="badge freemium">💛 Freemium</span>
+                </div>
+                <p class="tool-desc">Web performance and security platform offering CDN, DNS management, domain registration, DDoS protection, and SSL certificates. Free tier includes DNS and basic CDN.</p>
+                <div class="tool-links">
+                    <a href="https://dash.cloudflare.com/" target="_blank">🌐 Dashboard</a>
+                    <a href="https://www.cloudflare.com/" target="_blank">🌐 Official Site</a>
                 </div>
             </div>
 
