@@ -50,6 +50,27 @@ body {
     position: relative;
 }
 
+.back-btn {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    background-color: #000000;
+    color: #00ff00;
+    border: 1px solid #00ff00;
+    padding: 8px 16px;
+    font-family: 'Courier New', monospace;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.back-btn:hover {
+    background-color: #003300;
+    box-shadow: 0 0 10px #00ff00;
+}
+
 .theme-dropdown {
     position: absolute;
     top: 15px;
