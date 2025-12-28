@@ -53,7 +53,7 @@ body.terminal-bg {
 
 .terminal-window {
     max-width: 700px;
-    margin: 40px auto 0 auto;
+    margin: 40px auto;
     background: var(--terminal-gray);
     border: 2px solid var(--terminal-border);
     border-radius: 8px;
@@ -78,7 +78,7 @@ body.terminal-bg {
 }
 
 .prompt-title {
-    font-family: inherit;
+    font-family: monospace;
 }
 .prompt-blink {
     animation: blink 1s steps(1) infinite;
@@ -101,7 +101,7 @@ body.terminal-bg {
     color: var(--terminal-amber);
     font-size: 1.1rem;
     margin-bottom: 10px;
-    font-family: inherit;
+    font-family: monospace;
     white-space: pre-line;
     min-height: 2.2em;
     display: flex;
@@ -121,7 +121,7 @@ body.terminal-bg {
     font-weight: bold;
     margin-bottom: 6px;
     display: block;
-    font-family: inherit;
+    font-family: monospace;
 }
 .terminal-links {
     display: flex;
@@ -135,7 +135,7 @@ body.terminal-bg {
     border: 1px solid var(--terminal-link);
     border-radius: 3px;
     padding: 4px 14px;
-    font-family: inherit;
+    font-family: monospace;
     font-size: 1rem;
     text-decoration: none;
     transition: background 0.2s, color 0.2s, border 0.2s;
@@ -179,7 +179,7 @@ body.terminal-bg {
     padding: 4px 16px;
     border-radius: 3px;
     cursor: pointer;
-    font-family: inherit;
+    font-family: monospace;
     font-size: 1rem;
     font-weight: bold;
     transition: background 0.2s, color 0.2s, border 0.2s;
@@ -316,7 +316,7 @@ main {
     position: relative;
     overflow: hidden;
     color: var(--terminal-green);
-    font-family: inherit;
+    font-family: monospace;
 }
 .service-card:hover {
     border-color: var(--terminal-amber);
@@ -374,7 +374,7 @@ main {
     font-size: 1.18rem;
     margin-bottom: 10px;
     font-weight: bold;
-    font-family: inherit;
+    font-family: monospace;
 }
 
 .description {
@@ -382,7 +382,7 @@ main {
     color: var(--terminal-white);
     font-size: 0.98rem;
     line-height: 1.5;
-    font-family: inherit;
+    font-family: monospace;
 }
 
 .service-link {
@@ -432,7 +432,6 @@ main {
 }
 
 footer {
-    margin-top: 40px;
     text-align: center;
     padding-top: 30px;
     border-top: 2px solid var(--primary-purple);
@@ -606,7 +605,6 @@ body:not([data-lang]) .lang.en {
     text-align: center;
     margin-top: 20px;
     padding-top: 10px;
-    border-top: 1px solid #eee;
 }
 
 .cookie-notice p {
