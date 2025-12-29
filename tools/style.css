@@ -407,6 +407,12 @@ h1 {
     border: 1px solid #0099ff;
 }
 
+.badge.hybrid {
+    background-color: #00cccc;
+    color: #ffffff;
+    border: 1px solid #00ffff;
+}
+
 .badge.download {
     background-color: #ff6600;
     color: #ffffff;

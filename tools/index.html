@@ -46,6 +46,7 @@
             <div class="filter-buttons">
                 <button class="filter-btn active" onclick="filterCategory('all')">All Tools</button>
                 <button class="filter-btn" onclick="filterCategory('online')">🌐 Online Only</button>
+                <button class="filter-btn" onclick="filterCategory('hybrid')">🔄 Online + App</button>
                 <button class="filter-btn" onclick="filterCategory('download')">💾 Download</button>
                 <button class="filter-btn" onclick="filterCategory('network')">🔌 Network</button>
                 <button class="filter-btn" onclick="filterCategory('security')">🔒 Security</button>
@@ -138,58 +139,76 @@
                 </div>
             </div>
 
-            <div class="tool-card" data-category="online" data-price="paid">
-                <h3>1Password</h3>
+            <div class="tool-card" data-category="download network" data-price="free">
+                <h3>Akvorado</h3>
                 <div class="tool-type">
-                    <span class="badge online">Online Only</span>
-                    <span class="badge paid">💰 Paid</span>
+                    <span class="badge download">Download Required</span>
+                    <span class="badge free">💚 Free</span>
                 </div>
-                <p class="tool-desc">Password manager and digital vault for secure credential storage and sharing.</p>
+                <p class="tool-desc">Network flow collector and analyzer for NetFlow/IPFIX and sFlow. Enriches flows with SNMP metadata, geographic information, and BGP data, then stores in ClickHouse with a web interface for visualization.</p>
                 <div class="tool-links">
-                    <a href="https://1password.com/" target="_blank">🌐 Official Site</a>
-                    <a href="https://my.1password.com/" target="_blank">🔗 Web Vault</a>
+                    <a href="https://demo.akvorado.net/docs/intro" target="_blank">🌐 Official Site</a>
+                    <a href="https://github.com/akvorado/akvorado" target="_blank">📦 GitHub</a>
+                    <a href="https://demo.akvorado.net/docs/install" target="_blank">📖 Installation Guide</a>
                 </div>
             </div>
 
-            <div class="tool-card" data-category="online" data-price="paid">
-                <h3>Keeper Password Manager</h3>
+            <div class="tool-card" data-category="hybrid" data-price="paid">
+                <h3>1Password</h3>
                 <div class="tool-type">
-                    <span class="badge online">Online Only</span>
+                    <span class="badge hybrid">Online + App</span>
                     <span class="badge paid">💰 Paid</span>
                 </div>
-                <p class="tool-desc">Zero-knowledge security platform for password management and secure file storage.
+                <p class="tool-desc">Password manager and digital vault for secure credential storage and sharing. Available as web app and native desktop/mobile apps.</p>
+                <div class="tool-links">
+                    <a href="https://1password.com/" target="_blank">🌐 Official Site</a>
+                    <a href="https://my.1password.com/" target="_blank">🔗 Web Vault</a>
+                    <a href="https://1password.com/downloads" target="_blank">⬇️ Download Apps</a>
+                </div>
+            </div>
+
+            <div class="tool-card" data-category="hybrid" data-price="paid">
+                <h3>Keeper Password Manager</h3>
+                <div class="tool-type">
+                    <span class="badge hybrid">Online + App</span>
+                    <span class="badge paid">💰 Paid</span>
+                </div>
+                <p class="tool-desc">Zero-knowledge security platform for password management and secure file storage. Available as web vault and desktop/mobile apps.
                 </p>
                 <div class="tool-links">
                     <a href="https://www.keepersecurity.com/" target="_blank">🌐 Official Site</a>
                     <a href="https://keepersecurity.com/vault/" target="_blank">🔗 Web Vault</a>
+                    <a href="https://www.keepersecurity.com/download.html" target="_blank">⬇️ Download Apps</a>
                 </div>
             </div>
 
-            <div class="tool-card" data-category="online" data-price="freemium">
+            <div class="tool-card" data-category="hybrid" data-price="freemium">
                 <h3>Clockify</h3>
                 <div class="tool-type">
-                    <span class="badge online">Online Only</span>
+                    <span class="badge hybrid">Online + App</span>
                     <span class="badge freemium">💛 Freemium</span>
                 </div>
                 <p class="tool-desc">Time tracking software for teams and freelancers with reporting and project
-                    management.</p>
+                    management. Available as web app and desktop/mobile apps.</p>
                 <div class="tool-links">
                     <a href="https://clockify.me/" target="_blank">🌐 Official Site</a>
-                    <a href="https://app.clockify.me/" target="_blank">🔗 Open Tool</a>
+                    <a href="https://app.clockify.me/" target="_blank">🔗 Web App</a>
+                    <a href="https://clockify.me/downloads" target="_blank">⬇️ Download Apps</a>
                 </div>
             </div>
 
-            <div class="tool-card" data-category="online" data-price="free">
+            <div class="tool-card" data-category="hybrid" data-price="free">
                 <h3>Draw.io (diagrams.net)</h3>
                 <div class="tool-type">
-                    <span class="badge online">Online Only</span>
+                    <span class="badge hybrid">Online + App</span>
                     <span class="badge free">💚 Free</span>
                 </div>
-                <p class="tool-desc">Free online diagram software for flowcharts, network diagrams, and technical
-                    drawings.</p>
+                <p class="tool-desc">Free diagram software for flowcharts, network diagrams, and technical
+                    drawings. Available as web app and desktop app for Windows/Mac/Linux.</p>
                 <div class="tool-links">
                     <a href="https://www.diagrams.net/" target="_blank">🌐 Official Site</a>
-                    <a href="https://app.diagrams.net/" target="_blank">🔗 Open Tool</a>
+                    <a href="https://app.diagrams.net/" target="_blank">🔗 Web App</a>
+                    <a href="https://github.com/jgraph/drawio-desktop/releases" target="_blank">⬇️ Download Desktop App</a>
                     <a href="https://github.com/jgraph/drawio" target="_blank">📦 GitHub</a>
                 </div>
             </div>
@@ -208,18 +227,18 @@
                 </div>
             </div>
 
-            <div class="tool-card" data-category="online" data-price="freemium">
+            <div class="tool-card" data-category="hybrid" data-price="freemium">
                 <h3>n8n</h3>
                 <div class="tool-type">
-                    <span class="badge online">Online Only</span>
+                    <span class="badge hybrid">Online + App</span>
                     <span class="badge freemium">💛 Freemium</span>
                 </div>
                 <p class="tool-desc">Workflow automation platform for connecting apps and services with visual
-                    programming.</p>
+                    programming. Available as cloud service and self-hosted.</p>
                 <div class="tool-links">
                     <a href="https://n8n.io/" target="_blank">🌐 Official Site</a>
-                    <a href="https://app.n8n.cloud/login" target="_blank">🔗 Open Tool</a>
-                    <a href="https://github.com/n8n-io/n8n" target="_blank">📦 GitHub</a>
+                    <a href="https://app.n8n.cloud/login" target="_blank">🔗 Cloud App</a>
+                    <a href="https://github.com/n8n-io/n8n" target="_blank">📦 GitHub (Self-host)</a>
                 </div>
             </div>
 
@@ -255,17 +274,17 @@
                 </div>
             </div>
 
-            <div class="tool-card" data-category="online" data-price="freemium">
+            <div class="tool-card" data-category="hybrid" data-price="freemium">
                 <h3>NocoDB</h3>
                 <div class="tool-type">
-                    <span class="badge online">Online Only</span>
+                    <span class="badge hybrid">Online + App</span>
                     <span class="badge freemium">💛 Freemium</span>
                 </div>
-                <p class="tool-desc">Open source Airtable alternative - turns any database into a smart spreadsheet.</p>
+                <p class="tool-desc">Open source Airtable alternative - turns any database into a smart spreadsheet. Available as cloud service and self-hosted.</p>
                 <div class="tool-links">
                     <a href="https://nocodb.com/" target="_blank">🌐 Official Site</a>
-                    <a href="https://app.nocodb.com/" target="_blank">🔗 Open Tool</a>
-                    <a href="https://github.com/nocodb/nocodb" target="_blank">📦 GitHub</a>
+                    <a href="https://app.nocodb.com/" target="_blank">🔗 Cloud App</a>
+                    <a href="https://github.com/nocodb/nocodb" target="_blank">📦 GitHub (Self-host)</a>
                 </div>
             </div>
 
@@ -680,6 +699,33 @@
                 </div>
             </div>
 
+            <div class="tool-card" data-category="download network security" data-price="free">
+                <h3>ntopng</h3>
+                <div class="tool-type">
+                    <span class="badge download">Download Required</span>
+                    <span class="badge free">💚 Free</span>
+                </div>
+                <p class="tool-desc">Web-based network traffic monitoring and analysis tool for real-time network visibility and performance metrics.</p>
+                <div class="tool-links">
+                    <a href="https://www.ntop.org/products/traffic-analysis/ntopng/" target="_blank">🌐 Official Site</a>
+                    <a href="https://github.com/ntop/ntopng" target="_blank">📦 GitHub</a>
+                </div>
+            </div>
+
+            <div class="tool-card" data-category="download network security forensics" data-price="free">
+                <h3>Zeek</h3>
+                <div class="tool-type">
+                    <span class="badge download">Download Required</span>
+                    <span class="badge free">💚 Free</span>
+                </div>
+                <p class="tool-desc">Powerful network security monitoring framework for comprehensive network traffic analysis and threat detection.</p>
+                <div class="tool-links">
+                    <a href="https://zeek.org/" target="_blank">🌐 Official Site</a>
+                    <a href="https://zeek.org/get-zeek/" target="_blank">⬇️ Download</a>
+                    <a href="https://github.com/zeek/zeek" target="_blank">📦 GitHub</a>
+                </div>
+            </div>
+
             <!-- SYSTEM TOOLS -->
             <div class="tool-card" data-category="online system" data-price="free">
                 <h3>Ninite</h3>
@@ -1044,14 +1090,14 @@
                 </div>
             </div>
 
-            <div class="tool-card" data-category="download system" data-price="free">
+            <div class="tool-card" data-category="system hybrid" data-price="free">
                 <h3>Joplin</h3>
                 <div class="tool-type">
-                    <span class="badge download">Download Required</span>
+                    <span class="badge hybrid">Online + App</span>
                     <span class="badge free">💚 Free</span>
                 </div>
                 <p class="tool-desc">Open source note-taking and to-do app with Markdown support and end-to-end
-                    encryption.</p>
+                    encryption. Desktop/mobile apps with cloud sync and web clipper.</p>
                 <div class="tool-links">
                     <a href="https://joplinapp.org/" target="_blank">🌐 Official Site</a>
                     <a href="https://github.com/laurent22/joplin" target="_blank">📦 GitHub</a>
@@ -1272,16 +1318,17 @@
                 </div>
             </div>
 
-            <div class="tool-card" data-category="download" data-price="free">
+            <div class="tool-card" data-category="hybrid" data-price="free">
                 <h3>Discord</h3>
                 <div class="tool-type">
-                    <span class="badge download">Download Required</span>
+                    <span class="badge hybrid">Online + App</span>
                     <span class="badge free">💚 Free</span>
                 </div>
-                <p class="tool-desc">Voice, video, and text communication platform for communities and teams.</p>
+                <p class="tool-desc">Voice, video, and text communication platform for communities and teams. Available as web app and desktop/mobile apps.</p>
                 <div class="tool-links">
                     <a href="https://discord.com/" target="_blank">🌐 Official Site</a>
-                    <a href="https://discord.com/download" target="_blank">⬇️ Download</a>
+                    <a href="https://discord.com/app" target="_blank">🔗 Web App</a>
+                    <a href="https://discord.com/download" target="_blank">⬇️ Download Apps</a>
                 </div>
             </div>
 
@@ -1358,20 +1405,21 @@
                 </div>
             </div>
 
-            <div class="tool-card" data-category="download development" data-price="free" data-verified="true">
+            <div class="tool-card" data-category="development hybrid" data-price="free" data-verified="true">
                 <h3>Visual Studio Code</h3>
                 <div class="tool-type">
-                    <span class="badge download">Download Required</span>
+                    <span class="badge hybrid">Online + App</span>
                     <span class="badge free">💚 Free</span>
                 </div>
                 <p class="tool-desc">Lightweight but powerful source code editor with extensive extension ecosystem.
-                    Cross-platform and highly customizable.</p>
+                    Cross-platform and highly customizable. Available as desktop app and web version (vscode.dev).</p>
                 <p class="warning">⚠️ NOTE: Not the same as Visual Studio. This is a lightweight editor / IDE, while
                     Visual Studio is a full IDE primarily for .NET development.</p>
                 <div class="tool-links">
                     <a href="https://code.visualstudio.com/" target="_blank">🌐 Official Site</a>
+                    <a href="https://vscode.dev/" target="_blank">🔗 Web Version</a>
+                    <a href="https://code.visualstudio.com/download" target="_blank">⬇️ Download Desktop</a>
                     <a href="https://github.com/microsoft/vscode" target="_blank">📦 GitHub</a>
-                    <a href="https://code.visualstudio.com/download" target="_blank">⬇️ Download</a>
                 </div>
             </div>
 
@@ -1606,17 +1654,18 @@
                 </div>
             </div>
 
-            <div class="tool-card" data-category="download development" data-price="free">
+            <div class="tool-card" data-category="development hybrid" data-price="free">
                 <h3>Postman</h3>
                 <div class="tool-type">
-                    <span class="badge download">Download Required</span>
+                    <span class="badge hybrid">Online + App</span>
                     <span class="badge free">💚 Free</span>
                 </div>
                 <p class="tool-desc">API platform for building, testing, and documenting APIs with collaboration
-                    features.</p>
+                    features. Available as desktop app and web version.</p>
                 <div class="tool-links">
                     <a href="https://www.postman.com/" target="_blank">🌐 Official Site</a>
-                    <a href="https://www.postman.com/downloads/" target="_blank">⬇️ Download</a>
+                    <a href="https://web.postman.co/" target="_blank">🔗 Web Version</a>
+                    <a href="https://www.postman.com/downloads/" target="_blank">⬇️ Download Desktop</a>
                 </div>
             </div>
 
@@ -1661,18 +1710,18 @@
                 </div>
             </div>
 
-            <div class="tool-card" data-category="download development" data-price="free">
+            <div class="tool-card" data-category="development hybrid" data-price="free">
                 <h3>Insomnia</h3>
                 <div class="tool-type">
-                    <span class="badge download">Download Required</span>
+                    <span class="badge hybrid">Online + App</span>
                     <span class="badge free">💚 Free</span>
                 </div>
-                <p class="tool-desc">API client and testing tool - modern alternative to Postman with GraphQL support.
+                <p class="tool-desc">API client and testing tool - modern alternative to Postman with GraphQL support. Available as desktop app and web version.
                 </p>
                 <div class="tool-links">
                     <a href="https://insomnia.rest/" target="_blank">🌐 Official Site</a>
+                    <a href="https://insomnia.rest/download" target="_blank">⬇️ Download Desktop</a>
                     <a href="https://github.com/Kong/insomnia" target="_blank">📦 GitHub</a>
-                    <a href="https://insomnia.rest/download" target="_blank">⬇️ Download</a>
                 </div>
             </div>
 
@@ -1719,14 +1768,14 @@
                 </div>
             </div>
 
-            <div class="tool-card" data-category="online media" data-price="freemium">
+            <div class="tool-card" data-category="media hybrid" data-price="freemium">
                 <h3>Figma</h3>
                 <div class="tool-type">
-                    <span class="badge online">Online Only</span>
+                    <span class="badge hybrid">Online + App</span>
                     <span class="badge freemium">💛 Freemium</span>
                 </div>
                 <p class="tool-desc">Collaborative interface design tool for creating UI/UX designs, prototypes, and
-                    design systems. Real-time collaboration and powerful vector editing. Free tier available for
+                    design systems. Real-time collaboration and powerful vector editing. Available as web app and desktop app. Free tier available for
                     individuals and small teams.</p>
                 <div class="tool-links">
                     <a href="https://www.figma.com/" target="_blank">🌐 Official Site</a>
@@ -3394,7 +3443,7 @@
 
             toolsData = cards.map(card => {
                 const name = card.querySelector('h3').textContent;
-                const type = card.querySelector('.badge.online, .badge.download, .badge.browser').textContent;
+                const type = card.querySelector('.badge.online, .badge.hybrid, .badge.download, .badge.browser').textContent;
                 const priceEl = card.querySelector('.badge.free, .badge.freemium, .badge.trial, .badge.paid');
                 const price = priceEl ? priceEl.textContent : 'N/A';
                 const desc = card.querySelector('.tool-desc').textContent;
