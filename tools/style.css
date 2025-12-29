@@ -1158,6 +1158,12 @@ body.bright-theme .badge.browser {
     border: 1px solid #7719aa;
 }
 
+body.bright-theme .badge.hybrid {
+    background-color: #00cccc;
+    color: #ffffff;
+    border: 1px solid #00a3a3;
+}
+
 body.bright-theme .badge.free {
     background-color: #107c10;
     color: #ffffff;
@@ -1249,6 +1255,14 @@ body.bright-theme .portal-details-compact summary {
     color: #0078d4;
     font-family: 'Segoe UI', sans-serif;
     font-weight: 600;
+    background-color: #f3f2f1;
+    border: 1px solid #c8c6c4;
+}
+
+body.bright-theme .portal-details summary:hover,
+body.bright-theme .portal-details-compact summary:hover {
+    background-color: #e1dfdd;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 body.bright-theme .portal-links,
