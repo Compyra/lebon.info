@@ -23,8 +23,10 @@
             <p class="prompt">$ cat README.md</p>
             <p class="intro">Welcome. Here you'll find useful tools and resources for IT.</p>
             <p class="intro">Here are tools me and my friends have come across. I have not checked all of them for correctness.</p>
-            <p class="intro">- "CHECKED": I've personally checked if the written information and links on this page are correct. You still need to check for yourself if they are GDPR compliant or if there are security risks. When I have time, I'll check for these risks, for privacy and for GDPR compliance and mark them as such.</p>
-            <p class="intro">- "📍 lebon.info": shows tools created by me or a copy of the tool hosted here.</p>
+           <!--  <p class="intro">-<span class="tool-name"><span class="verified-stamp">CHECKED</span></span> means I've personally checked if the written information and links on this page are correct. You still need to check for yourself if they are GDPR compliant or if there are security risks. When I have time, I'll check for these risks, for privacy and for GDPR compliance and mark them as such.</p> -->
+            <p class="intro">-<span class="tool-name"><span class="verified-stamp gdpr-stamp">GDPR</span></span> means the tool claims to be compliant with GDPR regulations.</p>
+            <!-- <p class="intro">-<span class="tool-name"><span class="verified-stamp">EU</span></span> means the tool has their datacenters in the European Union.</p>   -->
+            <p class="intro">-<span class="tool-name"><span class="verified-stamp">📍 lebon.info</span></span> shows tools created by me or a copy of the tool hosted here.</p>
             <p class="warning">Use at your own risk.</p>
         </div>
 
@@ -86,8 +88,8 @@
         <div class="tools-grid" id="toolsGrid">
 
             <!-- ONLINE TOOLS -->
-            <div class="tool-card" data-category="online security forensics">
-                <h3>CyberChef <span class="badge lebon">📍 lebon.info</span></h3>
+            <div class="tool-card" data-category="online security forensics" data-verified="true">
+                <h3>CyberChef</h3>
                 <div class="tool-type">
                     <span class="badge online">Online Only</span>
                     <span class="badge free">💚 Free</span>
@@ -115,8 +117,8 @@
                 </div>
             </div>
 
-            <div class="tool-card" data-category="online security" data-price="free">
-                <h3>CVE - PSIRT Database <span class="badge lebon">📍 lebon.info</span></h3>
+            <div class="tool-card" data-category="online security" data-price="free" data-verified="true">
+                <h3>CVE - PSIRT Database</h3>
                 <div class="tool-type">
                     <span class="badge online">Online Only</span>
                     <span class="badge free">💚 Free</span>
@@ -127,8 +129,8 @@
                 </div>
             </div>
 
-            <div class="tool-card" data-category="online network" data-price="free">
-                <h3>Network Scanner <span class="badge lebon">📍 lebon.info</span></h3>
+            <div class="tool-card" data-category="online network" data-price="free" data-verified="true">
+                <h3>Network Scanner</h3>
                 <div class="tool-type">
                     <span class="badge online">Online Only</span>
                     <span class="badge free">💚 Free</span>
@@ -242,7 +244,7 @@
                 </div>
             </div>
 
-            <div class="tool-card" data-category="online development rdh" data-price="freemium" data-verified="true">
+            <div class="tool-card" data-category="online development rdh" data-price="freemium">
                 <h3>Lovable</h3>
                 <div class="tool-type">
                     <span class="badge online">Online Only</span>
@@ -301,7 +303,7 @@
                 </div>
             </div>
 
-            <div class="tool-card" data-category="online" data-price="freemium" data-verified="true">
+            <div class="tool-card" data-category="online" data-price="freemium">
                 <h3>ChatGPT</h3>
                 <div class="tool-type">
                     <span class="badge online">Online Only</span>
@@ -357,7 +359,7 @@
                 </div>
             </div>
 
-            <div class="tool-card" data-category="online security" data-price="free" data-verified="true">
+            <div class="tool-card" data-category="online security" data-price="free">
                 <h3>O365 ATP Safe Links Decoder</h3>
                 <div class="tool-type">
                     <span class="badge online">Online Only</span>
@@ -753,7 +755,7 @@
                 </div>
             </div>
 
-            <div class="tool-card" data-category="download system" data-price="freemium" data-verified="true">
+            <div class="tool-card" data-category="download system" data-price="freemium">
                 <h3>WinRAR</h3>
                 <div class="tool-type">
                     <span class="badge download">Download Required</span>
@@ -767,7 +769,7 @@
                 </div>
             </div>
 
-            <div class="tool-card" data-category="download system" data-price="free" data-verified="true">
+            <div class="tool-card" data-category="download system" data-price="free">
                 <h3>XZ Utils</h3>
                 <div class="tool-type">
                     <span class="badge download">Download Required</span>
@@ -1076,7 +1078,7 @@
                 </div>
             </div>
 
-            <div class="tool-card" data-category="download media" data-price="free" data-verified="true">
+            <div class="tool-card" data-category="download media" data-price="free">
                 <h3>VLC Media Player</h3>
                 <div class="tool-type">
                     <span class="badge download">Download Required</span>
@@ -1374,7 +1376,7 @@
             </div>
 
             <!-- DEVELOPMENT TOOLS -->
-            <div class="tool-card" data-category="download development" data-price="freemium" data-verified="true">
+            <div class="tool-card" data-category="download development" data-price="freemium">
                 <h3>Visual Studio</h3>
                 <div class="tool-type">
                     <span class="badge download">Download Required</span>
@@ -1390,7 +1392,7 @@
                 </div>
             </div>
 
-            <div class="tool-card" data-category="download development" data-price="freemium" data-verified="true">
+            <div class="tool-card" data-category="download development" data-price="freemium">
                 <h3>IntelliJ IDEA</h3>
                 <div class="tool-type">
                     <span class="badge download">Download Required</span>
@@ -1405,7 +1407,7 @@
                 </div>
             </div>
 
-            <div class="tool-card" data-category="development hybrid" data-price="free" data-verified="true">
+            <div class="tool-card" data-category="development hybrid" data-price="free">
                 <h3>Visual Studio Code</h3>
                 <div class="tool-type">
                     <span class="badge hybrid">Online + App</span>
@@ -1597,7 +1599,7 @@
                 </div>
             </div>
 
-            <div class="tool-card" data-category="download development" data-price="free" data-verified="true">
+            <div class="tool-card" data-category="download development" data-price="free">
                 <h3>Notepad++</h3>
                 <div class="tool-type">
                     <span class="badge download">Download Required</span>
@@ -1641,7 +1643,7 @@
                 </div>
             </div>
 
-            <div class="tool-card" data-category="download development" data-price="free" data-verified="true">
+            <div class="tool-card" data-category="download development" data-price="free">
                 <h3>SQL Server Management Studio (SSMS)</h3>
                 <div class="tool-type">
                     <span class="badge download">Download Required</span>
@@ -1696,7 +1698,7 @@
                 </div>
             </div>
 
-            <div class="tool-card" data-category="download development" data-price="free" data-verified="true">
+            <div class="tool-card" data-category="download development" data-price="free">
                 <h3>Grafana</h3>
                 <div class="tool-type">
                     <span class="badge download">Download Required</span>
@@ -1784,7 +1786,7 @@
                 </div>
             </div>
 
-            <div class="tool-card" data-category="online media" data-price="free" data-verified="true">
+            <div class="tool-card" data-category="online media" data-price="free">
                 <h3>Photopea</h3>
                 <div class="tool-type">
                     <span class="badge online">Online Only</span>
@@ -1910,7 +1912,7 @@
                 </div>
             </div>
 
-            <div class="tool-card" data-category="download security system" data-price="free" data-verified="true">
+            <div class="tool-card" data-category="download security system" data-price="free">
                 <h3>Frigate NVR</h3>
                 <div class="tool-type">
                     <span class="badge download">Download Required</span>
@@ -2107,7 +2109,7 @@
             </div>
 
             <!-- EDITOR EXTENSIONS -->
-            <div class="tool-card" data-category="download" data-price="free" data-verified="true">
+            <div class="tool-card" data-category="download" data-price="free">
                 <h3>Notepad++ Compare Plugin</h3>
                 <div class="tool-type">
                     <span class="badge download">Download Required</span>
@@ -2274,8 +2276,8 @@
             </div>
 
             <!-- PROJECT FOLDERS -->
-            <div class="tool-card" data-category="development" data-price="free">
-                <h3>Project Folder <span class="badge lebon">📍 lebon.info</span></h3>
+            <div class="tool-card" data-category="development" data-price="free" data-verified="true">
+                <h3>Project Folder</h3>
                 <div class="tool-type">
                     <span class="badge online">Online Only</span>
                     <span class="badge free">💚 Free</span>
@@ -2286,8 +2288,8 @@
                 </div>
             </div>
 
-            <div class="tool-card" data-category="online" data-price="free">
-                <h3>Notes <span class="badge lebon">📍 lebon.info</span></h3>
+            <div class="tool-card" data-category="online" data-price="free" data-verified="true">
+                <h3>Notes</h3>
                 <div class="tool-type">
                     <span class="badge online">Online Only</span>
                     <span class="badge free">💚 Free</span>
@@ -3512,7 +3514,7 @@
                 }
 
                 const row = document.createElement('tr');
-                const verifiedStamp = tool.verified ? '<span class="verified-stamp">CHECKED</span>' : '';
+                const verifiedStamp = tool.verified ? '<span class="verified-stamp">📍 lebon.info</span>' : '';
                 row.innerHTML = `
                     <td class="tool-name">${tool.name}${verifiedStamp}</td>
                     <td class="tool-type-cell">${tool.type}</td>

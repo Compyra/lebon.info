@@ -563,6 +563,15 @@ h1 {
     text-shadow: 0 0 2px #00ff00;
 }
 
+/* GDPR stamp with blue-yellow console colors */
+.tool-name .verified-stamp.gdpr-stamp {
+    background: linear-gradient(135deg, #4a9eff 0%, #ffe066 100%);
+    color: #0a0a0a;
+    border: 2px solid #ffe066;
+    box-shadow: 0 0 8px rgba(74, 158, 255, 0.5), 0 0 4px rgba(255, 224, 102, 0.5);
+    text-shadow: 0 0 2px rgba(255, 224, 102, 0.8);
+}
+
 .tool-type-cell {
     min-width: 120px;
     font-size: 12px;
