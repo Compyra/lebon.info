@@ -47,19 +47,22 @@
             <p class="prompt">$ filter --category</p>
             <div class="filter-buttons">
                 <button class="filter-btn active" onclick="filterCategory('all')">All Tools</button>
-                <button class="filter-btn" onclick="filterCategory('online')">🌐 Online Only</button>
-                <button class="filter-btn" onclick="filterCategory('hybrid')">🔄 Online + App</button>
-                <button class="filter-btn" onclick="filterCategory('download')">💾 Download</button>
+                <span class="filter-separator"></span>
+                <button class="filter-btn" onclick="filterCategory('online')">🌐 Online only tool</button>
+                <button class="filter-btn" onclick="filterCategory('hybrid')">🔄 Both online and app possible</button>
+                <button class="filter-btn" onclick="filterCategory('download')">💾 Download needed to use tool</button>
+                <span class="filter-separator"></span>
                 <button class="filter-btn" onclick="filterCategory('network')">🔌 Network</button>
-                <button class="filter-btn" onclick="filterCategory('security')">🔒 Security</button>
                 <button class="filter-btn" onclick="filterCategory('development')">💻 Development</button>
-                <button class="filter-btn" onclick="filterCategory('language')">🔠 Programming Languages</button>
-                <button class="filter-btn" onclick="filterCategory('media')">🎥 Media & Creative</button>
                 <button class="filter-btn" onclick="filterCategory('system')">⚙️ System Tools</button>
-                <button class="filter-btn" onclick="filterCategory('temp')" style="display: none;">🔐 Entra ID</button>
-                <button class="filter-btn" onclick="filterCategory('selfhost')">🏠 Self-host</button>
-                <button class="filter-btn" onclick="filterCategory('browser')">🌍 Browsers</button>
+                <button class="filter-btn" onclick="filterCategory('security')">🔒 Security</button>
                 <button class="filter-btn" onclick="filterCategory('forensics')">🔍 Forensics</button>
+                <button class="filter-btn" onclick="filterCategory('media')">🎥 Media & Creative</button>
+                <button class="filter-btn" onclick="filterCategory('selfhost')">🏠 Self-host</button>
+                <span class="filter-separator"></span>
+                <button class="filter-btn" onclick="filterCategory('temp')" style="display: none;">🔐 Entra ID</button>
+                <button class="filter-btn" onclick="filterCategory('language')">🔠 Programming Languages</button>
+                <button class="filter-btn" onclick="filterCategory('browser')">🌍 Browsers</button>
                 <button class="filter-btn" onclick="filterCategory('microsoft')">🪟 Microsoft Portals</button>
                 <button class="filter-btn" onclick="filterCategory('rdh')">🕸️ Registrar, DNS & Hosting</button>
             </div>
