@@ -57,7 +57,7 @@
                 <button class="filter-btn" onclick="filterCategory('media')">🎥 Media & Creative</button>
                 <button class="filter-btn" onclick="filterCategory('system')">⚙️ System Tools</button>
                 <button class="filter-btn" onclick="filterCategory('temp')" style="display: none;">🔐 Entra ID</button>
-                <button class="filter-btn" onclick="filterCategory('docker')">🐳 Docker</button>
+                <button class="filter-btn" onclick="filterCategory('selfhost')">🏠 Self-host</button>
                 <button class="filter-btn" onclick="filterCategory('browser')">🌍 Browsers</button>
                 <button class="filter-btn" onclick="filterCategory('forensics')">🔍 Forensics</button>
                 <button class="filter-btn" onclick="filterCategory('microsoft')">🪟 Microsoft Portals</button>
@@ -88,8 +88,8 @@
         <div class="tools-grid" id="toolsGrid">
 
             <!-- ONLINE TOOLS -->
-            <div class="tool-card" data-category="online security forensics docker" data-verified="true">
-                <h3>CyberChef <span class="verified-stamp gdpr-stamp">GDPR?</span></h3>
+            <div class="tool-card" data-category="online security forensics selfhost" data-verified="true">
+                <h3>CyberChef <span class="verified-stamp">GDPR?</span></h3>
                 <div class="tool-type">
                     <span class="badge online">Online Only</span>
                     <span class="badge free">Free</span>
@@ -102,7 +102,7 @@
                 </div>
             </div>
 
-            <div class="tool-card" data-category="online docker" data-price="free">
+            <div class="tool-card" data-category="online selfhost" data-price="free">
                 <h3>IT Tools Collection <span class="verified-stamp gdpr-stamp">GDPR</span></h3>
                 <div class="tool-type">
                     <span class="badge online">Online Only</span>
@@ -139,8 +139,8 @@
                 </div>
             </div>
 
-            <div class="tool-card" data-category="download network" data-price="free">
-                <h3>Akvorado <span class="verified-stamp gdpr-stamp">GDPR?</span></h3>
+            <div class="tool-card" data-category="download network selfhost" data-price="free">
+                <h3>Akvorado <span class="verified-stamp">GDPR?</span></h3>
                 <div class="tool-type">
                     <span class="badge download">Download Required</span>
                     <span class="badge free">Free</span>
@@ -174,12 +174,26 @@
                     <span class="badge hybrid">Online + App</span>
                     <span class="badge paid">Paid</span>
                 </div>
-                <p class="tool-desc">Zero-knowledge security platform for password management and secure file storage. Available as web vault and desktop/mobile apps.
-                </p>
+                <p class="tool-desc">Zero-knowledge security platform for password management and secure file storage. Available as web vault and desktop/mobile apps.</p>
                 <div class="tool-links">
                     <a href="https://www.keepersecurity.com/" target="_blank">🌐 Official Site</a>
                     <a href="https://keepersecurity.com/vault/" target="_blank">🔗 Web Vault</a>
                     <a href="https://www.keepersecurity.com/download.html" target="_blank">⬇️ Download Apps</a>
+                </div>
+            </div>
+
+            <div class="tool-card" data-category="hybrid security selfhost" data-price="freemium">
+                <h3>Psono Password Manager <span class="verified-stamp gdpr-stamp">GDPR</span></h3>
+                <div class="tool-type">
+                    <span class="badge hybrid">Online + App</span>
+                    <span class="badge freemium">Freemium</span>
+                </div>
+                <p class="tool-desc">Open-source password manager with client-side encryption. Self-hostable or cloud-hosted solution for teams and individuals. Available as web app and desktop/mobile apps.</p>
+                <div class="tool-links">
+                    <a href="https://psono.com/" target="_blank">🌐 Official Site</a>
+                    <a href="https://www.psono.pw/" target="_blank">🔗 Web Vault</a>
+                    <a href="https://psono.com/download" target="_blank">⬇️ Download Apps</a>
+                    <a href="https://github.com/psono/psono-server" target="_blank">📦 GitHub</a>
                 </div>
             </div>
 
@@ -189,8 +203,7 @@
                     <span class="badge hybrid">Online + App</span>
                     <span class="badge freemium">Freemium</span>
                 </div>
-                <p class="tool-desc">Time tracking software for teams and freelancers with reporting and project
-                    management. Available as web app and desktop/mobile apps.</p>
+                <p class="tool-desc">Time tracking software for teams and freelancers with reporting and project management. Available as web app and desktop/mobile apps.</p>
                 <div class="tool-links">
                     <a href="https://clockify.me/" target="_blank">🌐 Official Site</a>
                     <a href="https://app.clockify.me/" target="_blank">🔗 Web App</a>
@@ -198,14 +211,13 @@
                 </div>
             </div>
 
-            <div class="tool-card" data-category="hybrid" data-price="free">
+            <div class="tool-card" data-category="hybrid selfhost" data-price="free">
                 <h3>Draw.io (diagrams.net) <span class="verified-stamp">GDPR?</span></h3>
                 <div class="tool-type">
                     <span class="badge hybrid">Online + App</span>
                     <span class="badge free">Free</span>
                 </div>
-                <p class="tool-desc">Free diagram software for flowcharts, network diagrams, and technical
-                    drawings. Available as web app and desktop app for Windows/Mac/Linux.</p>
+                <p class="tool-desc">Free diagram software for flowcharts, network diagrams, and technical drawings. Available as web app and desktop app for Windows/Mac/Linux.</p>
                 <div class="tool-links">
                     <a href="https://www.diagrams.net/" target="_blank">🌐 Official Site</a>
                     <a href="https://app.diagrams.net/" target="_blank">🔗 Web App</a>
@@ -213,29 +225,14 @@
                     <a href="https://github.com/jgraph/drawio" target="_blank">📦 GitHub</a>
                 </div>
             </div>
-<!-- 
-            <div class="tool-card" data-category="online" data-price="free">
-                <h3>Alternating Case Converter <span class="verified-stamp">GDPR?</span></h3>
-                <div class="tool-type">
-                    <span class="badge online">Online Only</span>
-                    <span class="badge free">Free</span>
-                </div>
-                <p class="tool-desc">Convert text to alternating case (aLtErNaTiNg CaSe) online text manipulation tool.
-                </p>
-                <div class="tool-links">
-                    <a href="https://en.toolpage.org/" target="_blank">🌐 Official Site</a>
-                    <a href="https://en.toolpage.org/tool/alternatingcase" target="_blank">🔗 Open Tool</a>
-                </div>
-            </div> -->
 
-            <div class="tool-card" data-category="hybrid" data-price="freemium">
+            <div class="tool-card" data-category="hybrid selfhost" data-price="freemium">
                 <h3>n8n</h3>
                 <div class="tool-type">
                     <span class="badge hybrid">Online + App</span>
                     <span class="badge freemium">Freemium</span>
                 </div>
-                <p class="tool-desc">Workflow automation platform for connecting apps and services with visual
-                    programming. Available as cloud service and self-hosted.</p>
+                <p class="tool-desc">Workflow automation platform for connecting apps and services with visual programming. Available as cloud service and self-hosted.</p>
                 <div class="tool-links">
                     <a href="https://n8n.io/" target="_blank">🌐 Official Site</a>
                     <a href="https://app.n8n.cloud/login" target="_blank">🔗 Cloud App</a>
@@ -249,9 +246,7 @@
                     <span class="badge online">Online Only</span>
                     <span class="badge freemium">Freemium</span>
                 </div>
-                <p class="tool-desc">AI-powered platform for building apps and websites by chatting. Create full-stack
-                    applications with templates, prototyping, and deployment. Hosting is free at the time of writing
-                    (12-2025).</p>
+                <p class="tool-desc">AI-powered platform for building apps and websites by chatting. Create full-stack applications with templates, prototyping, and deployment. Hosting is free at the time of writing (12-2025).</p>
                 <div class="tool-links">
                     <a href="https://lovable.dev/" target="_blank">🌐 Official Site</a>
                     <a href="https://lovable.dev/templates" target="_blank">🔗 Templates</a>
@@ -265,17 +260,14 @@
                     <span class="badge online">Online Only</span>
                     <span class="badge freemium">Freemium</span>
                 </div>
-                <p class="tool-desc">Cloud platform for deploying web applications with automatic SSL, CDN, and
-                    serverless functions. Seamless integration with Git for continuous deployment. Free tier available
-                    for personal projects.</p>
+                <p class="tool-desc">Cloud platform for deploying web applications with automatic SSL, CDN, and serverless functions. Seamless integration with Git for continuous deployment. Free tier available for personal projects.</p>
                 <div class="tool-links">
                     <a href="https://vercel.com/" target="_blank">🌐 Official Site</a>
-                    <a href="https://vercel.com/dashboard" target="_blank">🔗 Dashboard</a>
                     <a href="https://vercel.com/docs" target="_blank">📚 Documentation</a>
                 </div>
             </div>
 
-            <div class="tool-card" data-category="hybrid" data-price="freemium">
+            <div class="tool-card" data-category="hybrid selfhost" data-price="freemium">
                 <h3>NocoDB</h3>
                 <div class="tool-type">
                     <span class="badge hybrid">Online + App</span>
@@ -298,7 +290,6 @@
                 <p class="tool-desc">Share passwords and sensitive information securely with self-destructing links.</p>
                 <div class="tool-links">
                     <a href="https://onetimesecret.com/" target="_blank">🌐 Official Site</a>
-                    <a href="https://onetimesecret.com/" target="_blank">🔗 Open Tool</a>
                 </div>
             </div>
 
@@ -308,8 +299,7 @@
                     <span class="badge online">Online Only</span>
                     <span class="badge freemium">Freemium</span>
                 </div>
-                <p class="tool-desc">OpenAI's conversational AI-powered assistant for text generation, chats, coding
-                    help, and problem solving.</p>
+                <p class="tool-desc">OpenAI's conversational AI-powered assistant for text generation, chats, coding help, and problem solving.</p>
                 <div class="tool-links">
                     <a href="https://openai.com/" target="_blank">🌐 Official Site</a>
                     <a href="https://chat.openai.com/" target="_blank">🔗 Open Tool</a>
@@ -322,8 +312,7 @@
                     <span class="badge online">Online Only</span>
                     <span class="badge freemium">Freemium</span>
                 </div>
-                <p class="tool-desc">Anthropic's AI-powered assistant with advanced reasoning, chats and coding
-                    capabilities.</p>
+                <p class="tool-desc">Anthropic's AI-powered assistant with advanced reasoning, chats and coding capabilities.</p>
                 <div class="tool-links">
                     <a href="https://www.anthropic.com/claude" target="_blank">🌐 Official Site</a>
                     <a href="https://claude.ai/" target="_blank">🔗 Open Tool</a>
@@ -336,8 +325,7 @@
                     <span class="badge online">Online Only</span>
                     <span class="badge free">Free</span>
                 </div>
-                <p class="tool-desc">xAI's conversational AI-powered assistant with real-time information access, chats
-                    and witty responses.</p>
+                <p class="tool-desc">xAI's conversational AI-powered assistant with real-time information access, chats and witty responses.</p>
                 <div class="tool-links">
                     <a href="https://grok.x.ai/" target="_blank">🌐 Official Site</a>
                     <a href="https://x.com/i/grok" target="_blank">🔗 Open Tool</a>
@@ -350,8 +338,7 @@
                     <span class="badge online">Online Only</span>
                     <span class="badge free">Free</span>
                 </div>
-                <p class="tool-desc">Email server testing and DNS lookup tool for troubleshooting mail delivery issues.
-                </p>
+                <p class="tool-desc">Email server testing and DNS lookup tool for troubleshooting mail delivery issues. </p>
                 <div class="tool-links">
                     <a href="https://mxtoolbox.com/" target="_blank">🌐 Official Site</a>
                     <a href="https://mxtoolbox.com/SuperTool.aspx" target="_blank">🔗 Open Tool</a>
@@ -364,8 +351,7 @@
                     <span class="badge online">Online Only</span>
                     <span class="badge free">Free</span>
                 </div>
-                <p class="tool-desc">Decode Microsoft Office 365 Advanced Threat Protection Safe Links URLs to reveal
-                    the original destination.</p>
+                <p class="tool-desc">Decode Microsoft Office 365 Advanced Threat Protection Safe Links URLs to reveal the original destination.</p>
                 <div class="tool-links">
                     <a href="https://www.o365atp.com/" target="_blank">🔗 Open Tool</a>
                 </div>
@@ -377,10 +363,9 @@
                     <span class="badge online">Online Only</span>
                     <span class="badge free">Free</span>
                 </div>
-                <p class="tool-desc">IP reputation checker and blacklist monitoring for detecting malicious IPs.</p>
+                <p class="tool-desc">Big list of tools: IP, DNS, Text, URL, encoding/decoding, generators and more.</p>
                 <div class="tool-links">
                     <a href="https://www.ipvoid.com/" target="_blank">🌐 Official Site</a>
-                    <a href="https://www.ipvoid.com/ip-blacklist-check/" target="_blank">🔗 Open Tool</a>
                 </div>
             </div>
 
@@ -390,11 +375,9 @@
                     <span class="badge online">Online Only</span>
                     <span class="badge free">Free</span>
                 </div>
-                <p class="tool-desc">Community-driven IP abuse database for reporting and checking malicious IP
-                    addresses.</p>
+                <p class="tool-desc">Community-driven IP abuse database for reporting and checking malicious IP addresses.</p>
                 <div class="tool-links">
                     <a href="https://www.abuseipdb.com/" target="_blank">🌐 Official Site</a>
-                    <a href="https://www.abuseipdb.com/check/" target="_blank">🔗 Open Tool</a>
                 </div>
             </div>
 
@@ -404,11 +387,9 @@
                     <span class="badge online">Online Only</span>
                     <span class="badge free">Free</span>
                 </div>
-                <p class="tool-desc">Estimate costs for Azure services and create pricing scenarios for cloud
-                    deployments.</p>
+                <p class="tool-desc">Estimate costs for Azure services and create pricing scenarios for cloud deployments.</p>
                 <div class="tool-links">
                     <a href="https://azure.microsoft.com/en-us/pricing/calculator/" target="_blank">🌐 Official Site</a>
-                    <!--  <a href="https://azure.microsoft.com/en-us/pricing/calculator/" target="_blank">🔗 Open Tool</a> -->
                 </div>
             </div>
 
@@ -433,11 +414,9 @@
                     <span class="badge download">Download Required</span>
                     <span class="badge free">Free</span>
                 </div>
-                <p class="tool-desc">Visual traceroute tool showing network path with geographic mapping and latency
-                    graphs.</p>
+                <p class="tool-desc">Visual traceroute tool showing network path with geographic mapping and latency graphs.</p>
                 <div class="tool-links">
-                    <a href="https://www.pingtracer.com/" target="_blank">🌐 Official Site</a>
-                    <a href="https://www.pingtracer.com/download.html" target="_blank">⬇️ Download</a>
+                    <a href="https://github.com/bp2008/pingtracer" target="_blank">📦 GitHub</a>
                 </div>
             </div>
 
@@ -447,11 +426,9 @@
                     <span class="badge download">Download Required</span>
                     <span class="badge free">Free</span>
                 </div>
-                <p class="tool-desc">Fast and reliable network scanner to analyze LAN devices and access shared folders.
-                </p>
+                <p class="tool-desc">Fast and reliable network scanner to analyze LAN devices and access shared folders. </p>
                 <div class="tool-links">
                     <a href="https://www.advanced-ip-scanner.com/" target="_blank">🌐 Official Site</a>
-                    <a href="https://www.advanced-ip-scanner.com/download/" target="_blank">⬇️ Download</a>
                 </div>
             </div>
 
@@ -461,12 +438,10 @@
                     <span class="badge download">Download Required</span>
                     <span class="badge free">Free</span>
                 </div>
-                <p class="tool-desc">Network protocol analyzer for troubleshooting, analysis, and security
-                    investigations.</p>
+                <p class="tool-desc">Network protocol analyzer for troubleshooting, analysis, and security investigations.</p>
                 <div class="tool-links">
                     <a href="https://www.wireshark.org/" target="_blank">🌐 Official Site</a>
                     <a href="https://gitlab.com/wireshark/wireshark" target="_blank">📦 GitLab</a>
-                    <a href="https://www.wireshark.org/download.html" target="_blank">⬇️ Download</a>
                 </div>
             </div>
 
@@ -480,7 +455,7 @@
                 <p class="warning">⚠️ WARNING: Official download may contain adware. Consider using WinSCP instead.</p>
                 <div class="tool-links">
                     <a href="https://filezilla-project.org/" target="_blank">🌐 Official Site</a>
-                    <a href="https://filezilla-project.org/download.php?show_all=1" target="_blank">⬇️ Download</a>
+                    <a href="https://filezilla-project.org/download.php?show_all=1" target="_blank">⬇️ Download no sponsor</a>
                 </div>
             </div>
 
@@ -494,8 +469,7 @@
                 <p class="warning">⚠️ WARNING: Official download may contain adware.</p>
                 <div class="tool-links">
                     <a href="https://filezilla-project.org/" target="_blank">🌐 Official Site</a>
-                    <a href="https://filezilla-project.org/download.php?show_all=1&type=server" target="_blank">⬇️
-                        Download</a>
+                    <a href="https://filezilla-project.org/download.php?show_all=1&type=server" target="_blank">⬇️ Download no sponsor</a>
                 </div>
             </div>
 
@@ -505,11 +479,10 @@
                     <span class="badge download">Download Required</span>
                     <span class="badge free">Free</span>
                 </div>
-                <p class="tool-desc">SFTP, SCP, and FTP client for Windows with file synchronization capabilities.</p>
+                <p class="tool-desc">SFTP, FTP, FTPS, SCP, S3, WebDAV and local-to-local file transfer client for Windows.</p>
                 <div class="tool-links">
                     <a href="https://winscp.net/" target="_blank">🌐 Official Site</a>
                     <a href="https://github.com/winscp/winscp" target="_blank">📦 GitHub</a>
-                    <a href="https://winscp.net/eng/download.php" target="_blank">⬇️ Download</a>
                 </div>
             </div>
 
@@ -521,10 +494,8 @@
                 </div>
                 <p class="tool-desc">Free SSH and telnet client for Windows with terminal emulation.</p>
                 <div class="tool-links">
-                    <a href="https://www.putty.org/" target="_blank">🌐 Official Site</a>
-                    <a href="https://github.com/github/putty" target="_blank">📦 GitHub</a>
-                    <a href="https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html" target="_blank">⬇️
-                        Download</a>
+                    <a href="https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html" target="_blank">⬇️ Download</a>
+                    <a href="https://github.com/github/putty" target="_blank">📦 GitHub, Public archive</a>
                 </div>
             </div>
 
@@ -534,15 +505,13 @@
                     <span class="badge download">Download Required</span>
                     <span class="badge free">Freemium</span>
                 </div>
-                <p class="tool-desc">Free syslog server for Windows to receive, log, display, and forward syslog
-                    messages from network devices, servers, and applications. Essential for centralized log management
-                    and monitoring.</p>
+                <p class="tool-desc">Free syslog server for Windows to receive, log, display, and forward syslog messages from network devices, servers, and applications. Essential for centralized log management and monitoring.</p>
                 <div class="tool-links">
                     <a href="https://www.solarwinds.com/free-tools/kiwi-free-syslog-server" target="_blank">🌐 Official
                         Site</a>
                 </div>
             </div>
-
+<!-- TODO hieronder verder controleren -->
             <div class="tool-card" data-category="download network" data-price="free">
                 <h3>mRemoteNG</h3>
                 <div class="tool-type">
@@ -1063,7 +1032,7 @@
                 </div>
             </div>
 
-            <div class="tool-card" data-category="download media" data-price="free">
+            <div class="tool-card" data-category="download media selfhost" data-price="free">
                 <h3>OBS Studio <span class="verified-stamp">GDPR?</span></h3>
                 <div class="tool-type">
                     <span class="badge download">Download Required</span>
@@ -1077,7 +1046,7 @@
                 </div>
             </div>
 
-            <div class="tool-card" data-category="download media" data-price="free">
+            <div class="tool-card" data-category="download media selfhost" data-price="free">
                 <h3>VLC Media Player <span class="verified-stamp">GDPR?</span></h3>
                 <div class="tool-type">
                     <span class="badge download">Download Required</span>
@@ -1091,7 +1060,7 @@
                 </div>
             </div>
 
-            <div class="tool-card" data-category="system hybrid" data-price="free">
+            <div class="tool-card" data-category="system hybrid selfhost" data-price="free">
                 <h3>Joplin <span class="verified-stamp">GDPR?</span></h3>
                 <div class="tool-type">
                     <span class="badge hybrid">Online + App</span>
@@ -1670,7 +1639,7 @@
                 </div>
             </div>
 
-            <div class="tool-card" data-category="download development" data-price="free">
+            <div class="tool-card" data-category="download development selfhost" data-price="free">
                 <h3>pgAdmin</h3>
                 <div class="tool-type">
                     <span class="badge download">Download Required</span>
@@ -1683,7 +1652,7 @@
                 </div>
             </div>
 
-            <div class="tool-card" data-category="download development" data-price="free">
+            <div class="tool-card" data-category="download development selfhost" data-price="free">
                 <h3>Beekeeper Studio</h3>
                 <div class="tool-type">
                     <span class="badge download">Download Required</span>
@@ -1697,7 +1666,7 @@
                 </div>
             </div>
 
-            <div class="tool-card" data-category="download development" data-price="free">
+            <div class="tool-card" data-category="download development selfhost" data-price="free">
                 <h3>Grafana <span class="verified-stamp gdpr-stamp">GDPR</span></h3>
                 <div class="tool-type">
                     <span class="badge download">Download Required</span>
@@ -1711,7 +1680,7 @@
                 </div>
             </div>
 
-            <div class="tool-card" data-category="development hybrid" data-price="free">
+            <div class="tool-card" data-category="development hybrid selfhost" data-price="free">
                 <h3>Insomnia</h3>
                 <div class="tool-type">
                     <span class="badge hybrid">Online + App</span>
@@ -1740,7 +1709,7 @@
                 </div>
             </div>
 
-            <div class="tool-card" data-category="download development" data-price="free">
+            <div class="tool-card" data-category="download development selfhost" data-price="free">
                 <h3>PDFsam Basic</h3>
                 <div class="tool-type">
                     <span class="badge download">Download Required</span>
@@ -1938,7 +1907,7 @@
                 </div>
             </div>
 
-            <div class="tool-card" data-category="download security system" data-price="free">
+            <div class="tool-card" data-category="download security system selfhost" data-price="free">
                 <h3>Frigate NVR</h3>
                 <div class="tool-type">
                     <span class="badge download">Download Required</span>
@@ -2187,8 +2156,8 @@
                 </div>
             </div>
 
-            <!-- DOCKER TOOLS -->
-            <div class="tool-card" data-category="download docker" data-price="freemium">
+            <!-- SELF-HOST TOOLS -->
+            <div class="tool-card" data-category="download selfhost" data-price="freemium">
                 <h3>Docker Desktop <span class="verified-stamp gdpr-stamp">GDPR</span></h3>
                 <div class="tool-type">
                     <span class="badge download">Download Required</span>
@@ -2203,7 +2172,7 @@
                 </div>
             </div>
 
-            <div class="tool-card" data-category="online docker" data-price="freemium">
+            <div class="tool-card" data-category="online selfhost" data-price="freemium">
                 <h3>Docker Hub <span class="verified-stamp gdpr-stamp">GDPR</span></h3>
                 <div class="tool-type">
                     <span class="badge online">Online Only</span>
@@ -2216,7 +2185,7 @@
                 </div>
             </div>
 
-            <div class="tool-card" data-category="download docker" data-price="free">
+            <div class="tool-card" data-category="download selfhost" data-price="free">
                 <h3>Docker Compose</h3>
                 <div class="tool-type">
                     <span class="badge download">Download Required</span>
@@ -2230,7 +2199,7 @@
                 </div>
             </div>
 
-            <div class="tool-card" data-category="download docker" data-price="free">
+            <div class="tool-card" data-category="download selfhost" data-price="free">
                 <h3>Podman</h3>
                 <div class="tool-type">
                     <span class="badge download">Download Required</span>
@@ -2244,7 +2213,7 @@
                 </div>
             </div>
 
-            <div class="tool-card" data-category="download development system" data-price="free">
+            <div class="tool-card" data-category="download development system selfhost" data-price="free">
                 <h3>Ansible</h3>
                 <div class="tool-type">
                     <span class="badge download">Download Required</span>
@@ -2273,7 +2242,7 @@
                 </div>
             </div>
 
-            <div class="tool-card" data-category="download docker" data-price="freemium">
+            <div class="tool-card" data-category="download selfhost" data-price="freemium">
                 <h3>Portainer <span class="verified-stamp gdpr-stamp">GDPR</span></h3>
                 <div class="tool-type">
                     <span class="badge download">Download Required</span>
@@ -2287,7 +2256,7 @@
                 </div>
             </div>
 
-            <div class="tool-card" data-category="download docker" data-price="free">
+            <div class="tool-card" data-category="download selfhost" data-price="free">
                 <h3>Lazydocker</h3>
                 <div class="tool-type">
                     <span class="badge download">Download Required</span>
