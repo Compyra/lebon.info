@@ -24,7 +24,7 @@
             <p class="intro">Welcome. Here you'll find useful tools and resources for IT.</p>
             <p class="intro">Here are tools me and my friends have come across. I am currently still checking all information below.</p>
            <!--  <p class="intro">-<span class="tool-name"><span class="verified-stamp">CHECKED</span></span> means I've personally checked if the written information and links on this page are correct. You still need to check for yourself if they are GDPR compliant or if there are security risks. When I have time, I'll check for these risks, for privacy and for GDPR compliance and mark them as such.</p> -->
-            <p class="intro">-<span class="tool-name"><span class="verified-stamp gdpr-stamp">GDPR</span></span> means the tool claims to be compliant with GDPR regulations.</p>
+            <p class="intro">-<span class="tool-name"><span class="verified-stamp gdpr-stamp">GDPR</span></span> means the tool claims to be compliant with GDPR regulations or if it's possible to use it in a GDPR compliant way.</p>
             <!-- <p class="intro">-<span class="tool-name"><span class="verified-stamp">EU</span></span> means the tool has their datacenters in the European Union.</p>   -->
             <p class="intro">-<span class="tool-name"><span class="verified-stamp">📍 lebon.info</span></span> shows tools created by me or a copy of the tool hosted here.</p>
             <p class="warning">Use at your own risk.</p>
@@ -88,14 +88,13 @@
         <div class="tools-grid" id="toolsGrid">
 
             <!-- ONLINE TOOLS -->
-            <div class="tool-card" data-category="online security forensics" data-verified="true">
-                <h3>CyberChef</h3>
+            <div class="tool-card" data-category="online security forensics docker" data-verified="true">
+                <h3>CyberChef <span class="verified-stamp gdpr-stamp">GDPR?</span></h3>
                 <div class="tool-type">
                     <span class="badge online">Online Only</span>
                     <span class="badge free">Free</span>
                 </div>
-                <p class="tool-desc">Swiss army knife for data transformation, encoding/decoding, encryption, and
-                    cybersecurity analysis tasks.</p>
+                <p class="tool-desc">Swiss army knife for data transformation, encoding/decoding, encryption, and cybersecurity analysis tasks. Runs entirely in the browser (client-sided).</p>
                 <div class="tool-links">
                     <a href="https://gchq.github.io/CyberChef/" target="_blank">🌐 Official Site</a>
                     <a href="https://github.com/gchq/CyberChef" target="_blank">📦 GitHub</a>
@@ -103,14 +102,13 @@
                 </div>
             </div>
 
-            <div class="tool-card" data-category="online" data-price="free">
-                <h3>IT Tools Collection</h3>
+            <div class="tool-card" data-category="online docker" data-price="free">
+                <h3>IT Tools Collection <span class="verified-stamp gdpr-stamp">GDPR</span></h3>
                 <div class="tool-type">
                     <span class="badge online">Online Only</span>
                     <span class="badge free">Free</span>
                 </div>
-                <p class="tool-desc">Comprehensive collection of web-based utilities for developers and IT
-                    professionals.</p>
+                <p class="tool-desc">Comprehensive collection of web-based utilities for developers and IT professionals. At the moment of writing (2025-11) it contains 410 tools.</p>
                 <div class="tool-links">
                     <a href="https://sharevb-it-tools.vercel.app/" target="_blank">🔗 Open Tool</a>
                     <a href="https://github.com/sharevb/it-tools" target="_blank">📦 GitHub</a>
@@ -118,19 +116,19 @@
             </div>
 
             <div class="tool-card" data-category="online security" data-price="free" data-verified="true">
-                <h3>CVE - PSIRT Database</h3>
+                <h3>CVE - PSIRT Database <span class="verified-stamp gdpr-stamp">GDPR</span></h3>
                 <div class="tool-type">
                     <span class="badge online">Online Only</span>
                     <span class="badge free">Free</span>
                 </div>
-                <p class="tool-desc">Small page with URL's to browse psirt's; Common Vulnerabilities and exposures database for my own security research.</p>
+                <p class="tool-desc">Small personal page with URL's to browse psirt's; Common Vulnerabilities and exposures database for my own security research.</p>
                 <div class="tool-links">
                     <a href="./cve/" target="_blank">🔗 Open Tool</a>
                 </div>
             </div>
 
             <div class="tool-card" data-category="online network" data-price="free" data-verified="true">
-                <h3>Network Scanner</h3>
+                <h3>Network Scanner <span class="verified-stamp gdpr-stamp">GDPR</span></h3>
                 <div class="tool-type">
                     <span class="badge online">Online Only</span>
                     <span class="badge free">Free</span>
@@ -142,16 +140,17 @@
             </div>
 
             <div class="tool-card" data-category="download network" data-price="free">
-                <h3>Akvorado</h3>
+                <h3>Akvorado <span class="verified-stamp gdpr-stamp">GDPR?</span></h3>
                 <div class="tool-type">
                     <span class="badge download">Download Required</span>
                     <span class="badge free">Free</span>
                 </div>
                 <p class="tool-desc">Network flow collector and analyzer for NetFlow/IPFIX and sFlow. Enriches flows with SNMP metadata, geographic information, and BGP data, then stores in ClickHouse with a web interface for visualization.</p>
                 <div class="tool-links">
-                    <a href="https://demo.akvorado.net/docs/intro" target="_blank">🌐 Official Site</a>
+                    <a href="https://akvorado.net" target="_blank">🌐 Official Site</a>
+                    <a href="https://akvorado.net/docs/intro" target="_blank">🌐 Docs</a>
                     <a href="https://github.com/akvorado/akvorado" target="_blank">📦 GitHub</a>
-                    <a href="https://demo.akvorado.net/docs/install" target="_blank">📖 Installation Guide</a>
+                    <a href="https://demo.akvorado.net/docs/install" target="_blank">📖 Installation Guide on demo subdomain</a>
                 </div>
             </div>
 
@@ -200,7 +199,7 @@
             </div>
 
             <div class="tool-card" data-category="hybrid" data-price="free">
-                <h3>Draw.io (diagrams.net)</h3>
+                <h3>Draw.io (diagrams.net) <span class="verified-stamp">GDPR?</span></h3>
                 <div class="tool-type">
                     <span class="badge hybrid">Online + App</span>
                     <span class="badge free">Free</span>
@@ -214,9 +213,9 @@
                     <a href="https://github.com/jgraph/drawio" target="_blank">📦 GitHub</a>
                 </div>
             </div>
-
+<!-- 
             <div class="tool-card" data-category="online" data-price="free">
-                <h3>Alternating Case Converter</h3>
+                <h3>Alternating Case Converter <span class="verified-stamp">GDPR?</span></h3>
                 <div class="tool-type">
                     <span class="badge online">Online Only</span>
                     <span class="badge free">Free</span>
@@ -227,7 +226,7 @@
                     <a href="https://en.toolpage.org/" target="_blank">🌐 Official Site</a>
                     <a href="https://en.toolpage.org/tool/alternatingcase" target="_blank">🔗 Open Tool</a>
                 </div>
-            </div>
+            </div> -->
 
             <div class="tool-card" data-category="hybrid" data-price="freemium">
                 <h3>n8n</h3>
@@ -415,7 +414,7 @@
 
             <!-- NETWORK TOOLS -->
             <div class="tool-card" data-category="download network" data-price="free">
-                <h3>Nmap</h3>
+                <h3>Nmap <span class="verified-stamp">GDPR?</span></h3>
                 <div class="tool-type">
                     <span class="badge download">Download Required</span>
                     <span class="badge free">Free</span>
@@ -429,7 +428,7 @@
             </div>
 
             <div class="tool-card" data-category="download network" data-price="free">
-                <h3>PingTracer</h3>
+                <h3>PingTracer <span class="verified-stamp">GDPR?</span></h3>
                 <div class="tool-type">
                     <span class="badge download">Download Required</span>
                     <span class="badge free">Free</span>
@@ -443,7 +442,7 @@
             </div>
 
             <div class="tool-card" data-category="download network" data-price="free">
-                <h3>Advanced IP Scanner</h3>
+                <h3>Advanced IP Scanner <span class="verified-stamp">GDPR?</span></h3>
                 <div class="tool-type">
                     <span class="badge download">Download Required</span>
                     <span class="badge free">Free</span>
@@ -457,7 +456,7 @@
             </div>
 
             <div class="tool-card" data-category="download network" data-price="free">
-                <h3>Wireshark</h3>
+                <h3>Wireshark <span class="verified-stamp">GDPR?</span></h3>
                 <div class="tool-type">
                     <span class="badge download">Download Required</span>
                     <span class="badge free">Free</span>
@@ -472,7 +471,7 @@
             </div>
 
             <div class="tool-card" data-category="download network" data-price="free">
-                <h3>FileZilla Client</h3>
+                <h3>FileZilla Client <span class="verified-stamp">GDPR?</span></h3>
                 <div class="tool-type">
                     <span class="badge download">Download Required</span>
                     <span class="badge free">Free</span>
@@ -486,7 +485,7 @@
             </div>
 
             <div class="tool-card" data-category="download network" data-price="free">
-                <h3>FileZilla Server</h3>
+                <h3>FileZilla Server <span class="verified-stamp">GDPR?</span></h3>
                 <div class="tool-type">
                     <span class="badge download">Download Required</span>
                     <span class="badge free">Free</span>
@@ -501,7 +500,7 @@
             </div>
 
             <div class="tool-card" data-category="download network" data-price="free">
-                <h3>WinSCP</h3>
+                <h3>WinSCP <span class="verified-stamp">GDPR?</span></h3>
                 <div class="tool-type">
                     <span class="badge download">Download Required</span>
                     <span class="badge free">Free</span>
@@ -515,7 +514,7 @@
             </div>
 
             <div class="tool-card" data-category="download network" data-price="free">
-                <h3>PuTTY</h3>
+                <h3>PuTTY <span class="verified-stamp">GDPR?</span></h3>
                 <div class="tool-type">
                     <span class="badge download">Download Required</span>
                     <span class="badge free">Free</span>
@@ -702,7 +701,7 @@
             </div>
 
             <div class="tool-card" data-category="download network security" data-price="free">
-                <h3>ntopng</h3>
+                <h3>ntopng <span class="verified-stamp">GDPR?</span></h3>
                 <div class="tool-type">
                     <span class="badge download">Download Required</span>
                     <span class="badge free">Free</span>
@@ -715,7 +714,7 @@
             </div>
 
             <div class="tool-card" data-category="download network security forensics" data-price="free">
-                <h3>Zeek</h3>
+                <h3>Zeek <span class="verified-stamp">GDPR?</span></h3>
                 <div class="tool-type">
                     <span class="badge download">Download Required</span>
                     <span class="badge free">Free</span>
@@ -730,7 +729,7 @@
 
             <!-- SYSTEM TOOLS -->
             <div class="tool-card" data-category="online system" data-price="free">
-                <h3>Ninite</h3>
+                <h3>Ninite <span class="verified-stamp">GDPR?</span></h3>
                 <div class="tool-type">
                     <span class="badge online">Online Only</span>
                     <span class="badge free">Free</span>
@@ -743,7 +742,7 @@
             </div>
 
             <div class="tool-card" data-category="download system" data-price="free">
-                <h3>7-Zip</h3>
+                <h3>7-Zip <span class="verified-stamp">GDPR?</span></h3>
                 <div class="tool-type">
                     <span class="badge download">Download Required</span>
                     <span class="badge free">Free</span>
@@ -756,7 +755,7 @@
             </div>
 
             <div class="tool-card" data-category="download system" data-price="freemium">
-                <h3>WinRAR</h3>
+                <h3>WinRAR <span class="verified-stamp">GDPR?</span></h3>
                 <div class="tool-type">
                     <span class="badge download">Download Required</span>
                     <span class="badge freemium">Freemium</span>
@@ -883,7 +882,7 @@
             </div>
 
             <div class="tool-card" data-category="download system" data-price="free">
-                <h3>Q-Dir</h3>
+                <h3>Q-Dir <span class="verified-stamp">GDPR?</span></h3>
                 <div class="tool-type">
                     <span class="badge download">Download Required</span>
                     <span class="badge free">Free</span>
@@ -896,7 +895,7 @@
             </div>
 
             <div class="tool-card" data-category="download system" data-price="free">
-                <h3>Everything</h3>
+                <h3>Everything <span class="verified-stamp">GDPR?</span></h3>
                 <div class="tool-type">
                     <span class="badge download">Download Required</span>
                     <span class="badge free">Free</span>
@@ -909,7 +908,7 @@
             </div>
 
             <div class="tool-card" data-category="download system" data-price="free">
-                <h3>WinDirStat</h3>
+                <h3>WinDirStat <span class="verified-stamp">GDPR?</span></h3>
                 <div class="tool-type">
                     <span class="badge download">Download Required</span>
                     <span class="badge free">Free</span>
@@ -1023,7 +1022,7 @@
             </div>
 
             <div class="tool-card" data-category="download system" data-price="free">
-                <h3>LibreOffice</h3>
+                <h3>LibreOffice <span class="verified-stamp">GDPR?</span></h3>
                 <div class="tool-type">
                     <span class="badge download">Download Required</span>
                     <span class="badge free">Free</span>
@@ -1037,7 +1036,7 @@
             </div>
 
             <div class="tool-card" data-category="download system" data-price="free">
-                <h3>qBittorrent</h3>
+                <h3>qBittorrent <span class="verified-stamp">GDPR?</span></h3>
                 <div class="tool-type">
                     <span class="badge download">Download Required</span>
                     <span class="badge free">Free</span>
@@ -1051,7 +1050,7 @@
             </div>
 
             <div class="tool-card" data-category="download system development" data-price="free">
-                <h3>nginx</h3>
+                <h3>nginx <span class="verified-stamp">GDPR?</span></h3>
                 <div class="tool-type">
                     <span class="badge download">Download Required</span>
                     <span class="badge free">Free</span>
@@ -1065,7 +1064,7 @@
             </div>
 
             <div class="tool-card" data-category="download media" data-price="free">
-                <h3>OBS Studio</h3>
+                <h3>OBS Studio <span class="verified-stamp">GDPR?</span></h3>
                 <div class="tool-type">
                     <span class="badge download">Download Required</span>
                     <span class="badge free">Free</span>
@@ -1079,7 +1078,7 @@
             </div>
 
             <div class="tool-card" data-category="download media" data-price="free">
-                <h3>VLC Media Player</h3>
+                <h3>VLC Media Player <span class="verified-stamp">GDPR?</span></h3>
                 <div class="tool-type">
                     <span class="badge download">Download Required</span>
                     <span class="badge free">Free</span>
@@ -1093,7 +1092,7 @@
             </div>
 
             <div class="tool-card" data-category="system hybrid" data-price="free">
-                <h3>Joplin</h3>
+                <h3>Joplin <span class="verified-stamp">GDPR?</span></h3>
                 <div class="tool-type">
                     <span class="badge hybrid">Online + App</span>
                     <span class="badge free">Free</span>
@@ -1426,7 +1425,7 @@
             </div>
 
             <div class="tool-card" data-category="download development" data-price="free">
-                <h3>Git</h3>
+                <h3>Git <span class="verified-stamp">GDPR?</span></h3>
                 <div class="tool-type">
                     <span class="badge download">Download Required</span>
                     <span class="badge free">Free</span>
@@ -1440,7 +1439,7 @@
             </div>
 
             <div class="tool-card" data-category="download development language" data-price="free">
-                <h3>Node.js</h3>
+                <h3>Node.js <span class="verified-stamp">GDPR?</span></h3>
                 <div class="tool-type">
                     <span class="badge download">Download Required</span>
                     <span class="badge free">Free</span>
@@ -1454,7 +1453,7 @@
             </div>
 
             <div class="tool-card" data-category="download development language" data-price="free">
-                <h3>Bun</h3>
+                <h3>Bun <span class="verified-stamp">GDPR?</span></h3>
                 <div class="tool-type">
                     <span class="badge download">Download Required</span>
                     <span class="badge free">Free</span>
@@ -1468,7 +1467,7 @@
             </div>
 
             <div class="tool-card" data-category="download development language" data-price="free">
-                <h3>Deno</h3>
+                <h3>Deno <span class="verified-stamp">GDPR?</span></h3>
                 <div class="tool-type">
                     <span class="badge download">Download Required</span>
                     <span class="badge free">Free</span>
@@ -1482,7 +1481,7 @@
             </div>
 
             <div class="tool-card" data-category="download development language" data-price="free">
-                <h3>Rust (rustc, cargo, clippy)</h3>
+                <h3>Rust (rustc, cargo, clippy) <span class="verified-stamp">GDPR?</span></h3>
                 <div class="tool-type">
                     <span class="badge download">Download Required</span>
                     <span class="badge free">Free</span>
@@ -1496,7 +1495,7 @@
             </div>
 
             <div class="tool-card" data-category="download development language" data-price="free">
-                <h3>Python</h3>
+                <h3>Python <span class="verified-stamp">GDPR?</span></h3>
                 <div class="tool-type">
                     <span class="badge download">Download Required</span>
                     <span class="badge free">Free</span>
@@ -1600,7 +1599,7 @@
             </div>
 
             <div class="tool-card" data-category="download development" data-price="free">
-                <h3>Notepad++</h3>
+                <h3>Notepad++ <span class="verified-stamp">GDPR?</span></h3>
                 <div class="tool-type">
                     <span class="badge download">Download Required</span>
                     <span class="badge free">Free</span>
@@ -1787,7 +1786,7 @@
             </div>
 
             <div class="tool-card" data-category="online media" data-price="free">
-                <h3>Photopea</h3>
+                <h3>Photopea <span class="verified-stamp">GDPR?</span></h3>
                 <div class="tool-type">
                     <span class="badge online">Online Only</span>
                     <span class="badge free">Free</span>
@@ -1799,7 +1798,7 @@
             </div>
 
             <div class="tool-card" data-category="online media" data-price="free">
-                <h3>Cobalt</h3>
+                <h3>Cobalt <span class="verified-stamp">GDPR?</span></h3>
                 <div class="tool-type">
                     <span class="badge online">Online Only</span>
                     <span class="badge free">Free</span>
@@ -1812,7 +1811,7 @@
             </div>
 
             <div class="tool-card" data-category="download media" data-price="free">
-                <h3>yt-dlp</h3>
+                <h3>yt-dlp <span class="verified-stamp">GDPR?</span></h3>
                 <div class="tool-type">
                     <span class="badge download">Download Required</span>
                     <span class="badge free">Free</span>
@@ -1955,7 +1954,7 @@
 
             <!-- BROWSERS -->
             <div class="tool-card" data-category="download browser" data-price="free">
-                <h3>Google Chrome</h3>
+                <h3>Google Chrome <span class="verified-stamp">GDPR?</span></h3>
                 <div class="tool-type">
                     <span class="badge download">Download Required</span>
                     <span class="badge free">Free</span>
@@ -1968,7 +1967,7 @@
             </div>
 
             <div class="tool-card" data-category="download browser" data-price="free">
-                <h3>Brave Browser</h3>
+                <h3>Brave Browser <span class="verified-stamp">GDPR?</span></h3>
                 <div class="tool-type">
                     <span class="badge download">Download Required</span>
                     <span class="badge free">Free</span>
@@ -1982,7 +1981,7 @@
             </div>
 
             <div class="tool-card" data-category="download browser" data-price="free">
-                <h3>Firefox Portable</h3>
+                <h3>Firefox Portable <span class="verified-stamp">GDPR?</span></h3>
                 <div class="tool-type">
                     <span class="badge download">Download Required</span>
                     <span class="badge free">Free</span>
@@ -1995,7 +1994,7 @@
             </div>
 
             <div class="tool-card" data-category="download system" data-price="free">
-                <h3>Mozilla Thunderbird</h3>
+                <h3>Mozilla Thunderbird <span class="verified-stamp">GDPR?</span></h3>
                 <div class="tool-type">
                     <span class="badge download">Download Required</span>
                     <span class="badge free">Free</span>
