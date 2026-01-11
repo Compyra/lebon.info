@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About // WebCheck</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="terminal-bg">
+    <div class="terminal-window">
+        <div class="terminal-header">
+            <span class="prompt-title">webcheck/about:~$</span>
+            <span class="prompt-blink">█</span>
+        </div>
+        <div class="terminal-body about-content">
+            <div class="terminal-intro">
+                <span>About WebCheck - Website Audit Tool</span>
+            </div>
+
+            <div class="terminal-section">
+                <span class="section-label"># What is WebCheck?</span>
+                <p>
+                    WebCheck is a browser-based website audit tool that verifies if your website has essential files and configurations in place. 
+                    It helps ensure your site follows web standards and best practices for SEO, security, and user experience.
+                </p>
+            </div>
+
+            <div class="terminal-section">
+                <span class="section-label"># Understanding Check Results</span>
+                <p>Each check displays one of three status indicators:</p>
+                <ul>
+                    <li><strong style="color: var(--terminal-green);">✓ Pass (Green)</strong> - The file or configuration was found and is working correctly</li>
+                    <li><strong style="color: var(--terminal-red);">✗ Fail (Red)</strong> - The file or configuration is missing or not working</li>
+                    <li><strong style="color: var(--terminal-amber);">? Warning (Amber)</strong> - Unable to verify due to browser limitations (CORS) - manual verification needed</li>
+                </ul>
+                <p>
+                    Each check includes a "🔗 Visit" link that opens the checked resource in a new tab, allowing you to manually verify the results.
+                </p>
+            </div>
+
+            <div class="terminal-section">
+                <span class="section-label"># What We Check</span>
+                <p>WebCheck validates the following critical website components:</p>
+                
+                <h2>1. HTTPS/SSL Configuration</h2>
+                <ul>
+                    <li>Checks if your site uses HTTPS (secure connection)</li>
+                    <li>Always shows <strong style="color: var(--terminal-amber);">?</strong> status - please verify manually by clicking the link</li>
+                    <li>Browser limitations prevent automatic verification</li>
+                    <li>Important for: Security, SEO ranking, user trust</li>
+                </ul>
+
+                <h2>2. robots.txt</h2>
+                <ul>
+                    <li>Location: <code>/robots.txt</code></li>
+                    <li>Controls search engine crawler access to your site</li>
+                    <li>Important for: SEO, preventing indexing of sensitive pages</li>
+                </ul>
+
+                <h2>3. sitemap.xml</h2>
+                <ul>
+                    <li>Location: <code>/sitemap.xml</code></li>
+                    <li>Helps search engines discover and index your pages</li>
+                    <li>Important for: SEO, content discovery</li>
+                </ul>
+
+                <h2>4. security.txt</h2>
+                <ul>
+                    <li>Locations checked: <code>/.well-known/security.txt</code> (standard) or <code>/security.txt</code> (alternative)</li>
+                    <li>Provides security researchers with contact information</li>
+                    <li>Displays which location(s) contain the file if found</li>
+                    <li>Important for: Security, responsible disclosure</li>
+                </ul>
+
+                <h2>5. favicon.ico</h2>
+                <ul>
+                    <li>Locations checked: <code>/favicon.ico</code> or <code>/favicons/favicon.ico</code></li>
+                    <li>Note: Favicons can also be defined in HTML using <code>&lt;link rel="icon"&gt;</code> tag</li>
+                    <li>Website icon displayed in browser tabs and bookmarks</li>
+                    <li>Displays which location(s) contain the file if found</li>
+                    <li>Important for: Branding, user experience</li>
+                </ul>
+
+                <h2>6. 404 Error Page</h2>
+                <ul>
+                    <li>Custom error page for non-existent URLs</li>
+                    <li>Important for: User experience, navigation</li>
+                </ul>
+
+                <h2>7. site.webmanifest</h2>
+                <ul>
+                    <li>Location: <code>/site.webmanifest</code></li>
+                    <li>Enables Progressive Web App (PWA) features</li>
+                    <li>Important for: Mobile experience, app-like functionality</li>
+                </ul>
+
+                <h2>8. humans.txt</h2>
+                <ul>
+                    <li>Location: <code>/humans.txt</code></li>
+                    <li>Credits the people behind the website</li>
+                    <li>Important for: Transparency, team recognition</li>
+                </ul>
+
+                <h2>9. Meta Tags</h2>
+                <ul>
+                    <li>Title, description, and other HTML meta tags</li>
+                    <li>Click the "🔗 Visit" link to open the Meta Tag Viewer</li>
+                    <li>The viewer displays all meta tags, link tags, and head elements</li>
+                    <li>Shows formatted HTML source of the entire <code>&lt;head&gt;</code> section</li>
+                    <li>Important for: SEO, social media sharing</li>
+                </ul>
+            </div>
+
+            <div class="terminal-section">
+                <span class="section-label"># Current Limitations</span>
+                <p>Due to browser CORS (Cross-Origin Resource Sharing) restrictions, some checks have limitations:</p>
+                <ul>
+                    <li><strong>HTTPS/SSL:</strong> Always shows <strong style="color: var(--terminal-amber);">?</strong> status - verify manually via the provided link</li>
+                    <li><strong>File checks:</strong> May show <strong style="color: var(--terminal-amber);">?</strong> if CORS prevents access (use the link to verify)</li>
+                    <li><strong>Meta Tags:</strong> Cannot be parsed automatically - use the Meta Tag Viewer (link provided)</li>
+                    <li><strong>Clickable links:</strong> All checks include links to manually verify the results</li>
+                </ul>
+                <p>
+                    <strong>Workaround:</strong> Click the "🔗 Visit" link next to any check to manually verify the resource in your browser.
+                </p>
+                <p>
+                    For a production version with full verification capabilities, a backend API service is needed to fetch 
+                    and analyze websites server-side without CORS restrictions.
+                </p>
+            </div>
+
+            <div class="terminal-section">
+                <span class="section-label"># Meta Tag Viewer</span>
+                <p>
+                    WebCheck includes a dedicated Meta Tag Viewer accessible at <code>meta.html</code> that displays:
+                </p>
+                <ul>
+                    <li>Page title, description, keywords, and viewport settings</li>
+                    <li>All meta tags with their attributes</li>
+                    <li>All link tags (stylesheets, favicons, etc.)</li>
+                    <li>Other head elements (scripts, styles)</li>
+                    <li>Full formatted <code>&lt;head&gt;</code> section source code</li>
+                </ul>
+                <p>
+                    <strong>Usage:</strong> Access via <code>meta.html?url=example.com</code> or click the link in the Meta Tags check results.
+                </p>
+                <p>
+                    Note: The Meta Tag Viewer may also be subject to CORS restrictions. If blocked, a link to view the page source directly will be provided.
+                </p>
+            </div>
+
+            <div class="terminal-section">
+                <span class="section-label"># Development Steps & TODO</span>
+                
+                <div class="todo-item">
+                    <span class="todo-status">✓</span>
+                    <strong>Phase 1: Core Frontend (Completed)</strong>
+                    <ul>
+                        <li>Create HTML structure with input fields</li>
+                        <li>Design terminal-style CSS based on lebon.info</li>
+                        <li>Implement basic JavaScript checks</li>
+                        <li>Add visual feedback for results</li>
+                    </ul>
+                </div>
+
+                <div class="todo-item">
+                    <span class="todo-status pending">⚡</span>
+                    <strong>Phase 2: Backend API (Planned)</strong>
+                    <ul>
+                        <li>Create Node.js/Python backend service</li>
+                        <li>Implement server-side website fetching</li>
+                        <li>Add HTML parsing for meta tags</li>
+                        <li>Check HTTP headers (security headers, redirects)</li>
+                        <li>Implement rate limiting and caching</li>
+                    </ul>
+                </div>
+
+                <div class="todo-item">
+                    <span class="todo-status pending">⚡</span>
+                    <strong>Phase 3: Enhanced Checks (Planned)</strong>
+                    <ul>
+                        <li>SSL certificate validation and expiration</li>
+                        <li>Page load speed analysis</li>
+                        <li>Mobile responsiveness check</li>
+                        <li>Accessibility (WCAG) validation</li>
+                        <li>Social media meta tags (Open Graph, Twitter Cards)</li>
+                        <li>Structured data (Schema.org) validation</li>
+                    </ul>
+                </div>
+
+                <div class="todo-item">
+                    <span class="todo-status pending">⚡</span>
+                    <strong>Phase 4: Advanced Features (Planned)</strong>
+                    <ul>
+                        <li>Save and export audit reports (PDF/JSON)</li>
+                        <li>Historical tracking and comparisons</li>
+                        <li>Scheduled automatic audits</li>
+                        <li>Email notifications for issues</li>
+                        <li>API for integration with other tools</li>
+                        <li>Batch processing for multiple domains</li>
+                    </ul>
+                </div>
+
+                <div class="todo-item">
+                    <span class="todo-status pending">⚡</span>
+                    <strong>Phase 5: User Experience (Planned)</strong>
+                    <ul>
+                        <li>User accounts and saved websites</li>
+                        <li>Customizable check configurations</li>
+                        <li>Score/grade system for overall site health</li>
+                        <li>Recommendations for fixing issues</li>
+                        <li>Dark/light theme toggle</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="terminal-section">
+                <span class="section-label"># Technical Stack</span>
+                <p><strong>Current Implementation:</strong></p>
+                <ul>
+                    <li>HTML5 for structure</li>
+                    <li>Vanilla JavaScript (no frameworks)</li>
+                    <li>CSS3 with custom properties (terminal theme)</li>
+                    <li>Fetch API for network requests</li>
+                </ul>
+                
+                <p><strong>Planned Backend:</strong></p>
+                <ul>
+                    <li>Node.js with Express or Python with FastAPI</li>
+                    <li>Puppeteer/Playwright for full page analysis</li>
+                    <li>Redis for caching results</li>
+                    <li>PostgreSQL for storing audit history</li>
+                </ul>
+            </div>
+
+            <div class="terminal-section">
+                <span class="section-label"># How to Use</span>
+                <ol>
+                    <li>Enter one or more website domains (e.g., <code>example.com</code>)</li>
+                    <li>Separate multiple domains with commas</li>
+                    <li>Click "Run Audit" or press Enter</li>
+                    <li>View results with pass (<strong style="color: var(--terminal-green);">✓</strong>), fail (<strong style="color: var(--terminal-red);">✗</strong>), or warning (<strong style="color: var(--terminal-amber);">?</strong>) status for each check</li>
+                    <li>Click the "🔗 Visit" link next to any check to manually verify the resource</li>
+                    <li>For meta tags, click the link to open the Meta Tag Viewer</li>
+                </ol>
+            </div>
+
+            <div class="terminal-section">
+                <span class="section-label"># Best Practices</span>
+                <p>For your website to pass all checks, ensure you have:</p>
+                <ul>
+                    <li>✓ Valid SSL certificate installed (HTTPS)</li>
+                    <li>✓ robots.txt file in root directory</li>
+                    <li>✓ sitemap.xml file in root directory</li>
+                    <li>✓ security.txt in <code>/.well-known/</code> or root directory</li>
+                    <li>✓ favicon.ico in root, <code>/favicons/</code> directory, or defined in HTML</li>
+                    <li>✓ Custom 404 error page configured</li>
+                    <li>✓ site.webmanifest for PWA support</li>
+                    <li>✓ humans.txt for team credits (optional but recommended)</li>
+                    <li>✓ Proper meta tags (title, description) in HTML head</li>
+                </ul>
+            </div>
+
+            <a href="index.html" class="back-link">← Back to WebCheck</a>
+        </div>
+    </div>
+</body>
+</html>

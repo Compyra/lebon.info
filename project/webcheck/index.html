@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebCheck // Website Audit Tool</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="terminal-bg">
+    <div class="terminal-window">
+        <div class="terminal-header">
+            <span class="prompt-title">webcheck:~$</span>
+            <span class="prompt-blink">█</span>
+            <a href="about.html" class="terminal-link" style="position: absolute; right: 15px;">about</a>
+        </div>
+        <div class="terminal-body">
+            <div class="terminal-intro">
+                <span>Website Audit Tool - Check your website's essential files and configuration</span>
+            </div>
+            
+            <div class="terminal-section">
+                <span class="section-label"># Enter Website(s) to Check</span>
+                <div class="input-container">
+                    <input type="text" id="websiteInput" placeholder="example.com (or multiple: site1.com, site2.com)" class="terminal-input">
+                    <button id="checkButton" class="terminal-button">Run Audit</button>
+                </div>
+                <div class="help-text">
+                    <span class="comment">// Separate multiple domains with commas</span>
+                </div>
+            </div>
+
+            <div id="resultsContainer" class="results-container" style="display: none;">
+                <div class="terminal-section">
+                    <span class="section-label"># Audit Results</span>
+                    <div id="results"></div>
+                </div>
+            </div>
+
+            <div class="terminal-section">
+                <span class="section-label"># What We Check</span>
+                <div class="check-list">
+                    <div class="check-item">
+                        <span class="check-icon status-warning">?</span>
+                        <span>HTTPS/SSL Configuration</span>
+                    </div>
+                    <div class="check-item">
+                        <span class="check-icon">✓</span>
+                        <span>robots.txt</span>
+                    </div>
+                    <div class="check-item">
+                        <span class="check-icon">✓</span>
+                        <span>sitemap.xml</span>
+                    </div>
+                    <div class="check-item">
+                        <span class="check-icon">✓</span>
+                        <span>security.txt</span>
+                    </div>
+                    <div class="check-item">
+                        <span class="check-icon">✓</span>
+                        <span>favicon.ico</span>
+                    </div>
+                    <div class="check-item">
+                        <span class="check-icon">✓</span>
+                        <span>404 Error Page</span>
+                    </div>
+                    <div class="check-item">
+                        <span class="check-icon">✓</span>
+                        <span>site.webmanifest</span>
+                    </div>
+                    <div class="check-item">
+                        <span class="check-icon">✓</span>
+                        <span>humans.txt</span>
+                    </div>
+                    <div class="check-item">
+                        <span class="check-icon">✓</span>
+                        <span>Meta Tags (Title, Description)</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

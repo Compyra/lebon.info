@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meta Tag Viewer // WebCheck</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="terminal-bg">
+    <div class="terminal-window">
+        <div class="terminal-header">
+            <span class="prompt-title">webcheck/meta:~$</span>
+            <span class="prompt-blink">█</span>
+            <a href="index.html" class="terminal-link" style="position: absolute; right: 15px;">← back</a>
+        </div>
+        <div class="terminal-body">
+            <div class="terminal-intro">
+                <span>Meta Tag & Head Viewer - Inspect the &lt;head&gt; section of any website</span>
+            </div>
+            
+            <div class="terminal-section">
+                <span class="section-label"># Enter Website URL</span>
+                <div class="input-container">
+                    <input type="text" id="urlInput" placeholder="example.com" class="terminal-input">
+                    <button id="fetchButton" class="terminal-button">Fetch Meta Tags</button>
+                </div>
+                <div class="help-text">
+                    <span class="comment">// Enter a domain or full URL</span>
+                </div>
+            </div>
+
+            <div id="loadingContainer" class="loading-container" style="display: none;">
+                <div class="loading">Fetching webpage...</div>
+            </div>
+
+            <div id="errorContainer" class="error-container" style="display: none;">
+                <div class="terminal-section">
+                    <span class="section-label"># Error</span>
+                    <div id="errorMessage" class="error-message"></div>
+                </div>
+            </div>
+
+            <div id="resultsContainer" class="results-container" style="display: none;">
+                <div class="terminal-section">
+                    <span class="section-label"># Page Information</span>
+                    <div id="pageInfo" class="page-info"></div>
+                </div>
+
+                <div class="terminal-section">
+                    <span class="section-label"># Meta Tags</span>
+                    <div id="metaTags" class="meta-tags"></div>
+                </div>
+
+                <div class="terminal-section">
+                    <span class="section-label"># Link Tags</span>
+                    <div id="linkTags" class="link-tags"></div>
+                </div>
+
+                <div class="terminal-section">
+                    <span class="section-label"># Other Head Elements</span>
+                    <div id="otherTags" class="other-tags"></div>
+                </div>
+
+                <div class="terminal-section">
+                    <span class="section-label"># Full &lt;head&gt; Section</span>
+                    <div class="code-block">
+                        <pre id="fullHead"></pre>
+                    </div>
+                </div>
+            </div>
+
+            <div class="terminal-section">
+                <span class="section-label"># How to Use</span>
+                <div class="help-content">
+                    <p>You can access this page in two ways:</p>
+                    <ul>
+                        <li>Use the input field above to enter a URL and click "Fetch Meta Tags"</li>
+                        <li>Use a query parameter: <code>meta.html?url=example.com</code></li>
+                    </ul>
+                    <p class="warning-text">Note: Due to CORS restrictions, some websites may not be accessible. In that case, you'll be shown a link to view the page source directly.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="meta.js"></script>
+</body>
+</html>
