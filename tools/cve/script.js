@@ -103,8 +103,8 @@ document.addEventListener('DOMContentLoaded', async () => {
         blocked = true;
         break;
       }
-      // small delay to reduce popup-blocker heuristics
-      await new Promise(r => setTimeout(r, 250));
+      // very small delay to reduce popup-blocker heuristics
+      await new Promise(r => setTimeout(r, 25));
     }
 
     btn.removeAttribute('aria-busy');

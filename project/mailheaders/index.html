@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email Header Analyzer</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <button id="themeToggle" class="theme-toggle" title="Toggle Dark/Light Theme">
+            <svg class="sun-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="5"/>
+                <line x1="12" y1="1" x2="12" y2="3"/>
+                <line x1="12" y1="21" x2="12" y2="23"/>
+                <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+                <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+                <line x1="1" y1="12" x2="3" y2="12"/>
+                <line x1="21" y1="12" x2="23" y2="12"/>
+                <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+                <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+            </svg>
+            <svg class="moon-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+            </svg>
+        </button>
+        
+        <header>
+            <h1>Email Header Analyzer</h1>
+            <p class="subtitle">Analyze email headers for security and authenticity</p>
+        </header>
+
+        <div class="input-section">
+            <div class="button-group">
+                <button id="pasteBtn" class="paste-btn">Paste Headers</button>
+                <button id="toggleTextbox" class="toggle-btn" title="Toggle manual input">
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+                        <path d="M10 3L8.5 4.5L13 9H3v2h10l-4.5 4.5L10 17l7-7z"/>
+                    </svg>
+                </button>
+            </div>
+            
+            <div id="textboxContainer" class="textbox-container hidden">
+                <textarea id="headersInput" placeholder="Paste email headers here..."></textarea>
+                <button id="analyzeBtn" class="analyze-btn">Analyze Headers</button>
+            </div>
+        </div>
+
+        <div id="results" class="results hidden">
+            <div class="security-summary">
+                <h2>Security Analysis</h2>
+                <div id="securityChecks" class="security-checks"></div>
+            </div>
+
+            <div class="sender-info">
+                <h2>Sender Information</h2>
+                <div id="senderInfo" class="info-grid"></div>
+            </div>
+
+            <div class="relay-timeline">
+                <h2>Email Relay Timeline</h2>
+                <div id="relayTimeline" class="timeline"></div>
+            </div>
+
+            <div class="all-headers">
+                <h2>All Headers</h2>
+                <div id="allHeaders" class="headers-list"></div>
+            </div>
+        </div>
+
+        <div id="emptyState" class="empty-state">
+            <svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+            </svg>
+            <p>Paste email headers to analyze</p>
+            <p class="hint">Press Ctrl+V or click "Paste Headers" button</p>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

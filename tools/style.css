@@ -393,6 +393,7 @@ h1 {
     margin: 0 0 10px 0;
     text-shadow: 0 0 5px #00ff00;
     font-size: 18px;
+    padding-right: 120px;
 }
 
 .tool-type {
@@ -549,8 +550,8 @@ h1 {
     position: relative;
 }
 
-/* Verified indicator in compact view */
-.tool-name .verified-stamp {
+/* Verified stamp - applies to both grid and compact view */
+.verified-stamp {
     display: inline-block;
     padding: 2px 6px;
     background-color: transparent;
@@ -566,7 +567,6 @@ h1 {
     font-family: 'Courier New', monospace;
     letter-spacing: 0.5px;
     transform: rotate(-3deg);
-    display: inline-block;
     opacity: 0.9;
     text-shadow: 0 0 2px #00ff00;
 }
@@ -1041,6 +1041,10 @@ body.bright-theme #searchInput:focus {
     box-shadow: 0 0 0 1px #0078d4;
 }
 
+body.bright-theme #searchInput::placeholder {
+    color: #605e5c;
+}
+
 body.bright-theme .filter-container {
     background-color: #faf9f8;
     border: 1px solid #c8c6c4;
@@ -1066,6 +1070,10 @@ body.bright-theme .filter-btn.active {
     background-color: #0078d4;
     color: #ffffff;
     border-color: #0078d4;
+}
+
+body.bright-theme .filter-separator {
+    background: linear-gradient(to right, transparent, #c8c6c4, transparent);
 }
 
 body.bright-theme .view-btn {
@@ -1111,6 +1119,7 @@ body.bright-theme .tool-card h3 {
     font-family: 'Segoe UI', sans-serif;
     font-weight: 600;
     text-shadow: none;
+    padding-right: 120px;
 }
 
 body.bright-theme .tool-desc {
@@ -1124,23 +1133,32 @@ body.bright-theme .checkbox-label span {
 }
 
 body.bright-theme .verified-stamp {
-    color: #0e6b0e;
-    border: 2px solid #0e6b0e;
+    color: #8764b8;
+    border: 2px solid #8764b8;
     font-family: 'Segoe UI', sans-serif;
+    background-color: #f3f0f9;
+    box-shadow: 0 1px 2px rgba(135, 100, 184, 0.2) !important;
+    text-shadow: none !important;
+    opacity: 1;
 }
 
 body.bright-theme .verified-stamp.gdpr-stamp {
-    background: linear-gradient(135deg, #2b7de9 0%, #f4b942 100%);
-    color: #1a1a1a;
-    border: 2px solid #f4b942;
-    box-shadow: 0 0 6px rgba(43, 125, 233, 0.4), 0 0 3px rgba(244, 185, 66, 0.4);
-    text-shadow: 0 0 1px rgba(244, 185, 66, 0.6);
+    background: linear-gradient(135deg, #0078d4 0%, #ffc83d 100%);
+    color: #000000;
+    border: 2px solid #ffc83d;
+    box-shadow: 0 1px 3px rgba(0, 120, 212, 0.3) !important;
+    text-shadow: none !important;
+    opacity: 1;
 }
 
 body.bright-theme .tool-card[data-verified="true"]::before {
     color: #0e6b0e;
     border: 3px solid #0e6b0e;
     font-family: 'Segoe UI', sans-serif;
+    background-color: #f3f9f1;
+    box-shadow: 0 1px 3px rgba(14, 107, 14, 0.2) !important;
+    text-shadow: none !important;
+    opacity: 1;
 }
 
 body.bright-theme .badge {
