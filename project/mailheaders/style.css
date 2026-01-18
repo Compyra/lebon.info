@@ -271,8 +271,8 @@ body.dark-theme .all-headers h2 {
 .security-check {
     padding: 15px;
     border-radius: 8px;
-    border-left:var(--input-bg);
-    transition: background 0.3s easelid;
+    border-left: 4px solid var(--border-color);
+    transition: background 0.3s ease;
     background: #f9fafb;
 }
 
@@ -326,8 +326,7 @@ body.dark-theme .security-check.neutral {
 
 .check-value {
     font-size: 0.95rem;
-    color: var(--text-secondary)
-    font-size: 0.95rem;
+    color: var(--text-secondary);
 }
 
 .info-grid {
@@ -415,19 +414,19 @@ body.dark-theme .header-item.suspicious {
 }
 
 .header-name {
-    font-wevar(--text-header);
+    font-weight: 700;
+    color: var(--text-header);
     margin-right: 10px;
 }
 
 .header-value {
-    color: var(--text-secondary)
-    color: #4b5563;
+    color: var(--text-secondary);
 }
 
 .empty-state {
     text-align: center;
-    paddingvar(--header-text)x 20px;
-    color: white;
+    padding: 60px 20px;
+    color: var(--text-header);
 }
 
 .empty-state.hidden {
@@ -609,7 +608,6 @@ body.dark-theme .timeline-number {
         grid-template-columns: 1fr;
         gap: 2px;
     }
-}
     
     .input-section,
     .results {
