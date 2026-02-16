@@ -571,6 +571,10 @@ button[type="submit"]:active {
     color: #f44336 !important;
 }
 
+.danger-zone label {
+    color: black;
+}
+
 .btn-danger {
     background: #f44336;
     color: white;

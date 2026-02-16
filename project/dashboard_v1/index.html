@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Window View - Old Town</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="lucide-icons-list.js"></script>
+</head>
+<body>
+    <!-- Main Container -->
+    <div class="room-container">
+        <!-- Old Bookcase -->
+        <div class="bookcase">
+            <!-- Wooden Beams/Support Structure -->
+            <div class="bookcase-frame">
+                <!-- Vertical outer beams (full height) -->
+                <div class="beam beam-vertical beam-left-outer"></div>
+                <div class="beam beam-vertical beam-right-outer"></div>
+                
+                <!-- Top frame beams -->
+                <div class="beam beam-horizontal beam-top"></div>
+                
+                <!-- Left side vertical dividers (between shelves) -->
+                <div class="beam beam-vertical beam-left-divider-1"></div>
+                <div class="beam beam-vertical beam-left-divider-2"></div>
+                
+                <!-- Right side vertical dividers (between shelves) -->
+                <div class="beam beam-vertical beam-right-divider-1"></div>
+                <div class="beam beam-vertical beam-right-divider-2"></div>
+                
+                <!-- Bottom frame beam -->
+                <div class="beam beam-horizontal beam-bottom"></div>
+                
+                <!-- Corner brackets -->
+                <div class="bracket bracket-top-left"></div>
+                <div class="bracket bracket-top-right"></div>
+                <div class="bracket bracket-bottom-left"></div>
+                <div class="bracket bracket-bottom-right"></div>
+            </div>
+
+            <!-- Top Shelf -->
+            <div class="shelf shelf-top">
+                <div class="shelf-back"></div>
+                <div class="shelf-items" id="topShelfItems"></div>
+            </div>
+
+            <!-- Left Shelves -->
+            <div class="shelf-column shelf-left">
+                <div class="shelf shelf-left-top">
+                    <div class="shelf-back"></div>
+                    <div class="shelf-items vertical" id="leftTopShelfItems"></div>
+                </div>
+                <div class="shelf shelf-left-middle">
+                    <div class="shelf-back"></div>
+                    <div class="shelf-items vertical" id="leftMiddleShelfItems"></div>
+                </div>
+                <div class="shelf shelf-left-bottom">
+                    <div class="shelf-back"></div>
+                    <div class="shelf-items vertical" id="leftBottomShelfItems"></div>
+                </div>
+            </div>
+
+            <!-- Right Shelves -->
+            <div class="shelf-column shelf-right">
+                <div class="shelf shelf-right-top">
+                    <div class="shelf-back"></div>
+                    <div class="shelf-items vertical" id="rightTopShelfItems"></div>
+                </div>
+                <div class="shelf shelf-right-middle">
+                    <div class="shelf-back"></div>
+                    <div class="shelf-items vertical" id="rightMiddleShelfItems"></div>
+                </div>
+                <div class="shelf shelf-right-bottom">
+                    <div class="shelf-back"></div>
+                    <div class="shelf-items vertical" id="rightBottomShelfItems"></div>
+                </div>
+            </div>
+
+            <!-- Bottom Shelf -->
+            <div class="shelf shelf-bottom">
+                <div class="shelf-back"></div>
+                <div class="shelf-items" id="bottomShelfItems"></div>
+            </div>
+        </div>
+
+        <!-- Window View with 3D Windowsill -->
+        <div class="window-view">
+            <!-- 3D Windowsill -->
+            <div class="windowsill">
+                <div class="windowsill-top"></div>
+                <div class="windowsill-front"></div>
+                <div class="windowsill-left"></div>
+                <div class="windowsill-right"></div>
+            </div>
+            <div class="window-frame">
+                <div class="window-pane left-pane">
+                    <div class="glass-reflection"></div>
+                </div>
+                <div class="window-divider vertical"></div>
+                <div class="window-pane right-pane">
+                    <div class="glass-reflection"></div>
+                </div>
+                <div class="window-divider horizontal"></div>
+            </div>
+            
+            <!-- Old Town Scene -->
+            <div class="scene">
+                <div class="sky" id="skyGradient">
+                    <div class="stars" id="stars"></div>
+                    <div class="sun" id="sun"></div>
+                    <div class="moon" id="moon"></div>
+                    <div class="clouds">
+                        <div class="cloud cloud-1"></div>
+                        <div class="cloud cloud-2"></div>
+                        <div class="cloud cloud-3"></div>
+                    </div>
+                </div>
+                
+                <div class="town">
+                    <div class="building building-1"></div>
+                    <div class="building building-2"></div>
+                    <div class="building building-3"></div>
+                    <div class="building building-4"></div>
+                    <div class="building building-5"></div>
+                    <div class="tower"></div>
+                    <div class="church"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Wall Clock (if enabled) -->
+        <div class="wall-clock" id="wallClock" style="display: none;">
+            <div class="clock-face">
+                <div class="clock-hand hour-hand"></div>
+                <div class="clock-hand minute-hand"></div>
+                <div class="clock-hand second-hand"></div>
+                <div class="clock-center"></div>
+            </div>
+        </div>
+
+        <!-- Thermometer (if enabled) -->
+        <div class="thermometer" id="thermometer" style="display: none;">
+            <div class="thermometer-reading" id="thermometerReading">--°C</div>
+            <div class="thermometer-container">
+                <div class="thermometer-body">
+                    <div class="thermometer-mercury" id="thermometerMercury"></div>
+                    <div class="thermometer-scale"></div>
+                </div>
+                <div class="thermometer-bulb"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Settings Panel -->
+    <div class="settings-panel" id="settingsPanel">
+        <div class="settings-header">
+            <h2>
+                <i data-lucide="settings"></i>
+                Settings
+            </h2>
+            <div class="header-actions">
+                <button class="save-close-btn" id="saveCloseBtn" title="Save and Close">
+                    <i data-lucide="check"></i>
+                </button>
+                <button class="close-btn" id="closeSettingsBtn" title="Close without Saving">
+                    <i data-lucide="x"></i>
+                </button>
+            </div>
+        </div>
+
+        <div class="settings-content">
+            <!-- Clock Settings -->
+            <div class="settings-section">
+                <h3>
+                    <i data-lucide="clock"></i>
+                    Clock Settings
+                </h3>
+                <div class="setting-item">
+                    <label>
+                        <input type="checkbox" id="enableWallClock">
+                        Enable Wall Clock
+                    </label>
+                </div>
+                <div class="setting-item" id="wallClockPosition">
+                    <label>Wall Clock Position:</label>
+                    <select id="wallClockPos">
+                        <optgroup label="Above Window">
+                            <option value="top-left">Top Left</option>
+                            <option value="top-center-left">Top Center Left</option>
+                            <option value="top-center">Top Center</option>
+                            <option value="top-center-right">Top Center Right</option>
+                            <option value="top-right">Top Right</option>
+                        </optgroup>
+                        <optgroup label="Left of Window">
+                            <option value="left-top">Left Top</option>
+                            <option value="left-center-top">Left Center Top</option>
+                            <option value="left-center">Left Center</option>
+                            <option value="left-center-bottom">Left Center Bottom</option>
+                            <option value="left-bottom">Left Bottom</option>
+                        </optgroup>
+                        <optgroup label="Right of Window">
+                            <option value="right-top">Right Top</option>
+                            <option value="right-center-top">Right Center Top</option>
+                            <option value="right-center">Right Center</option>
+                            <option value="right-center-bottom">Right Center Bottom</option>
+                            <option value="right-bottom">Right Bottom</option>
+                        </optgroup>
+                        <optgroup label="Below Window">
+                            <option value="bottom-left">Bottom Left</option>
+                            <option value="bottom-center-left">Bottom Center Left</option>
+                            <option value="bottom-center">Bottom Center</option>
+                            <option value="bottom-center-right">Bottom Center Right</option>
+                            <option value="bottom-right">Bottom Right</option>
+                        </optgroup>
+                    </select>
+                </div>
+                <div class="setting-item">
+                    <label>
+                        <input type="checkbox" id="enableDigitalClock">
+                        Enable Digital Clock (on shelf)
+                    </label>
+                </div>
+                <div class="setting-item" id="digitalClockPosition">
+                    <label>Digital Clock Position:</label>
+                    <select id="digitalClockPos">
+                        <option value="top">Top Shelf</option>
+                        <option value="bottom">Bottom Shelf</option>
+                        <option value="leftTop">Left Top</option>
+                        <option value="leftMiddle">Left Middle</option>
+                        <option value="leftBottom">Left Bottom</option>
+                        <option value="rightTop">Right Top</option>
+                        <option value="rightMiddle">Right Middle</option>
+                        <option value="rightBottom">Right Bottom</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Location Settings -->
+            <div class="settings-section">
+                <h3>
+                    <i data-lucide="map-pin"></i>
+                    Location Settings
+                </h3>
+                <div class="setting-item">
+                    <label>
+                        <input type="checkbox" id="enableSunTime">
+                        Enable Sun Time Simulation
+                    </label>
+                </div>
+                <div class="setting-item">
+                    <label>Latitude:</label>
+                    <input type="number" id="latitude" step="0.1" placeholder="50.85">
+                </div>
+                <div class="setting-item">
+                    <label>Longitude:</label>
+                    <input type="number" id="longitude" step="0.1" placeholder="4.35">
+                </div>
+            </div>
+
+            <!-- Appearance Settings -->
+            <div class="settings-section">
+                <h3>
+                    <i data-lucide="palette"></i>
+                    Appearance Settings
+                </h3>
+                <div class="setting-item">
+                    <label>
+                        <input type="checkbox" id="hideWindowDivider">
+                        Hide Window Dividers
+                    </label>
+                </div>
+                <div class="setting-item">
+                    <label>
+                        <input type="checkbox" id="enableThermometer">
+                        Show Thermometer
+                    </label>
+                </div>
+                <div class="setting-item">
+                    <label>City for Temperature:</label>
+                    <input type="text" id="thermometerCity" placeholder="Brussels">
+                </div>
+                <div class="setting-item">
+                    <label>
+                        <input type="checkbox" id="fullscreenWindow">
+                        Fullscreen Window Mode
+                    </label>
+                </div>
+                <div class="setting-item">
+                    <label>
+                        <input type="checkbox" id="brickWallMode">
+                        Brick Wall Mode (instead of bookcase)
+                    </label>
+                </div>
+                <div class="setting-item">
+                    <label>Brick Wall Color:</label>
+                    <input type="color" id="brickColor" value="#8B4513">
+                </div>
+                <div class="setting-item">
+                    <label>
+                        <input type="checkbox" id="massiveBookcaseMode">
+                        Massive Bookcase (Full Screen)
+                    </label>
+                </div>
+                <div class="setting-item">
+                    <label>Background Color:</label>
+                    <input type="color" id="backgroundColor" value="#2C1810">
+                </div>
+                <div class="setting-item">
+                    <label>
+                        <input type="checkbox" id="natureMode">
+                        Nature View (instead of city)
+                    </label>
+                </div>
+            </div>
+
+            <!-- Custom Items -->
+            <div class="settings-section">
+                <h3>
+                    <i data-lucide="link"></i>
+                    Custom Items
+                </h3>
+                <div id="customItemsList"></div>
+                <button class="add-item-btn" id="addItemBtn">
+                    <i data-lucide="plus"></i>
+                    Add New Item
+                </button>
+            </div>
+
+            <!-- Save Button -->
+            <div class="settings-footer">
+                <button class="save-btn" id="saveSettingsBtn">
+                    <i data-lucide="save"></i>
+                    Save Settings
+                </button>
+                <button class="cancel-btn" id="cancelSettingsBtn">
+                    <i data-lucide="x-circle"></i>
+                    Close without Saving
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

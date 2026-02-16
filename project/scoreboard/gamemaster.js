@@ -126,6 +126,11 @@ function closeSettings() {
 
 // Load auto-logout setting
 function loadAutoLogoutSetting() {
+    // Set default to true on first page load
+    if (localStorage.getItem('gmAutoLogout') === null) {
+        localStorage.setItem('gmAutoLogout', 'true');
+    }
+    
     const autoLogout = localStorage.getItem('gmAutoLogout') === 'true';
     const checkbox = document.getElementById('autoLogoutCheckbox');
     if (checkbox) {

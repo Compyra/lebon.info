@@ -1,0 +1,1641 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+    overflow: hidden;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.toolbox-btn {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #8B4513 0%, #654321 100%);
+    border: 3px solid #3e2723;
+    cursor: pointer;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    color: #f5deb3;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+    z-index: 1000;
+}
+
+.toolbox-shelf-icon {
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    width: auto !important;
+    height: auto !important;
+    padding: 0 !important;
+}
+
+.toolbox-shelf-icon::before,
+.toolbox-shelf-icon::after {
+    display: none;
+}
+
+.toolbox-shelf-icon i {
+    width: 40px;
+    height: 40px;
+    color: #8B4513;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+}
+
+.toolbox-shelf-icon:hover {
+    transform: scale(1.2) rotate(15deg);
+    box-shadow: none !important;
+}
+
+.toolbox-shelf-icon:hover i {
+    color: #A0522D;
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.5));
+}
+
+.room-container {
+    position: relative;
+    width: 90vw;
+    height: 90vh;
+    max-width: 1200px;
+    max-height: 800px;
+}
+
+/* Old Bookcase */
+.bookcase {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 10;
+}
+
+/* Bookcase Frame - Wooden Beams */
+.bookcase-frame {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1;
+}
+
+.beam {
+    position: absolute;
+    background: linear-gradient(135deg, #3e2723 0%, #2c1810 50%, #3e2723 100%);
+    box-shadow: 
+        inset 0 2px 8px rgba(0, 0, 0, 0.7),
+        inset 0 -2px 8px rgba(101, 67, 33, 0.2),
+        0 2px 15px rgba(0, 0, 0, 0.6);
+}
+
+/* Vertical Beams */
+.beam-vertical {
+    width: 100px;
+}
+
+.beam-vertical::before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 80px,
+        rgba(0, 0, 0, 0.2) 80px,
+        rgba(0, 0, 0, 0.2) 82px
+    );
+}
+
+/* Outer vertical beams (full height) */
+.beam-left-outer {
+    left: 0;
+    top: 0;
+    bottom: 0;
+    border-right: 1px solid #1a0f08;
+}
+
+.beam-right-outer {
+    right: 0;
+    top: 0;
+    bottom: 0;
+    border-left: 1px solid #1a0f08;
+}
+
+/* Left shelf dividers (between the three left shelves) */
+.beam-left-divider-1 {
+    left: 0;
+    width: 100px;
+    top: calc(120px + 33.33% - 10px);
+    height: 20px;
+    border: 1px solid #1a0f08;
+}
+
+.beam-left-divider-2 {
+    left: 0;
+    width: 100px;
+    top: calc(120px + 66.66% - 10px);
+    height: 20px;
+    border: 1px solid #1a0f08;
+}
+
+/* Right shelf dividers (between the three right shelves) */
+.beam-right-divider-1 {
+    right: 0;
+    width: 100px;
+    top: calc(120px + 33.33% - 10px);
+    height: 20px;
+    border: 1px solid #1a0f08;
+}
+
+.beam-right-divider-2 {
+    right: 0;
+    width: 100px;
+    top: calc(120px + 66.66% - 10px);
+    height: 20px;
+    border: 1px solid #1a0f08;
+}
+
+/* Horizontal Beams */
+.beam-horizontal {
+    height: 100px;
+    left: 0;
+    right: 0;
+}
+
+.beam-horizontal::before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: repeating-linear-gradient(
+        90deg,
+        transparent,
+        transparent 80px,
+        rgba(0, 0, 0, 0.2) 80px,
+        rgba(0, 0, 0, 0.2) 82px
+    );
+}
+
+.beam-top {
+    top: 0;
+    border-bottom: 1px solid #1a0f08;
+}
+
+.beam-bottom {
+    bottom: 0;
+    border-top: 1px solid #1a0f08;
+}
+
+/* Corner Brackets for authenticity */
+.bracket {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    z-index: 12;
+}
+
+.bracket::before,
+.bracket::after {
+    content: '';
+    position: absolute;
+    background: linear-gradient(135deg, #6d4c41 0%, #4e342e 100%);
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+.bracket::before {
+    width: 8px;
+    height: 100%;
+}
+
+.bracket::after {
+    width: 100%;
+    height: 8px;
+}
+
+.bracket-top-left {
+    top: 15px;
+    left: 15px;
+}
+
+.bracket-top-left::before {
+    left: 0;
+}
+
+.bracket-top-left::after {
+    top: 0;
+}
+
+.bracket-top-right {
+    top: 15px;
+    right: 15px;
+}
+
+.bracket-top-right::before {
+    right: 0;
+}
+
+.bracket-top-right::after {
+    top: 0;
+}
+
+.bracket-bottom-left {
+    bottom: 15px;
+    left: 15px;
+}
+
+.bracket-bottom-left::before {
+    left: 0;
+}
+
+.bracket-bottom-left::after {
+    bottom: 0;
+}
+
+.bracket-bottom-right {
+    bottom: 15px;
+    right: 15px;
+}
+
+.bracket-bottom-right::before {
+    right: 0;
+}
+
+.bracket-bottom-right::after {
+    bottom: 0;
+}
+
+.shelf {
+    position: absolute;
+    background: linear-gradient(135deg, #5d4037 0%, #3e2723 50%, #5d4037 100%);
+    box-shadow: 
+        inset 0 2px 5px rgba(0, 0, 0, 0.6),
+        inset 0 -2px 5px rgba(101, 67, 33, 0.3),
+        0 4px 10px rgba(0, 0, 0, 0.4);
+    border: 2px solid #3e2723;
+    z-index: 11;
+}
+
+/* Wooden background for shelves */
+.shelf-back {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+        linear-gradient(135deg, 
+            #4a2f1a 0%, 
+            #5d4037 25%, 
+            #3e2723 50%, 
+            #5d4037 75%, 
+            #4a2f1a 100%);
+    z-index: -1;
+}
+
+/* Wood planks texture on shelf back */
+.shelf-back::before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: repeating-linear-gradient(
+        90deg,
+        transparent,
+        transparent 45px,
+        rgba(0, 0, 0, 0.15) 45px,
+        rgba(0, 0, 0, 0.15) 47px,
+        transparent 47px,
+        transparent 92px,
+        rgba(0, 0, 0, 0.1) 92px,
+        rgba(0, 0, 0, 0.1) 93px
+    );
+}
+
+/* Wood grain detail */
+.shelf-back::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 3px,
+        rgba(0, 0, 0, 0.03) 3px,
+        rgba(0, 0, 0, 0.03) 4px
+    );
+    opacity: 0.7;
+}
+
+/* Wood grain texture */
+.shelf::before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: repeating-linear-gradient(
+        90deg,
+        transparent,
+        transparent 60px,
+        rgba(0, 0, 0, 0.15) 60px,
+        rgba(0, 0, 0, 0.15) 62px
+    );
+    pointer-events: none;
+}
+
+/* Shelf shadow effect */
+.shelf::after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: 10px;
+    right: 10px;
+    height: 8px;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.3), transparent);
+    pointer-events: none;
+}
+
+.shelf-top {
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 100px;
+    border-radius: 0 0 8px 8px;
+}
+
+.shelf-bottom {
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 100px;
+    border-radius: 8px 8px 0 0;
+}
+
+.shelf-column {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.shelf-left {
+    top: 120px;
+    bottom: 120px;
+    left: 0;
+    width: 100px;
+}
+
+.shelf-right {
+    top: 120px;
+    bottom: 120px;
+    right: 0;
+    width: 100px;
+}
+
+.shelf-left-top,
+.shelf-left-middle,
+.shelf-left-bottom,
+.shelf-right-top,
+.shelf-right-middle,
+.shelf-right-bottom {
+    flex: 1;
+    position: relative;
+    border-radius: 8px;
+}
+
+.shelf-items {
+    display: flex;
+    gap: 15px;
+    padding: 15px;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.shelf-items.vertical {
+    flex-direction: column;
+}
+
+/* Shelf Items (Books/Icons) */
+.shelf-item {
+    width: auto;
+    height: auto;
+    background: transparent;
+    border: none;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    color: #8B4513;
+    text-decoration: none;
+    box-shadow: none;
+    position: relative;
+    padding: 5px;
+}
+
+.shelf-item i {
+    width: 35px;
+    height: 35px;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+}
+
+/* Remove book spine effects */
+.shelf-item::before,
+.shelf-item::after {
+    display: none;
+}
+
+.shelf-item:hover {
+    transform: scale(1.2);
+    color: #A0522D;
+}
+
+.shelf-item:hover i {
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.5));
+}
+
+.shelf-item.clock {
+    width: auto;
+    min-width: 80px;
+    height: 45px;
+    font-size: 13px;
+    font-weight: bold;
+    padding: 8px 12px;
+    background: rgba(101, 67, 33, 0.3);
+    border: 1px solid #654321;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+}
+
+.shelf-item.clock:hover {
+    transform: scale(1.05);
+    background: rgba(101, 67, 33, 0.5);
+}
+
+/* Window View */
+.window-view {
+    position: absolute;
+    top: 120px;
+    left: 120px;
+    right: 120px;
+    bottom: 120px;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.5);
+    z-index: 5;
+}
+
+/* 3D Windowsill */
+.windowsill {
+    position: absolute;
+    bottom: -35px;
+    left: -15px;
+    right: -15px;
+    height: 40px;
+    z-index: 30;
+}
+
+.windowsill-top {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 15px;
+    background: linear-gradient(135deg, #8B4513 0%, #A0522D 50%, #8B4513 100%);
+    border-radius: 8px 8px 0 0;
+    box-shadow: 
+        0 -2px 10px rgba(0, 0, 0, 0.3),
+        inset 0 2px 5px rgba(255, 255, 255, 0.2),
+        inset 0 -2px 5px rgba(0, 0, 0, 0.3);
+    border: 2px solid #654321;
+}
+
+.windowsill-front {
+    position: absolute;
+    top: 15px;
+    left: 5px;
+    right: 5px;
+    height: 25px;
+    background: linear-gradient(to bottom, #654321 0%, #4a2f1a 100%);
+    box-shadow: 
+        0 4px 15px rgba(0, 0, 0, 0.5),
+        inset 0 2px 3px rgba(0, 0, 0, 0.4);
+    border-left: 2px solid #3e2723;
+    border-right: 2px solid #3e2723;
+    border-bottom: 2px solid #3e2723;
+}
+
+.windowsill-left {
+    position: absolute;
+    top: 15px;
+    left: 0;
+    width: 8px;
+    height: 25px;
+    background: linear-gradient(to right, #4a2f1a 0%, #654321 100%);
+    transform: skewY(-45deg);
+    transform-origin: top left;
+    box-shadow: inset 2px 0 3px rgba(0, 0, 0, 0.4);
+}
+
+.windowsill-right {
+    position: absolute;
+    top: 15px;
+    right: 0;
+    width: 8px;
+    height: 25px;
+    background: linear-gradient(to left, #4a2f1a 0%, #654321 100%);
+    transform: skewY(45deg);
+    transform-origin: top right;
+    box-shadow: inset -2px 0 3px rgba(0, 0, 0, 0.4);
+}
+
+.window-frame {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 5;
+    pointer-events: none;
+}
+
+.window-divider {
+    position: absolute;
+    background: linear-gradient(135deg, #3e2723 0%, #5d4037 50%, #3e2723 100%);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.window-divider.vertical {
+    left: 50%;
+    top: 0;
+    bottom: 0;
+    width: 12px;
+    transform: translateX(-50%);
+}
+
+.window-divider.horizontal {
+    top: 50%;
+    left: 0;
+    right: 0;
+    height: 12px;
+    transform: translateY(-50%);
+}
+
+.window-pane {
+    position: absolute;
+    width: 50%;
+    height: 50%;
+}
+
+.glass-reflection {
+    position: absolute;
+    top: 10%;
+    left: 10%;
+    width: 30%;
+    height: 40%;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, transparent 100%);
+    border-radius: 10px;
+    pointer-events: none;
+}
+
+/* Scene */
+.scene {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.sky {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 70%;
+    background: linear-gradient(to bottom, #1e3a8a 0%, #3b82f6 50%, #93c5fd 100%);
+    transition: background 2s ease;
+}
+
+.sky.night {
+    background: linear-gradient(to bottom, #0f172a 0%, #1e293b 50%, #334155 100%);
+}
+
+.sky.dawn {
+    background: linear-gradient(to bottom, #4c1d95 0%, #f59e0b 50%, #fbbf24 100%);
+}
+
+.sky.dusk {
+    background: linear-gradient(to bottom, #7c2d12 0%, #ea580c 50%, #fb923c 100%);
+}
+
+.stars {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 2s ease;
+}
+
+.stars.visible {
+    opacity: 1;
+}
+
+.stars::before,
+.stars::after {
+    content: '';
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    background: white;
+    border-radius: 50%;
+    box-shadow: 
+        100px 50px white,
+        200px 80px white,
+        300px 30px white,
+        400px 100px white,
+        150px 150px white,
+        250px 120px white,
+        350px 70px white,
+        450px 140px white,
+        500px 90px white,
+        550px 160px white,
+        600px 40px white,
+        650px 110px white;
+}
+
+.sun {
+    position: absolute;
+    width: 80px;
+    height: 80px;
+    background: radial-gradient(circle, #fbbf24 0%, #f59e0b 100%);
+    border-radius: 50%;
+    box-shadow: 0 0 40px #fbbf24;
+    top: 20%;
+    right: 20%;
+    transition: all 2s ease;
+}
+
+.sun.hidden {
+    opacity: 0;
+    transform: translateY(100px);
+}
+
+.moon {
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    background: radial-gradient(circle, #f1f5f9 0%, #cbd5e1 100%);
+    border-radius: 50%;
+    box-shadow: 0 0 30px rgba(241, 245, 249, 0.5);
+    top: 15%;
+    left: 20%;
+    opacity: 0;
+    transition: all 2s ease;
+}
+
+.moon.visible {
+    opacity: 1;
+}
+
+.clouds {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.cloud {
+    position: absolute;
+    background: rgba(255, 255, 255, 0.7);
+    border-radius: 100px;
+    animation: floatCloud 60s infinite linear;
+}
+
+.cloud::before,
+.cloud::after {
+    content: '';
+    position: absolute;
+    background: rgba(255, 255, 255, 0.7);
+    border-radius: 100px;
+}
+
+.cloud-1 {
+    width: 100px;
+    height: 40px;
+    top: 20%;
+    left: -100px;
+}
+
+.cloud-1::before {
+    width: 50px;
+    height: 50px;
+    top: -25px;
+    left: 10px;
+}
+
+.cloud-1::after {
+    width: 60px;
+    height: 40px;
+    top: -15px;
+    right: 10px;
+}
+
+.cloud-2 {
+    width: 120px;
+    height: 45px;
+    top: 40%;
+    left: -150px;
+    animation-delay: -20s;
+}
+
+.cloud-2::before {
+    width: 55px;
+    height: 55px;
+    top: -28px;
+    left: 15px;
+}
+
+.cloud-2::after {
+    width: 70px;
+    height: 45px;
+    top: -18px;
+    right: 15px;
+}
+
+.cloud-3 {
+    width: 90px;
+    height: 35px;
+    top: 60%;
+    left: -120px;
+    animation-delay: -40s;
+}
+
+.cloud-3::before {
+    width: 45px;
+    height: 45px;
+    top: -22px;
+    left: 12px;
+}
+
+.cloud-3::after {
+    width: 55px;
+    height: 35px;
+    top: -13px;
+    right: 12px;
+}
+
+@keyframes floatCloud {
+    from { transform: translateX(0); }
+    to { transform: translateX(calc(100vw + 200px)); }
+}
+
+/* Town Buildings */
+.town {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 30%;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-evenly;
+    padding: 0 20px;
+    gap: 10px;
+    flex-wrap: nowrap;
+    overflow: visible;
+}
+
+.building {
+    background: linear-gradient(to bottom, #7c3aed 0%, #6d28d9 100%);
+    border-radius: 5px 5px 0 0;
+    position: relative;
+    box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.3);
+    flex-shrink: 0;
+    flex-grow: 0;
+    display: block;
+}
+
+.building::before {
+    content: '';
+    position: absolute;
+    top: 10px;
+    left: 10%;
+    width: 80%;
+    height: 20px;
+    background: repeating-linear-gradient(
+        90deg,
+        #fbbf24,
+        #fbbf24 8px,
+        transparent 8px,
+        transparent 18px
+    );
+}
+
+.building-1 {
+    width: 80px;
+    height: 120px;
+}
+
+.building-2 {
+    width: 60px;
+    height: 90px;
+    background: linear-gradient(to bottom, #ef4444 0%, #dc2626 100%);
+}
+
+.building-3 {
+    width: 70px;
+    height: 140px;
+}
+
+.building-4 {
+    width: 90px;
+    height: 100px;
+    background: linear-gradient(to bottom, #f59e0b 0%, #d97706 100%);
+}
+
+.building-5 {
+    width: 65px;
+    height: 110px;
+    background: linear-gradient(to bottom, #10b981 0%, #059669 100%);
+}
+
+.tower {
+    width: 40px;
+    height: 180px;
+    background: linear-gradient(to bottom, #64748b 0%, #475569 100%);
+    border-radius: 20px 20px 0 0;
+    flex-grow: 0;
+    display: block;
+    position: relative;
+    flex-shrink: 0;
+}
+
+.tower::before {
+    content: '';
+    position: absolute;
+    top: -30px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 0;
+    border-left: 25px solid transparent;
+    border-right: 25px solid transparent;
+    border-bottom: 40px solid #475569;
+}
+
+.church {
+    width: 100px;
+    height: 150px;
+    background: linear-gradient(to bottom, #8b5cf6 0%, #7c3aed 100%);
+    border-radius: 10px 10px 0 0;
+    flex-grow: 0;
+    display: block;
+    position: relative;
+    flex-shrink: 0;
+}
+
+.church::before {
+    content: '';
+    position: absolute;
+    top: -50px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 0;
+    border-left: 50px solid transparent;
+    border-right: 50px solid transparent;
+    border-bottom: 60px solid #7c3aed;
+}
+
+/* Wall Clock */
+.wall-clock {
+    position: absolute;
+    width: 80px;
+    height: 80px;
+    z-index: 12;
+    transition: all 0.3s ease;
+}
+
+/* Top positions (on top shelf wooden back) */
+.wall-clock.top-left {
+    top: 10px;
+    left: 20px;
+}
+
+.wall-clock.top-center-left {
+    top: 10px;
+    left: calc(20% - 40px);
+}
+
+.wall-clock.top-center {
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.wall-clock.top-center-right {
+    top: 10px;
+    right: calc(20% - 40px);
+}
+
+.wall-clock.top-right {
+    top: 10px;
+    right: 20px;
+}
+
+/* Left positions (on left shelves wooden back) */
+.wall-clock.left-top {
+    top: 130px;
+    left: 10px;
+}
+
+.wall-clock.left-center-top {
+    top: calc(30% + 60px);
+    left: 10px;
+}
+
+.wall-clock.left-center {
+    top: 50%;
+    left: 10px;
+    transform: translateY(-50%);
+}
+
+.wall-clock.left-center-bottom {
+    bottom: calc(30% + 60px);
+    left: 10px;
+}
+
+.wall-clock.left-bottom {
+    bottom: 130px;
+    left: 10px;
+}
+
+/* Right positions (on right shelves wooden back) */
+.wall-clock.right-top {
+    top: 130px;
+    right: 10px;
+}
+
+.wall-clock.right-center-top {
+    top: calc(30% + 60px);
+    right: 10px;
+}
+
+.wall-clock.right-center {
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+}
+
+.wall-clock.right-center-bottom {
+    bottom: calc(30% + 60px);
+    right: 10px;
+}
+
+.wall-clock.right-bottom {
+    bottom: 130px;
+    right: 10px;
+}
+
+/* Bottom positions (on bottom shelf wooden back) */
+.wall-clock.bottom-left {
+    bottom: 10px;
+    left: 20px;
+}
+
+.wall-clock.bottom-center-left {
+    bottom: 10px;
+    left: calc(20% - 40px);
+}
+
+.wall-clock.bottom-center {
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.wall-clock.bottom-center-right {
+    bottom: 10px;
+    right: calc(20% - 40px);
+}
+
+.wall-clock.bottom-right {
+    bottom: 10px;
+    right: 20px;
+}
+
+.clock-face {
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle, #f5deb3 0%, #d2b48c 100%);
+    border-radius: 50%;
+    border: 8px solid #8B4513;
+    position: relative;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4), inset 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+.clock-hand {
+    position: absolute;
+    bottom: 50%;
+    left: 50%;
+    transform-origin: bottom center;
+    background: #3e2723;
+    border-radius: 10px 10px 0 0;
+}
+
+.hour-hand {
+    width: 6px;
+    height: 35px;
+    margin-left: -3px;
+    z-index: 3;
+}
+
+.minute-hand {
+    width: 4px;
+    height: 50px;
+    margin-left: -2px;
+    z-index: 4;
+}
+
+.second-hand {
+    width: 2px;
+    height: 55px;
+    margin-left: -1px;
+    background: #dc2626;
+    z-index: 5;
+}
+
+.clock-center {
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    background: #3e2723;
+    border-radius: 50%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 6;
+}
+
+/* Settings Panel */
+.settings-panel {
+    position: fixed;
+    top: 0;
+    right: -450px;
+    width: 450px;
+    height: 100vh;
+    background: linear-gradient(135deg, #2d1b00 0%, #1a1106 100%);
+    box-shadow: -5px 0 30px rgba(0, 0, 0, 0.5);
+    z-index: 999;
+    transition: right 0.3s ease;
+    overflow-y: auto;
+    color: #f5deb3;
+}
+
+.settings-panel.open {
+    right: 0;
+}
+
+.settings-header {
+    position: sticky;
+    top: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    background: rgba(101, 67, 33, 0.95);
+    border-bottom: 2px solid #654321;
+    z-index: 10;
+    backdrop-filter: blur(10px);
+}
+
+.settings-header h2 {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 24px;
+}
+
+.header-actions {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.save-close-btn {
+    width: 40px;
+    height: 40px;
+    border: none;
+    background: rgba(34, 197, 94, 0.2);
+    color: #f5deb3;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.save-close-btn:hover {
+    background: rgba(34, 197, 94, 0.4);
+    transform: scale(1.1);
+}
+
+.close-btn {
+    width: 40px;
+    height: 40px;
+    border: none;
+    background: rgba(220, 38, 38, 0.2);
+    color: #f5deb3;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.close-btn:hover {
+    background: rgba(220, 38, 38, 0.4);
+    transform: rotate(90deg);
+}
+
+.settings-content {
+    padding: 20px;
+}
+
+.settings-section {
+    margin-bottom: 30px;
+    padding: 20px;
+    background: rgba(101, 67, 33, 0.2);
+    border-radius: 10px;
+    border: 1px solid #654321;
+}
+
+.settings-section h3 {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 15px;
+    font-size: 18px;
+    color: #fbbf24;
+}
+
+.setting-item {
+    margin-bottom: 15px;
+}
+
+.setting-item label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.setting-item input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+}
+
+.setting-item input[type="number"],
+.setting-item input[type="text"],
+.setting-item select {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    background: rgba(101, 67, 33, 0.3);
+    border: 1px solid #654321;
+    border-radius: 5px;
+    color: #f5deb3;
+    font-size: 14px;
+}
+
+.setting-item input[type="text"]:focus,
+.setting-item input[type="number"]:focus,
+.setting-item select:focus {
+    outline: none;
+    border-color: #fbbf24;
+}
+
+/* Icon Selector */
+.icon-selector {
+    position: relative;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.icon-selector input[type="text"] {
+    flex: 1;
+}
+
+.icon-preview {
+    width: 40px;
+    height: 40px;
+    background: rgba(101, 67, 33, 0.4);
+    border: 1px solid #654321;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fbbf24;
+}
+
+.icon-dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 40px;
+    max-height: 300px;
+    overflow-y: auto;
+    background: rgba(45, 27, 0, 0.98);
+    border: 1px solid #654321;
+    border-radius: 5px;
+    margin-top: 5px;
+    z-index: 1000;
+    display: none;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+}
+
+.icon-option {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px;
+    cursor: pointer;
+    transition: background 0.2s ease;
+    color: #f5deb3;
+}
+
+.icon-option:hover {
+    background: rgba(251, 191, 36, 0.2);
+}
+
+.icon-option.no-results {
+    cursor: default;
+    color: #9ca3af;
+    font-style: italic;
+}
+
+.icon-option.no-results:hover {
+    background: transparent;
+}
+
+.icon-option i {
+    width: 20px;
+    height: 20px;
+    color: #fbbf24;
+}
+
+.icon-option span {
+    font-size: 14px;
+}
+
+/* Icon Dropdown Scrollbar */
+.icon-dropdown::-webkit-scrollbar {
+    width: 6px;
+}
+
+.icon-dropdown::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.2);
+}
+
+.icon-dropdown::-webkit-scrollbar-thumb {
+    background: #654321;
+    border-radius: 3px;
+}
+
+.icon-dropdown::-webkit-scrollbar-thumb:hover {
+    background: #8B4513;
+}
+
+.custom-item {
+    background: rgba(101, 67, 33, 0.3);
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #654321;
+}
+
+.custom-item-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.item-actions {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+}
+
+.move-item-btn {
+    background: rgba(59, 130, 246, 0.3);
+    border: none;
+    color: #f5deb3;
+    padding: 5px 8px;
+    border-radius: 5px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    width: 32px;
+    height: 32px;
+}
+
+.move-item-btn:hover:not(:disabled) {
+    background: rgba(59, 130, 246, 0.5);
+}
+
+.move-item-btn:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+}
+
+.move-item-btn i {
+    width: 16px;
+    height: 16px;
+}
+
+.delete-item-btn {
+    background: rgba(220, 38, 38, 0.3);
+    border: none;
+    color: #f5deb3;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    transition: all 0.3s ease;
+}
+
+.delete-item-btn:hover {
+    background: rgba(220, 38, 38, 0.5);
+}
+
+.add-item-btn {
+    width: 100%;
+    padding: 12px;
+    background: rgba(34, 197, 94, 0.3);
+    border: 1px solid #059669;
+    border-radius: 8px;
+    color: #f5deb3;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    font-size: 14px;
+    transition: all 0.3s ease;
+}
+
+.add-item-btn:hover {
+    background: rgba(34, 197, 94, 0.5);
+}
+
+.save-btn {
+    width: 100%;
+    padding: 15px;
+    background: linear-gradient(135deg, #059669 0%, #047857 100%);
+    border: none;
+    border-radius: 8px;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(5, 150, 105, 0.3);
+}
+
+.save-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(5, 150, 105, 0.5);
+}
+
+.settings-footer {
+    padding: 20px;
+    background: rgba(101, 67, 33, 0.2);
+    border-top: 2px solid #654321;
+    display: flex;
+    gap: 10px;
+    justify-content: space-between;
+}
+
+.cancel-btn {
+    background: rgba(220, 38, 38, 0.2);
+    border: none;
+    color: #f5deb3;
+    padding: 12px 24px;
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 16px;
+    transition: all 0.3s ease;
+}
+
+.cancel-btn:hover {
+    background: rgba(220, 38, 38, 0.4);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(220, 38, 38, 0.4);
+}
+
+/* Scrollbar Styling */
+.settings-panel::-webkit-scrollbar {
+    width: 8px;
+}
+
+.settings-panel::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.2);
+}
+
+.settings-panel::-webkit-scrollbar-thumb {
+    background: #654321;
+    border-radius: 4px;
+}
+
+.settings-panel::-webkit-scrollbar-thumb:hover {
+    background: #8B4513;
+}
+
+/* Thermometer Styles */
+.thermometer {
+    position: absolute;
+    top: 15%;
+    right: 15%;
+    z-index: 15;
+    cursor: move;
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.5));
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.thermometer-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.thermometer-body {
+    width: 30px;
+    height: 150px;
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.1));
+    border: 3px solid #666;
+    border-radius: 15px 15px 0 0;
+    position: relative;
+    overflow: hidden;
+    backdrop-filter: blur(5px);
+}
+
+.thermometer-mercury {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 12px;
+    height: 50%;
+    background: linear-gradient(to top, #ff0000, #ff6666);
+    border-radius: 6px;
+    transition: height 0.5s ease;
+}
+
+.thermometer-scale {
+    position: absolute;
+    top: 0;
+    right: -25px;
+    height: 100%;
+    width: 20px;
+    font-size: 10px;
+    color: #fff;
+}
+
+.thermometer-bulb {
+    width: 40px;
+    height: 40px;
+    background: radial-gradient(circle, #ff0000, #cc0000);
+    border: 3px solid #666;
+    border-radius: 50%;
+    margin-top: -3px;
+}
+
+.thermometer-reading {
+    background: rgba(0, 0, 0, 0.8);
+    color: #fff;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: bold;
+    white-space: nowrap;
+    margin-bottom: 8px;
+}
+
+/* Brick Wall Mode */
+.bookcase.brick-wall-mode .bookcase-frame {
+    background: repeating-linear-gradient(
+        0deg,
+        var(--brick-color, #8B4513) 0px,
+        var(--brick-color, #8B4513) 20px,
+        #654321 20px,
+        #654321 22px
+    ),
+    repeating-linear-gradient(
+        90deg,
+        var(--brick-color, #8B4513) 0px,
+        var(--brick-color, #8B4513) 60px,
+        #654321 60px,
+        #654321 62px
+    );
+}
+
+.bookcase.brick-wall-mode .shelf,
+.bookcase.brick-wall-mode .shelf-back {
+    background: repeating-linear-gradient(
+        0deg,
+        var(--brick-color, #8B4513) 0px,
+        var(--brick-color, #8B4513) 20px,
+        #654321 20px,
+        #654321 22px
+    ),
+    repeating-linear-gradient(
+        90deg,
+        var(--brick-color, #8B4513) 0px,
+        var(--brick-color, #8B4513) 60px,
+        #654321 60px,
+        #654321 62px
+    );
+}
+
+.bookcase.brick-wall-mode .beam {
+    background: var(--brick-color, #8B4513);
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+/* Nature Mode */
+.scene.nature-mode {
+    background: linear-gradient(to bottom, 
+        var(--sky-color, #87CEEB) 0%,
+        var(--sky-color, #87CEEB) 50%,
+        #90EE90 50%,
+        #228B22 100%
+    );
+}
+
+.scene.nature-mode::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 50%;
+    background: 
+        radial-gradient(ellipse at 20% 100%, #228B22 0%, transparent 50%),
+        radial-gradient(ellipse at 50% 100%, #2F4F2F 0%, transparent 60%),
+        radial-gradient(ellipse at 80% 100%, #006400 0%, transparent 50%);
+    pointer-events: none;
+}
+
+.scene.nature-mode::after {
+    content: '🌲';
+    position: absolute;
+    bottom: 20%;
+    left: 20%;
+    font-size: 60px;
+    opacity: 0.8;
+}
+
+        height: 95vh;
+    }
+
+    .settings-panel {
+        width: 100%;
+        right: -100%;
+    }
+}

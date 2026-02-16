@@ -14,6 +14,6 @@ document.getElementById('snackButton').addEventListener('click', function() {
         body = "Hallo allemaal,\n\nIk voel me gul! Daarom heb ik besloten om een bedrijfs-BBQ te organiseren. Ik neem de volledige verantwoordelijkheid op mij.\n\nBereid jullie voor op een feestmaal! Details over de datum en locatie volgen snel.\n\nMet vriendelijke groeten,";
     }
 
-    const mailtoLink = `mailto:allen@lebon.info?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    const mailtoLink = `mailto:bbq@lebonit.be?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
     window.location.href = mailtoLink;
 });
