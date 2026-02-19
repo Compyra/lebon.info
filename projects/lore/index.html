@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lore Images</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Lore Gallery</h1>
+        <div class="category-buttons">
+            <button id="lore-btn" class="active">Magical Lore</button>
+            <button id="muggle-btn">Muggle Humor</button>
+            <button id="magic-btn">Magical Cuteness</button>
+        </div>
+        <div class="search-container">
+            <input type="text" id="search-bar" placeholder="Discover ancient artifacts...">
+        </div>
+    </header>
+    <main id="gallery">
+        <!-- Images will be loaded here by script.js -->
+    </main>
+    <div id="lightbox" class="hidden">
+        <span class="close-btn">&times;</span>
+        <span class="prev-btn">&lt;</span>
+        <span class="next-btn">&gt;</span>
+        <img id="lightbox-img" src="" alt="Enlarged lore image">
+        <div id="lightbox-title"></div>
+    </div>
+    <script src="img.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
