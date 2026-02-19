@@ -5,9 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Projects - lebon.info</title>
     <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="./projects.css">
 </head>
 <body class="terminal-bg">
     <div class="terminal-window">
+        <div class="language-selector">
+            <button onclick="setLanguage('en')" class="lang-btn active" data-lang="en">EN</button>
+            <button onclick="setLanguage('fr')" class="lang-btn" data-lang="fr">FR</button>
+            <button onclick="setLanguage('nl')" class="lang-btn" data-lang="nl">NL</button>
+        </div>
         <div class="terminal-header">
             <span class="prompt-title">lebon.info/projects:~$</span>
             <span class="prompt-blink">█</span>
@@ -25,19 +31,12 @@
                     <span class="lang nl"># Geplande projecten</span>
                 </span>
                 <div class="terminal-links">
-                    <a href="bbq/" class="terminal-link">bbq</a>
-                    <a href="blur/" class="terminal-link">blur</a>
                     <a href="clear/" class="terminal-link">clear</a>
                     <a href="dashboard_v1/" class="terminal-link">dashboard_v1</a>
                     <a href="fill/" class="terminal-link">fill</a>
-
-                    <a href="md/" class="terminal-link">md</a>
                     <a href="news/" class="terminal-link">news</a>
                     <a href="prank/" class="terminal-link">prank</a>
                     <a href="rami/" class="terminal-link">rami</a>
-                    <a href="scoreboard/" class="terminal-link">scoreboard</a>
-                    <a href="subnets/" class="terminal-link">subnets</a>
-                    <a href="trace-results/" class="terminal-link">trace-results</a>
                 </div>
             </div>
             <div class="terminal-section">
@@ -46,24 +45,35 @@
                     <span class="lang fr"># En cours de développement</span>
                     <span class="lang nl"># Momenteel in ontwikkeling</span>
                 </span>
-                <div class="terminal-links">
+                <div class="terminal-links" style="flex-direction:column;align-items:center;text-align:center;">
+                    <a href="bbq/" class="terminal-link">BBQ</a>
+                    <div class="project-desc">Barbecue event planning and management tool.</div>
+                    <a href="blur/" class="terminal-link">Blur</a>
+                    <div class="project-desc">Image blurring and privacy protection utility.</div>
+                    <a href="md/" class="terminal-link">MD</a>
+                    <div class="project-desc">Markdown editor and previewer for documentation.</div>
+                    <a href="scoreboard/" class="terminal-link">Scoreboard</a>
+                    <div class="project-desc">Live scoreboard for events and competitions.</div>
+                    <a href="subnets/" class="terminal-link">Subnets</a>
+                    <div class="project-desc">Subnet calculator and network planning assistant.</div>
+                    <a href="trace-results/" class="terminal-link">Trace-Results</a>
+                    <div class="project-desc">Tool for analyzing and visualizing trace results.</div>
                     <a href="mailheaders/" class="terminal-link">
-                        <span class="lang en">mailheaders - Email Header Analyzer</span>
-                        <span class="lang fr">mailheaders - Analyseur d'en-têtes d'e-mail</span>
-                        <span class="lang nl">mailheaders - E-mail header analyzer</span>
+                        <span class="lang en">Mailheaders - Email Header Analyzer</span>
+                        <span class="lang fr">Mailheaders - Analyseur d'en-têtes d'e-mail</span>
+                        <span class="lang nl">Mailheaders - E-mail header analyzer</span>
                     </a>
-                    <span class="lang en">Analyze and decode email headers to trace message paths and troubleshoot delivery issues</span>
-                    <span class="lang fr">Analysez et décodez les en-têtes d'e-mail pour tracer les chemins de messages et résoudre les problèmes de livraison</span>
-                    <span class="lang nl">Analyseer en decodeer e-mailheaders om berichtpaden te traceren en leveringsproblemen op te lossen</span>
-                    <br><br>
+                    <span class="lang en">Analyze and decode email headers to trace message paths and troubleshoot delivery issues.</span>
+                    <span class="lang fr">Analysez et décodez les en-têtes d'e-mail pour tracer les chemins de messages et résoudre les problèmes de livraison.</span>
+                    <span class="lang nl">Analyseer en decodeer e-mailheaders om berichtpaden te traceren en leveringsproblemen op te lossen.</span>
                     <a href="webcheck/" class="terminal-link">
-                        <span class="lang en">webcheck - Website Audit Tool</span>
-                        <span class="lang fr">webcheck - Outil d'audit de site Web</span>
-                        <span class="lang nl">webcheck - Website controle tool</span>
+                        <span class="lang en">Webcheck - Website Audit Tool</span>
+                        <span class="lang fr">Webcheck - Outil d'audit de site Web</span>
+                        <span class="lang nl">Webcheck - Website controle tool</span>
                     </a>
-                    <span class="lang en">Check essential website files and configurations (robots.txt, sitemap.xml, security.txt, favicon, meta tags, etc.)</span>
-                    <span class="lang fr">Vérifiez les fichiers et configurations essentiels du site Web (robots.txt, sitemap.xml, security.txt, favicon, balises méta, etc.)</span>
-                    <span class="lang nl">Controleer essentiële websitebestanden en configuraties (robots.txt, sitemap.xml, security.txt, favicon, meta tags, enz.)</span>
+                    <span class="lang en">Check essential website files and configurations (robots.txt, sitemap.xml, security.txt, favicon, meta tags, etc.).</span>
+                    <span class="lang fr">Vérifiez les fichiers et configurations essentiels du site Web (robots.txt, sitemap.xml, security.txt, favicon, balises méta, etc.).</span>
+                    <span class="lang nl">Controleer essentiële websitebestanden en configuraties (robots.txt, sitemap.xml, security.txt, favicon, meta tags, enz.).</span>
                 </div>
             </div>
             <div class="terminal-section">
@@ -72,11 +82,13 @@
                     <span class="lang fr"># Phase de test</span>
                     <span class="lang nl"># Testfase</span>
                 </span>
-                <div class="terminal-links">
-                    <a href="militaryalphabet/" class="terminal-link">militaryalphabet</a>
-                    <span class="lang en">Explore the military alphabet. Note: This page uses wakelock to keep your screen awake, preventing automatic locking.</span>
-                    <span class="lang fr">Explorez l'alphabet militaire. Note : Cette page utilise wakelock pour garder votre écran éveillé, empêchant le verrouillage automatique.</span>
-                    <span class="lang nl">Verken het militaire alfabet. Opmerking: Deze pagina gebruikt wakelock om uw scherm wakker te houden, waardoor automatische vergrendeling wordt voorkomen.</span>
+                <div class="terminal-links" style="flex-direction:column;align-items:center;text-align:center;">
+                    <a href="militaryalphabet/" class="terminal-link">Military Alphabet</a>
+                    <div class="project-desc">
+                        <span class="lang en">Explore the military alphabet. Note: This page uses wakelock to keep your screen awake, preventing automatic locking.</span>
+                        <span class="lang fr">Explorez l'alphabet militaire. Note : Cette page utilise wakelock pour garder votre écran éveillé, empêchant le verrouillage automatique.</span>
+                        <span class="lang nl">Verken het militaire alfabet. Opmerking: Deze pagina gebruikt wakelock om uw scherm wakker te houden, waardoor automatische vergrendeling wordt voorkomen.</span>
+                    </div>
                 </div>
             </div>
             <div class="terminal-section">
@@ -85,17 +97,18 @@
                     <span class="lang fr"># Projets terminés</span>
                     <span class="lang nl"># Afgewerkte projecten</span>
                 </span>
-                <div class="terminal-links">
+                <div class="terminal-links" style="flex-direction:column;align-items:center;text-align:center;">
+                    <a href="https://notes.lebon.info" class="terminal-link" target="_blank" rel="noopener noreferrer">notes.lebon.info</a>
+                    <div class="project-desc">A simple note-taking application.</div>
+                    <a href="https://lebon.info/tools" class="terminal-link" target="_blank" rel="noopener noreferrer">lebon.info/tools</a>
+                    <div class="project-desc">A collection of useful web tools (almost finished).</div>
+                    <a href="https://scoreboard.lebon.info" class="terminal-link" target="_blank" rel="noopener noreferrer">scoreboard.lebon.info</a>
+                    <div class="project-desc">A live scoreboard for games and events.</div>
+                    <a href="http://scan.lebon.info" class="terminal-link" target="_blank" rel="noopener noreferrer">scan.lebon.info</a>
+                    <div class="project-desc">A simple network scanning tool.</div>
                 </div>
             </div>
         </div>
-        <footer class="terminal-footer">
-            <div class="language-selector">
-                <button onclick="setLanguage('en')" class="lang-btn active" data-lang="en">EN</button>
-                <button onclick="setLanguage('fr')" class="lang-btn" data-lang="fr">FR</button>
-                <button onclick="setLanguage('nl')" class="lang-btn" data-lang="nl">NL</button>
-            </div>
-        </footer>
     </div>
     <script src="../script.js"></script>
 </body>

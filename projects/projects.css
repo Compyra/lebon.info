@@ -1,0 +1,27 @@
+/* Centered column for 'Currently Working On' section */
+.terminal-section .terminal-links[style*="flex-direction:column"] {
+    flex-direction: column !important;
+    align-items: center !important;
+    text-align: center !important;
+}
+
+.project-desc {
+    color: var(--terminal-green);
+    font-size: 0.98rem;
+    margin-bottom: 10px;
+    font-family: monospace;
+    text-align: center;
+    max-width: 90%;
+}
+
+/* Ensure language selector is visible and centered at the top */
+.terminal-window .language-selector {
+    position: static; /* Override absolute positioning */
+    transform: none; /* Reset transform */
+    padding: 16px 0 8px 0; /* Add some spacing */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+}
