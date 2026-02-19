@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="DNS Sinkhole Blocklist Collection - Curated lists for blocking ads, trackers, malware, and spam">
+    <title>DNS Sinkhole Blocklists</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+
+        <header>
+            <h1>DNS Sinkhole Blocklists</h1>
+            <p class="subtitle">Curated collection of blocklists for Pi-hole, AdGuard Home, and other DNS sinkholes</p>
+            <div class="info-box">
+                <h2>Custom Regex Blacklist & Whitelist</h2>
+                <p>
+                    <strong>regex-blacklist.txt</strong>: <a href="regex-blacklist.txt" target="_blank">Download/view</a><br>
+                    <span class="desc">A set of advanced <b>regular expression rules</b> for blocking domains. Use this for more flexible and powerful blocking (e.g., blocking patterns, not just specific domains).</span>
+                </p>
+                <p>
+                    <strong>whitelist.txt</strong>: <a href="whitelist.txt" target="_blank">Download/view</a><br>
+                    <span class="desc">A <b>whitelist</b> of domains that should <u>never</u> be blocked, even if they match a blacklist or regex rule. Use this to prevent false positives and ensure access to important domains.</span>
+                </p>
+                <p style="margin-top:0.5em;color:#0369a1;font-size:0.95em;">
+                    <b>Note:</b> The whitelist is a separate category from the blacklist. <br>
+                    <b>Blacklist</b> = block these domains (or patterns).<br>
+                    <b>Whitelist</b> = always allow these domains, even if they match a blacklist or regex rule.
+                </p>
+            </div>
+        </header>
+
+        <div class="controls">
+            <input type="text" id="filterInput" placeholder="Filter blocklists..." aria-label="Filter blocklists">
+            <button id="copyAll" class="btn-primary">Copy All URLs</button>
+        </div>
+
+        <div class="stats">
+            <span id="totalCount">52 blocklists</span>
+            <span id="filteredCount"></span>
+        </div>
+
+        <div class="blocklist-container" id="blocklistContainer">
+            <!-- Blocklists will be inserted here by JavaScript -->
+        </div>
+
+        <footer>
+            <p>Add these URLs to your DNS sinkhole's blocklist configuration to enhance blocking coverage.</p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

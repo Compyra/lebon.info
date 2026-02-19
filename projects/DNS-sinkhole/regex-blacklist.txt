@@ -1,0 +1,23 @@
+# Regex filters based on https://raw.githubusercontent.com/mmotti/pihole-regex/master/regex.list
+
+# False Positives
+# Due to the restrictive nature of these regex, you may encounter a small number of false positives
+# for domain names that are similar to ad-serving / tracking domains.
+# I have added a whitelist.txt next to this file
+
+# Regular Expressions:
+
+^ad([sxv]?[0-9]*|system)[_.-]([^.[:space:]]+\.){1,}|[_.-]ad([sxv]?[0-9]*|system)[_.-]
+^(.+[_.-])?adse?rv(er?|ice)?s?[0-9]*[_.-]
+^(.+[_.-])?telemetry[_.-]
+^adim(age|g)s?[0-9]*[_.-]
+^adtrack(er|ing)?[0-9]*[_.-]
+^advert(s|is(ing|ements?))?[0-9]*[_.-]
+^aff(iliat(es?|ion))?[_.-]
+^analytics?[_.-]
+^banners?[_.-]
+^beacons?[0-9]*[_.-]
+^count(ers?)?[0-9]*[_.-]
+^mads\.
+^pixels?[-.]
+^stat(s|istics)?[0-9]*[_.-]

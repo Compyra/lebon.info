@@ -1,0 +1,40 @@
+# Whitelist domains provided by Rami
+
+# False Positives
+# Due to the restrictive nature of regex, you may encouter a few false positives
+# 
+# This file catches those that might be blocked by the regex or other blacklists
+
+# Regex whitelist
+
+(\.|^)giphy\.com$
+(\.|^)fna\.fbcdn\.net$
+(\.|^)fbcdn\.net$
+(\.|^)cdn\.whatsapp\.net$
+(\.|^)ransomware\.live$
+(\.|^)manhuaus\.com$
+
+# Whitelist domains
+
+challenges.cloudflare.com
+web.whatsapp.com
+static.whatsapp.net
+fonts.gstatic.com
+chrome.google.com
+tenor.googleapis.com
+translate.google.com
+myprivacy.dpgmedia.nl
+discord-attachments-uploads-prd.storage.googleapis.com
+cdn.madaradex.org
+madaradex.org
+mail-attachment.googleusercontent.com
+jnn-pa.googleapis.com
+go.microsoft.com
+hianime.to
+aniwatchtv.to
+forms.fillout.com
+config.claspws.tv
+img.toongod.cc
+mangafire.to
+ads.google.com
+www.ransomware.live
