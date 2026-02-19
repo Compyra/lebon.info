@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Subnet Calculator - lebon.info</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <main>
+        <h1>Subnet Mask Information</h1>
+        <section>
+            <h2>Subnet Calculator</h2>
+            <form id="subnet-form" autocomplete="off">
+                <input type="text" id="ip" placeholder="IP-adres (bv. 192.168.1.0)" required>
+                <input type="number" id="prefix" min="1" max="32" placeholder="Prefix (bv. 24)" required>
+                <button type="submit">Bereken</button>
+            </form>
+            <div id="result"></div>
+        </section>
+        <section>
+            <h2>Korte uitleg IP-klassen</h2>
+            <p style="font-size:0.97em;line-height:1.6em;max-width:540px;margin:0 auto 1em auto;">
+                <strong>Klasse A</strong>: IP-adressen van <code>0.0.0.0</code> t/m <code>127.255.255.255</code> (<code>/8</code>), grote netwerken.<br>
+                <strong>Klasse B</strong>: IP-adressen van <code>128.0.0.0</code> t/m <code>191.255.255.255</code> (<code>/16</code>), middelgrote netwerken.<br>
+                <strong>Klasse C</strong>: IP-adressen van <code>192.0.0.0</code> t/m <code>223.255.255.255</code> (<code>/24</code>), kleine netwerken.
+            </p>
+            <h2>Korte uitleg private IP-adressen</h2>
+            <p style="font-size:0.97em;line-height:1.6em;max-width:540px;margin:0 auto 1.5em auto;">
+                <strong>Private IP-adressen</strong> zijn gereserveerd voor intern gebruik binnen een netwerk en zijn niet direct bereikbaar vanaf het internet.<br>
+                <strong>Klasse A:</strong> <code>10.0.0.0</code> t/m <code>10.255.255.255</code><br>
+                <strong>Klasse B:</strong> <code>172.16.0.0</code> t/m <code>172.31.255.255</code><br>
+                <strong>Klasse C:</strong> <code>192.168.0.0</code> t/m <code>192.168.255.255</code>
+            </p>
+        </section>
+        <section>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Number of Addresses</th>
+                        <th>Number of Bits</th>
+                        <th>Prefix</th>
+                        <th>Classful Notation</th>
+                        <th>Mask</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>1</td><td>0</td><td>/32</td><td></td><td>255.255.255.255</td></tr>
+                    <tr><td>2</td><td>1</td><td>/31</td><td></td><td>255.255.255.254</td></tr>
+                    <tr><td>4</td><td>2</td><td>/30</td><td></td><td>255.255.255.252</td></tr>
+                    <tr><td>8</td><td>3</td><td>/29</td><td></td><td>255.255.255.248</td></tr>
+                    <tr><td>16</td><td>4</td><td>/28</td><td></td><td>255.255.255.240</td></tr>
+                    <tr><td>32</td><td>5</td><td>/27</td><td></td><td>255.255.255.224</td></tr>
+                    <tr><td>64</td><td>6</td><td>/26</td><td></td><td>255.255.255.192</td></tr>
+                    <tr><td>128</td><td>7</td><td>/25</td><td></td><td>255.255.255.128</td></tr>
+                    <tr><td>256</td><td>8</td><td>/24</td><td>1 C</td><td>255.255.255.0</td></tr>
+                    <tr><td>512</td><td>9</td><td>/23</td><td>2 C</td><td>255.255.254.0</td></tr>
+                    <tr><td>1 K</td><td>10</td><td>/22</td><td>4 C</td><td>255.255.252.0</td></tr>
+                    <tr><td>2 K</td><td>11</td><td>/21</td><td>8 C</td><td>255.255.248.0</td></tr>
+                    <tr><td>4 K</td><td>12</td><td>/20</td><td>16 C</td><td>255.255.240.0</td></tr>
+                    <tr><td>8 K</td><td>13</td><td>/19</td><td>32 C</td><td>255.255.224.0</td></tr>
+                    <tr><td>16 K</td><td>14</td><td>/18</td><td>64 C</td><td>255.255.192.0</td></tr>
+                    <tr><td>32 K</td><td>15</td><td>/17</td><td>128 C</td><td>255.255.128.0</td></tr>
+                    <tr><td>64 K</td><td>16</td><td>/16</td><td>1 B</td><td>255.255.0.0</td></tr>
+                    <tr><td>128 K</td><td>17</td><td>/15</td><td>2 B</td><td>255.254.0.0</td></tr>
+                    <tr><td>256 K</td><td>18</td><td>/14</td><td>4 B</td><td>255.252.0.0</td></tr>
+                    <tr><td>512 K</td><td>19</td><td>/13</td><td>8 B</td><td>255.248.0.0</td></tr>
+                    <tr><td>1 M</td><td>20</td><td>/12</td><td>16 B</td><td>255.240.0.0</td></tr>
+                    <tr><td>2 M</td><td>21</td><td>/11</td><td>32 B</td><td>255.224.0.0</td></tr>
+                    <tr><td>4 M</td><td>22</td><td>/10</td><td>64 B</td><td>255.192.0.0</td></tr>
+                    <tr><td>8 M</td><td>23</td><td>/9</td><td>128 B</td><td>255.128.0.0</td></tr>
+                    <tr><td>16 M</td><td>24</td><td>/8</td><td>1 A</td><td>255.0.0.0</td></tr>
+                    <tr><td>32 M</td><td>25</td><td>/7</td><td>2 A</td><td>254.0.0.0</td></tr>
+                    <tr><td>64 M</td><td>26</td><td>/6</td><td>4 A</td><td>252.0.0.0</td></tr>
+                    <tr><td>128 M</td><td>27</td><td>/5</td><td>8 A</td><td>248.0.0.0</td></tr>
+                    <tr><td>256 M</td><td>28</td><td>/4</td><td>16 A</td><td>240.0.0.0</td></tr>
+                    <tr><td>512 M</td><td>29</td><td>/3</td><td>32 A</td><td>224.0.0.0</td></tr>
+                    <tr><td>1024 M</td><td>30</td><td>/2</td><td>64 A</td><td>192.0.0.0</td></tr>
+                </tbody>
+            </table>
+        </section>
+ 
+    </main>
+    <script src="script.js"></script>
+</body>
+</html>
