@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Laser Engraving Gallery</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="search-bar">
+            <input type="text" id="searchInput" placeholder="Search laser engravings by name or description...">
+            <span id="resultCount" class="result-count"></span>
+            <button id="toggleViewBtn" class="toggle-view-btn" title="Toggle grid view">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="3" y="3" width="7" height="7"></rect>
+                    <rect x="14" y="3" width="7" height="7"></rect>
+                    <rect x="14" y="14" width="7" height="7"></rect>
+                    <rect x="3" y="14" width="7" height="7"></rect>
+                </svg>
+            </button>
+        </div>
+
+        <div class="gallery">
+            <button class="nav-btn prev" id="prevBtn" aria-label="Previous image">‹</button>
+            
+            <div class="image-container" id="imageContainer">
+                <img id="mainImage" src="" alt="Gallery image">
+                <div class="image-info">
+                    <h2 id="imageName"></h2>
+                    <p id="imageCounter"></p>
+                </div>
+            </div>
+
+            <button class="nav-btn next" id="nextBtn" aria-label="Next image">›</button>
+        </div>
+
+        <div class="controls">
+            <button id="downloadPNG" class="download-btn png-btn">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                    <polyline points="7 10 12 15 17 10"></polyline>
+                    <line x1="12" y1="15" x2="12" y2="3"></line>
+                </svg>
+                Download PNG
+            </button>
+            <button id="downloadSVG" class="download-btn svg-btn">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                    <polyline points="7 10 12 15 17 10"></polyline>
+                    <line x1="12" y1="15" x2="12" y2="3"></line>
+                </svg>
+                Download SVG
+            </button>
+        </div>
+
+        <div class="grid-view" id="gridView"></div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
