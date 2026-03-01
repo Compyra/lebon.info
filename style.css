@@ -150,6 +150,17 @@ body.terminal-bg {
     border-color: var(--terminal-link-hover);
     outline: none;
 }
+.terminal-link.deprecated {
+    opacity: 0.5;
+    text-decoration: line-through;
+    pointer-events: none;
+    cursor: not-allowed;
+}
+.terminal-link.deprecated:hover {
+    background: #181c1b;
+    color: var(--terminal-link);
+    border-color: var(--terminal-link);
+}
 .terminal-hint {
     color: var(--terminal-amber);
     font-size: 0.95rem;
