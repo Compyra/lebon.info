@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BBQ E-mail</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="terminal-bg">
+    <div class="terminal-window">
+        <div class="terminal-header">
+            <span class="prompt-title">bbq-mailer:~$</span>
+            <span class="prompt-blink">█</span>
+        </div>
+        <div class="terminal-body">
+            <div class="terminal-intro"><span>Computer Vergeten Te Vergrendelen? <br> Tijd om een grappige mail te sturen!</span>
+            </div>
+        
+            <div class="terminal-section">
+                <span class="section-label"># Verstuur naar (selecteer één of meerdere):</span>
+                <div class="checkbox-group">
+                <label class="checkbox-option">
+                    <input type="checkbox" name="sendTo" value="bbq">
+                    <span>BBQ@lebon.info <small>(Ik tel anoniem hoeveel mensen hun computer niet vergrendelen)</small></span>
+                </label>
+                
+                <label class="checkbox-option">
+                    <input type="checkbox" name="sendTo" value="custom">
+                    <span>Eigen e-mailadres:</span>
+                    <input type="email" id="customEmail" placeholder="naam@voorbeeld.be">
+                </label>
+                
+                    <div id="recommendedEmails"></div>
+                </div>
+            </div>
+
+            <div class="terminal-section">
+                <div class="section-header">
+                    <span class="section-label"># Kies je prank e-mail:</span>
+                    <button id="randomEmailBtn" class="random-btn" title="Kies een willekeurige e-mail">🎲 Random</button>
+                </div>
+                <div class="email-templates">
+                <div class="email-option">
+                    <button class="prank-button" data-template="bbq">🍖 BBQ Organiseren</button>
+                    <p class="email-preview">Premium BBQ met Hawaiiaanse dresscode...</p>
+                </div>
+                
+                <div class="email-option">
+                    <button class="prank-button" data-template="snacks">🍩 Gratis Snacks</button>
+                    <p class="email-preview">50 dozen donuts voor iedereen...</p>
+                </div>
+                
+                <div class="email-option">
+                    <button class="prank-button" data-template="cake">🎂 Verjaardagstaart</button>
+                    <p class="email-preview">3 verdiepingen chocolade, vanille en red velvet...</p>
+                </div>
+                
+                <div class="email-option">
+                    <button class="prank-button" data-template="lottery">💰 Loterij Gewonnen</button>
+                    <p class="email-preview">€2.5 miljoen en bonussen voor iedereen...</p>
+                </div>
+                
+                <div class="email-option">
+                    <button class="prank-button" data-template="vacation">🏖️ Extra Vakantie</button>
+                    <p class="email-preview">5 gratis vakantiedagen weggeven...</p>
+                </div>
+                
+                <div class="email-option">
+                    <button class="prank-button" data-template="promotion">📈 CEO Sollicitatie</button>
+                    <p class="email-preview">4-daagse werkweek en pyjama dresscode...</p>
+                </div>
+                
+                <div class="email-option">
+                    <button class="prank-button" data-template="pet">🐶 Sint-Bernard</button>
+                    <p class="email-preview">75kg kantoorhond vanaf volgende week...</p>
+                </div>
+                
+                <div class="email-option">
+                    <button class="prank-button" data-template="karaoke">🎤 Karaoke Toernooi</button>
+                    <p class="email-preview">Verplichte deelname aan karaoke competitie...</p>
+                </div>
+                
+                <div class="email-option">
+                    <button class="prank-button" data-template="gymclub">💪 Bootcamp 6:30</button>
+                    <p class="email-preview">Dagelijkse ochtend training op parkeerterrein...</p>
+                </div>
+                
+                <div class="email-option">
+                    <button class="prank-button" data-template="confession">💭 Bizarre Bekentenis</button>
+                    <p class="email-preview">Ik geef stiekem water aan jullie planten...</p>
+                </div>
+                
+                <div class="email-option">
+                    <button class="prank-button" data-template="unlocked">🔓 Computer Niet Gelocked</button>
+                    <p class="email-preview">Uitgebreide excuusbrief en trakteren volgende vrijdag...</p>
+                </div>
+                
+                <div class="email-option">
+                    <button class="prank-button" data-template="marriage">💍 Trouwuitnodiging</button>
+                    <p class="email-preview">Spontane bruiloft op kantoor volgende week...</p>
+                </div>
+                
+                <div class="email-option">
+                    <button class="prank-button" data-template="chinese">🇨🇳 Chinees Bericht</button>
+                    <p class="email-preview">我要请大家吃饭...</p>
+                </div>
+                
+                <div class="email-option">
+                    <button class="prank-button" data-template="russian">🇷🇺 Russisch Bericht</button>
+                    <p class="email-preview">Я угощаю всех пиццей...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
