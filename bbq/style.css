@@ -429,10 +429,7 @@ body.terminal-bg {
         padding: 12px;
     }
 }
-    color: #ef6c00;
-    font-size: 0.75em;
-    margin-top: 3px;
-}
+
 
 @media (max-width: 600px) {
     .container {
