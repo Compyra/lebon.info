@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <title>Random First Player</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Burger Menu Button -->
+    <button id="burger-menu" class="burger-menu" aria-label="Settings">
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
+
+    <!-- Settings Panel -->
+    <div id="settings-panel" class="settings-panel">
+        <div class="settings-header">
+            <h2>Settings</h2>
+        </div>
+        
+        <div class="settings-content">
+            <div class="settings-section">
+                <h3>Display Options</h3>
+                
+                <div class="setting-item">
+                    <label>
+                        <input type="checkbox" id="black-and-white-mode">
+                        <span>Black and white mode</span>
+                    </label>
+                </div>
+                
+                <div class="setting-item">
+                    <label>
+                        <input type="checkbox" id="colorblind-mode">
+                        <span>Give every user a number (Colorblind mode)</span>
+                    </label>
+                </div>
+                
+                <div class="setting-item">
+                    <label>
+                        <input type="checkbox" id="two-teams-mode">
+                        <span>Two teams mode</span>
+                    </label>
+                </div>
+                
+                <div class="setting-item">
+                    <label>
+                        <input type="checkbox" id="three-teams-mode">
+                        <span>Three teams mode</span>
+                    </label>
+                </div>
+                
+                <div class="setting-item">
+                    <label>
+                        <input type="checkbox" id="manual-mode">
+                        <span>Manual mode - No touchscreen</span>
+                    </label>
+                </div>
+            </div>
+            
+            <div class="settings-section">
+                <h3>Advanced</h3>
+                
+                <div class="setting-item">
+                    <label for="wait-time">Wait Time (seconds):</label>
+                    <input type="number" id="wait-time" min="1" max="10" step="0.5" value="3">
+                </div>
+                
+                <div class="setting-item">
+                    <label for="selection-time">Selection Time (seconds):</label>
+                    <input type="number" id="selection-time" min="1" max="10" step="0.5" value="3">
+                </div>
+                
+                <div class="setting-item">
+                    <label for="effect-duration">Winner Effect Duration (seconds):</label>
+                    <input type="number" id="effect-duration" min="1" max="15" step="0.5" value="5">
+                </div>
+                
+                <div class="setting-item">
+                    <button id="test-mode-btn" class="test-mode-btn">Add Test Finger</button>
+                </div>
+            </div>
+            
+            <button id="reset-settings" class="reset-btn">Reset to Defaults</button>
+        </div>
+    </div>
+
+    <!-- Game Area -->
+    <div id="game-area" class="game-area">
+        <div id="instruction-text" class="instruction-text">Place your fingers on the screen</div>
+    </div>
+
+    <!-- Touch Indicators Container -->
+    <div id="touch-container"></div>
+    
+    <!-- Countdown Display -->
+    <div id="countdown-display" class="countdown-display"></div>
+    
+    <!-- Double Tap Prompt -->
+    <div id="double-tap-prompt" class="double-tap-prompt">
+        <span>Double tap to start again</span>
+    </div>
+
+    <!-- Manual Mode Interface -->
+    <div id="manual-mode-interface" class="manual-mode-interface">
+        <div class="manual-mode-content">
+            <h2>Manual Mode</h2>
+            <p class="manual-subtitle">Enter participant names or colors</p>
+            
+            <div class="participant-input-section">
+                <input type="text" id="participant-input" placeholder="Enter name or color..." />
+                <button id="add-participant-btn" class="add-btn">Add</button>
+            </div>
+            
+            <div id="participants-list" class="participants-list"></div>
+            
+            <div class="manual-actions">
+                <button id="randomize-btn" class="randomize-btn" disabled>Randomize Order</button>
+                <button id="clear-all-btn" class="clear-btn">Clear All</button>
+            </div>
+            
+            <div id="result-display" class="result-display"></div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
