@@ -228,6 +228,19 @@ body {
     pointer-events: none;
     border: 3px solid rgba(255, 255, 255, 0.3);
     box-shadow: 0 0 30px rgba(255, 255, 255, 0.2);
+    /* Always white text with black outline for readability */
+    color: white !important;
+    text-shadow: 
+        -2px -2px 0 #000,
+        2px -2px 0 #000,
+        -2px 2px 0 #000,
+        2px 2px 0 #000,
+        -2px 0 0 #000,
+        2px 0 0 #000,
+        0 -2px 0 #000,
+        0 2px 0 #000,
+        -3px -3px 4px rgba(0,0,0,0.8),
+        3px 3px 4px rgba(0,0,0,0.8);
 }
 
 .touch-indicator.winner {

@@ -586,8 +586,7 @@ function startSelection() {
                 touchData.element.style.backgroundColor = newColor;
                 touchData.element.style.color = getContrastColor(newColor);
                 
-                // Update text to show team number if in colorblind mode
-                updateTouchIndicatorText(touchData);
+                // Don't show team numbers yet - wait until showTeamAssignments()
             });
             
             if (progress >= 1) {
@@ -676,6 +675,11 @@ function showTeamAssignments() {
     
     instructionText.textContent = teamStrings.join(' | ');
     instructionText.classList.remove('hidden');
+    
+    // Now update all touch indicators to show team numbers (if colorblind mode)
+    activeTouches.forEach((touchData) => {
+        updateTouchIndicatorText(touchData);
+    });
     
     // Show double tap prompt
     doubleTapPrompt.classList.add('visible');
