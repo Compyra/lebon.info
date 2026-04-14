@@ -97,10 +97,16 @@ function updateSettingsUI() {
 
 function setupEventListeners() {
     // Menu - burger button toggles settings panel
-    burgerMenu.addEventListener('click', () => {
+    const toggleMenu = (e) => {
+        if (e.type === 'touchstart') {
+            e.preventDefault(); // Prevent click event from also firing
+        }
         settingsPanel.classList.toggle('active');
         burgerMenu.classList.toggle('active');
-    });
+    };
+    
+    burgerMenu.addEventListener('touchstart', toggleMenu);
+    burgerMenu.addEventListener('click', toggleMenu);
 
     // Settings changes
     blackAndWhiteCheckbox.addEventListener('change', (e) => {
