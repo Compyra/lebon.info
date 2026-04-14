@@ -269,10 +269,12 @@ function setupEventListeners() {
 }
 
 function handleTouchStart(e) {
-    e.preventDefault();
+    // Allow touches on settings panel to work normally
+    if (e.target.closest('.settings-panel') || e.target.closest('.burger-menu')) {
+        return; // Don't prevent default - let normal interaction happen
+    }
     
-    // Ignore touches on settings panel
-    if (settingsPanel.classList.contains('active')) return;
+    e.preventDefault();
     
     // Handle double tap during winner/cooldown phase
     if (gamePhase === 'winner' || gamePhase === 'cooldown') {
@@ -313,6 +315,11 @@ function handleTouchStart(e) {
 }
 
 function handleTouchMove(e) {
+    // Allow touches on settings panel to work normally
+    if (e.target.closest('.settings-panel') || e.target.closest('.burger-menu')) {
+        return; // Don't prevent default - let normal interaction happen
+    }
+    
     e.preventDefault();
     
     const touches = e.changedTouches;
@@ -331,6 +338,11 @@ function handleTouchMove(e) {
 }
 
 function handleTouchEnd(e) {
+    // Allow touches on settings panel to work normally
+    if (e.target.closest('.settings-panel') || e.target.closest('.burger-menu')) {
+        return; // Don't prevent default - let normal interaction happen
+    }
+    
     e.preventDefault();
     
     // Don't remove fingers during winner/cooldown - they stay imprinted
