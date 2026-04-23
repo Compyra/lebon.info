@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BT Scanner // Surveillance & Tracker Detector</title>
+    <meta name="description" content="Scan for nearby Bluetooth devices and identify surveillance devices and trackers.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="terminal-bg">
+    <div class="terminal-window">
+
+        <!-- Header -->
+        <div class="terminal-header">
+            <a href="../../" class="back-link">← lebon.info</a>
+            <span class="prompt-title">bt-scanner:~$</span>
+            <span class="prompt-blink">█</span>
+        </div>
+
+        <div class="terminal-body">
+
+            <!-- Title -->
+            <div class="tool-title">
+                <span class="title-prefix">// </span>BLUETOOTH SURVEILLANCE SCANNER
+                <span class="title-suffix"> v1.0</span>
+            </div>
+
+            <!-- Status Bar -->
+            <div class="status-bar">
+                <div class="status-item">
+                    <span class="status-label">STATUS</span>
+                    <span id="status" class="status-value">IDLE</span>
+                </div>
+                <div class="status-item">
+                    <span class="status-label">DEVICES</span>
+                    <span id="device-count" class="status-value">0</span>
+                </div>
+                <div class="status-item">
+                    <span class="status-label">SURVEILLANCE</span>
+                    <span id="surveillance-count" class="status-value">0</span>
+                </div>
+                <div class="status-item">
+                    <span class="status-label">TRACKERS</span>
+                    <span id="tracker-count" class="status-value">0</span>
+                </div>
+            </div>
+
+            <!-- Controls -->
+            <div class="controls">
+                <button id="btn-scan" class="terminal-btn primary" onclick="startScan()">[ START SCAN ]</button>
+                <button id="btn-stop" class="terminal-btn" onclick="stopScan()" disabled>[ STOP SCAN ]</button>
+                <button id="btn-add" class="terminal-btn secondary" onclick="addDevice()" title="Manually add one device via browser picker">[ + ADD DEVICE ]</button>
+                <button id="btn-clear" class="terminal-btn danger" onclick="clearDevices()">[ CLEAR ]</button>
+            </div>
+
+            <!-- Filters -->
+            <div class="filter-bar">
+                <span class="filter-label">FILTER:</span>
+                <button class="filter-btn active" onclick="setFilter('all')" data-filter="all">ALL</button>
+                <button class="filter-btn" onclick="setFilter('surveillance')" data-filter="surveillance">SURVEILLANCE</button>
+                <button class="filter-btn" onclick="setFilter('tracker')" data-filter="tracker">TRACKERS</button>
+                <button class="filter-btn" onclick="setFilter('normal')" data-filter="normal">NORMAL</button>
+            </div>
+
+            <!-- Alert Banner -->
+            <div id="alert-banner" class="alert-banner hidden">
+                <span class="alert-icon">⚠</span>
+                <span id="alert-text">SURVEILLANCE DEVICE DETECTED NEARBY</span>
+            </div>
+
+            <!-- Notice Box -->
+            <div id="notice-box" class="notice-box hidden"></div>
+
+            <!-- Device List -->
+            <div id="device-list" class="device-list">
+                <div class="device-list-empty">
+                    <span class="dim">No devices detected.</span><br>
+                    <span class="dim small">Click <strong>[ START SCAN ]</strong> to begin passive BLE scanning (requires Chrome with experimental Web Bluetooth flag).<br>
+                    Or use <strong>[ + ADD DEVICE ]</strong> to manually select a specific device.</span>
+                </div>
+            </div>
+
+            <!-- Legend -->
+            <div class="legend-section">
+                <span class="section-label"># LEGEND</span>
+                <div class="legend-items">
+                    <div class="legend-item">
+                        <span class="badge badge-surveillance">SURVEILLANCE</span>
+                        <span class="dim">Smart glasses &amp; covert recording devices<br>
+                        <small>(Meta Ray-Ban, Snap Spectacles, Amazon Echo Frames, Vuzix, Epson Moverio…)</small></span>
+                    </div>
+                    <div class="legend-item">
+                        <span class="badge badge-tracker">TRACKER</span>
+                        <span class="dim">Location trackers<br>
+                        <small>(Apple AirTag, Tile, Samsung SmartTag, Chipolo…)</small></span>
+                    </div>
+                    <div class="legend-item">
+                        <span class="badge badge-normal">DEVICE</span>
+                        <span class="dim">Regular Bluetooth device</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- How it works -->
+            <div class="info-section">
+                <span class="section-label"># HOW IT WORKS</span>
+                <p class="dim">
+                    Detection uses <strong>Bluetooth manufacturer company IDs</strong> from the
+                    <a href="https://www.bluetooth.com/specifications/assigned-numbers/" target="_blank" rel="noopener noreferrer" class="terminal-link">Bluetooth SIG assigned numbers</a>
+                    embedded in BLE advertisement packets, combined with device name pattern matching.<br><br>
+
+                    Surveillance devices are identified by manufacturer IDs for Meta, Luxottica (Ray-Ban), Snap Inc., Amazon,
+                    and others known to produce smart glasses or covert cameras. Trackers are identified by
+                    Apple FindMy, Tile, Samsung, and Chipolo manufacturer IDs or known service UUIDs.
+                </p>
+                <p class="dim small">
+                    ⚠ <strong>False positives are expected.</strong> A Meta company ID may indicate a Quest VR headset
+                    rather than Ray-Ban smart glasses. An Apple company ID may indicate an iPhone. Always use visual
+                    confirmation before drawing conclusions.<br><br>
+                    ⚠ <strong>Do not harass anyone</strong> based on detections from this tool.
+                </p>
+            </div>
+
+            <!-- Requirements -->
+            <div class="info-section">
+                <span class="section-label"># REQUIREMENTS</span>
+                <p class="dim">
+                    <strong>Full scan mode</strong> (START SCAN): Requires Chrome or Edge with the experimental Web Bluetooth scanning flag:<br>
+                    <code>chrome://flags/#enable-experimental-web-platform-features</code><br><br>
+                    <strong>Single device mode</strong> (+ ADD DEVICE): Works in any Chromium browser with Web Bluetooth support over HTTPS.<br><br>
+                    <strong>Does not work in:</strong> Firefox, Safari, or HTTP (non-secure) connections.
+                </p>
+            </div>
+
+        </div><!-- /terminal-body -->
+    </div><!-- /terminal-window -->
+
+    <script src="script.js"></script>
+</body>
+</html>
