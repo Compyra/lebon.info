@@ -29,5 +29,6 @@
   { "title_en": "CIPP — releases (GitHub)", "url": "https://github.com/KelvinTegelaar/CIPP/releases" },
   { "title_en": "WatchGuard — PSIRT advisories", "url": "https://www.watchguard.com/wgrd-psirt/advisories" },
   { "title_en": "FSLogix — release notes", "url": "https://learn.microsoft.com/en-us/fslogix/overview-release-notes" },
-  { "title_en": "FileZilla — versions", "url": "https://filezilla-project.org/versions.php" }
+  { "title_en": "FileZilla — versions", "url": "https://filezilla-project.org/versions.php" },
+  { "title_en": "PostgreSQL — security", "url": "https://www.postgresql.org/support/security/" }
 ]
