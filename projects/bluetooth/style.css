@@ -243,6 +243,41 @@ small { font-size: max(0.82em, 0.72rem); }
     overflow-wrap: anywhere;
 }
 
+/* ---- Card Action Buttons ---- */
+.device-actions {
+    display: flex;
+    gap: 4px;
+    flex-shrink: 0;
+}
+
+.icon-btn {
+    background: transparent;
+    border: 1px solid #2e3a30;
+    color: var(--text-dim);
+    font-family: inherit;
+    font-size: 0.72rem;
+    width: 22px;
+    height: 22px;
+    padding: 0;
+    line-height: 1;
+    border-radius: 2px;
+    cursor: pointer;
+    transition: border-color 0.15s, color 0.15s;
+}
+.icon-btn:hover { border-color: var(--green); color: var(--green); }
+.icon-btn:focus-visible { outline: 2px solid var(--green); outline-offset: 1px; }
+
+/* ---- Device Notes ---- */
+.note-row .note-text { color: var(--amber); font-style: italic; }
+
+.note-editor { align-items: center; }
+.note-editor .note-input {
+    flex: 1 1 160px;
+    min-width: 120px;
+    font-size: 0.8rem;
+    padding: 3px 6px;
+}
+
 /* ---- Alert Banner ---- */
 .alert-banner {
     background: #3a0000;

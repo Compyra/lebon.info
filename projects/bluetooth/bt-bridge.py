@@ -25,7 +25,7 @@ from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from bleak import BleakScanner
 
 PORT = 8437
-STALE_AFTER_S = 60          # drop devices not seen for this long
+STALE_AFTER_S = 900         # drop devices not seen for this long (page owns staleness UX)
 PRUNE_INTERVAL_S = 5
 
 devices = {}

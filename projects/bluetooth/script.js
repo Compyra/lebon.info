@@ -7,6 +7,8 @@
    https://github.com/yjeanrenaud/yj_nearbyglasses
    Manufacturer IDs from Bluetooth SIG Assigned Numbers:
    https://www.bluetooth.com/specifications/assigned-numbers/
+   Full company-identifier registry (company_identifiers.yaml):
+   https://bitbucket.org/bluetooth-SIG/public/src/main/assigned_numbers/company_identifiers/company_identifiers.yaml
    ============================================================ */
 
 'use strict';
@@ -94,22 +96,70 @@ const TRACKER_SERVICE_UUIDS = new Set([
 ]);
 
 // ================================================================
+// Company Identifier Registry
+// ================================================================
+
+/**
+ * Full Bluetooth SIG company-identifier registry (numeric ID -> name),
+ * loaded at startup from company_identifiers.yaml.
+ * Source: https://bitbucket.org/bluetooth-SIG/public/src/main/assigned_numbers/company_identifiers/company_identifiers.yaml
+ */
+const companyNames = new Map();
+
+/**
+ * Load and parse company_identifiers.yaml. The file is a strictly regular
+ * list of `- value: 0x....` / `name: '...'` pairs, so a purpose-built
+ * parser is used instead of shipping a YAML library.
+ * Fails silently (file:// pages, offline) — the curated lists remain as fallback.
+ */
+async function loadCompanyIdentifiers() {
+    try {
+        const res = await fetch('company_identifiers.yaml');
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const text = await res.text();
+
+        let pendingId = null;
+        for (const line of text.split('\n')) {
+            const value = line.match(/^\s*-\s*value:\s*0[xX]([0-9A-Fa-f]+)\s*$/);
+            if (value) {
+                pendingId = parseInt(value[1], 16);
+                continue;
+            }
+            const name = line.match(/^\s*name:\s*(.+?)\s*$/);
+            if (name && pendingId !== null) {
+                let n = name[1];
+                if ((n.startsWith("'") && n.endsWith("'")) || (n.startsWith('"') && n.endsWith('"'))) {
+                    n = n.slice(1, -1).replace(/''/g, "'");
+                }
+                companyNames.set(pendingId, n);
+                pendingId = null;
+            }
+        }
+    } catch (_) { /* keep curated fallback lists */ }
+}
+
+/** Best-known name for a company ID: full SIG registry, then curated lists. */
+function companyName(companyId) {
+    return companyNames.get(companyId)
+        || SURVEILLANCE_COMPANIES[companyId]
+        || TRACKER_COMPANIES[companyId]
+        || 'Unknown';
+}
+
+// ================================================================
 // Application State
 // ================================================================
 
 /** Map of deviceId -> device data object. */
 const devices = new Map();
 
-/** Map of deviceId -> rendered card element (avoids brittle string-id DOM lookups). */
-const deviceCards = new Map();
+/** Map of deviceId -> data object backing the currently rendered card (may be a bundle). */
+const renderedData = new Map();
 
-/** Device ids with a pending (throttled) card re-render. */
-const dirtyDevices = new Set();
+/** Timer handle for the throttled list re-render, or null. */
+let renderTimer = null;
 
-/** Timer handle for the throttled render flush, or null. */
-let flushTimer = null;
-
-/** Minimum interval between card re-renders for existing devices (ms). */
+/** Minimum interval between list re-renders (ms). */
 const RENDER_INTERVAL_MS = 300;
 
 /** Timer handle for auto-hiding the alert banner, or null. */
@@ -151,6 +201,30 @@ let rssiFilter = null;
 /** Whether the device list is grouped by manufacturer. */
 let groupByMfr = false;
 
+/** Sort mode: 'lastseen' | 'proximity' | 'severity' */
+let sortMode = 'lastseen';
+
+/** Whether devices not seen recently are hidden. */
+let hideStale = false;
+
+/** Staleness threshold for the HIDE STALE filter (ms). */
+const STALE_THRESHOLD_MS = 10 * 60 * 1000;
+
+/** Whether nameless devices with matching MFR + signal are bundled (MAC rotation). */
+let bundleRotating = false;
+
+/** Max gap between one alias disappearing and the next appearing (ms). */
+const BUNDLE_GAP_MS = 30000;
+
+/** Max RSSI difference between aliases to be considered the same device (dBm). */
+const BUNDLE_RSSI_TOLERANCE = 8;
+
+/** localStorage key for per-device notes. */
+const NOTES_STORAGE_KEY = 'btscan-notes';
+
+/** Map of deviceId -> user note text (persisted in localStorage). */
+let deviceNotes = {};
+
 // ================================================================
 // Classification
 // ================================================================
@@ -158,7 +232,7 @@ let groupByMfr = false;
 /**
  * Classify a BLE advertisement event into 'surveillance', 'tracker', or 'normal'.
  * @param {BluetoothAdvertisingEvent | object} event
- * @returns {{ type: string, reason: string|null, companyId: string|null }}
+ * @returns {{ type: string, reason: string|null }}
  */
 function classifyAdvertisement(event) {
     const name = (event.device?.name || '').trim();
@@ -170,14 +244,12 @@ function classifyAdvertisement(event) {
                 return {
                     type: 'surveillance',
                     reason: `Manufacturer ID ${formatCompanyId(companyId)}: ${SURVEILLANCE_COMPANIES[companyId]}`,
-                    companyId: formatCompanyId(companyId),
                 };
             }
             if (Object.prototype.hasOwnProperty.call(TRACKER_COMPANIES, companyId)) {
                 return {
                     type: 'tracker',
                     reason: `Manufacturer ID ${formatCompanyId(companyId)}: ${TRACKER_COMPANIES[companyId]}`,
-                    companyId: formatCompanyId(companyId),
                 };
             }
         }
@@ -190,7 +262,6 @@ function classifyAdvertisement(event) {
                 return {
                     type: 'surveillance',
                     reason: `Device name matches surveillance pattern: "${name}"`,
-                    companyId: null,
                 };
             }
         }
@@ -199,7 +270,6 @@ function classifyAdvertisement(event) {
                 return {
                     type: 'tracker',
                     reason: `Device name matches tracker pattern: "${name}"`,
-                    companyId: null,
                 };
             }
         }
@@ -212,12 +282,11 @@ function classifyAdvertisement(event) {
             return {
                 type: 'tracker',
                 reason: `Known tracker service UUID: ${uuid}`,
-                companyId: null,
             };
         }
     }
 
-    return { type: 'normal', reason: null, companyId: null };
+    return { type: 'normal', reason: null };
 }
 
 /** Format a numeric company ID as a 0x-prefixed hex string. */
@@ -262,12 +331,7 @@ function handleAdvertisement(event) {
     const manufacturers = [];
     if (event.manufacturerData && event.manufacturerData.size > 0) {
         for (const [companyId] of event.manufacturerData) {
-            const hexId = formatCompanyId(companyId);
-            const knownName =
-                SURVEILLANCE_COMPANIES[companyId] ||
-                TRACKER_COMPANIES[companyId] ||
-                'Unknown';
-            manufacturers.push({ id: hexId, name: knownName });
+            manufacturers.push({ id: formatCompanyId(companyId), name: companyName(companyId) });
         }
     }
 
@@ -293,43 +357,22 @@ function handleAdvertisement(event) {
 
     const isNew = !devices.has(deviceId);
     devices.set(deviceId, deviceData);
+    scheduleRender();
 
-    if (isNew) {
-        addDeviceCard(deviceData);
+    // Show alert banner for newly found surveillance devices
+    if (isNew && finalClassification.type === 'surveillance') {
+        showAlertBanner(deviceData.name || 'Unknown Device');
+    }
+}
+
+/** Queue a throttled re-render of the device list. */
+function scheduleRender() {
+    if (renderTimer !== null) return;
+    renderTimer = setTimeout(() => {
+        renderTimer = null;
+        renderDeviceList();
         updateCounts();
-
-        // Show alert banner for newly found surveillance devices
-        if (finalClassification.type === 'surveillance') {
-            showAlertBanner(deviceData.name || 'Unknown Device');
-        }
-    } else {
-        // Throttle re-renders: BLE advertisements can arrive many times per second
-        scheduleCardUpdate(deviceId);
-    }
-}
-
-/** Queue a throttled card re-render for an existing device. */
-function scheduleCardUpdate(deviceId) {
-    dirtyDevices.add(deviceId);
-    if (flushTimer === null) {
-        flushTimer = setTimeout(flushCardUpdates, RENDER_INTERVAL_MS);
-    }
-}
-
-/** Re-render all dirty device cards and refresh counters. */
-function flushCardUpdates() {
-    flushTimer = null;
-    if (groupByMfr) {
-        // Grouped view: one full rebuild per flush keeps ordering/groups correct
-        if (dirtyDevices.size > 0) rebuildList();
-    } else {
-        for (const id of dirtyDevices) {
-            const data = devices.get(id);
-            if (data) updateDeviceCard(data);
-        }
-    }
-    dirtyDevices.clear();
-    updateCounts();
+    }, RENDER_INTERVAL_MS);
 }
 
 /**
@@ -342,35 +385,8 @@ function shouldUpgrade(oldType, newType) {
 }
 
 // ================================================================
-// DOM — Device Cards
+// DOM — Device List Rendering
 // ================================================================
-
-function addDeviceCard(data) {
-    if (groupByMfr) {
-        rebuildList();
-        return;
-    }
-    const list = document.getElementById('device-list');
-    const empty = list.querySelector('.device-list-empty');
-    if (empty) empty.remove();
-
-    const card = buildCard(data);
-    deviceCards.set(data.id, card);
-    list.prepend(card);
-    applyFilterToCard(card);
-}
-
-function updateDeviceCard(data) {
-    const existing = deviceCards.get(data.id);
-    if (!existing || !existing.isConnected) {
-        addDeviceCard(data);
-        return;
-    }
-    const newCard = buildCard(data);
-    deviceCards.set(data.id, newCard);
-    existing.replaceWith(newCard);
-    applyFilterToCard(newCard);
-}
 
 function buildCard(data) {
     const card = document.createElement('div');
@@ -380,29 +396,99 @@ function buildCard(data) {
     return card;
 }
 
+/** Severity ranking used by the severity sort and bundle classification. */
+const SEVERITY_RANK = { surveillance: 2, tracker: 1, normal: 0 };
+
+/** Comparator implementing the active sort mode. */
+function deviceComparator(a, b) {
+    if (sortMode === 'proximity') {
+        return (b.rssi ?? -999) - (a.rssi ?? -999);
+    }
+    if (sortMode === 'severity') {
+        const diff = (SEVERITY_RANK[b.classification.type] ?? 0) - (SEVERITY_RANK[a.classification.type] ?? 0);
+        return diff !== 0 ? diff : (b.rssi ?? -999) - (a.rssi ?? -999);
+    }
+    return b.lastSeen - a.lastSeen; // 'lastseen' (default)
+}
+
 /**
- * Rebuild the entire device list (used for manufacturer grouping and
- * when toggling grouping on/off).
+ * Bundle likely MAC-rotation aliases: nameless devices sharing a manufacturer
+ * ID, where one appears shortly after another disappears at a similar signal
+ * level. Named devices and unmatched devices pass through untouched.
+ * Purely derived at render time — no state is mutated.
+ * @returns {Array<object>} devices and merged pseudo-devices
  */
-function rebuildList() {
+function computeBundles() {
+    const all = [...devices.values()];
+    const passthrough = all.filter(d => d.name || d.manufacturers.length === 0);
+    const candidates = all
+        .filter(d => !d.name && d.manufacturers.length > 0)
+        .sort((a, b) => a.firstSeen - b.firstSeen);
+
+    const chains = [];
+    for (const dev of candidates) {
+        const chain = chains.find(c => {
+            const tail = c[c.length - 1];
+            return tail.manufacturers[0].id === dev.manufacturers[0].id
+                && tail.lastSeen <= dev.firstSeen
+                && dev.firstSeen - tail.lastSeen <= BUNDLE_GAP_MS
+                && tail.rssi != null && dev.rssi != null
+                && Math.abs(tail.rssi - dev.rssi) <= BUNDLE_RSSI_TOLERANCE;
+        });
+        if (chain) chain.push(dev);
+        else chains.push([dev]);
+    }
+
+    const merged = chains.map(chain => {
+        if (chain.length === 1) return chain[0];
+        const latest = chain[chain.length - 1];
+        let classification = latest.classification;
+        for (const d of chain) {
+            if (shouldUpgrade(classification.type, d.classification.type)) classification = d.classification;
+        }
+        return {
+            ...latest,
+            classification,
+            firstSeen: chain[0].firstSeen,
+            lastSeen: Math.max(...chain.map(d => d.lastSeen)),
+            aliasIds: chain.map(d => d.id),
+        };
+    });
+
+    return [...passthrough, ...merged];
+}
+
+/**
+ * Rebuild the device list honoring bundling, grouping, sorting and filters.
+ * Throttled via scheduleRender(); skipped while a note editor is open so
+ * typing is never clobbered.
+ */
+function renderDeviceList() {
     const list = document.getElementById('device-list');
-    deviceCards.clear();
+
+    // Never clobber an open note editor — retry on the next tick instead
+    if (list.querySelector('.note-input')) {
+        scheduleRender();
+        return;
+    }
+
+    renderedData.clear();
 
     if (devices.size === 0) {
         list.replaceChildren(renderEmptyState());
         return;
     }
 
+    const entries = bundleRotating ? computeBundles() : [...devices.values()];
     const frag = document.createDocumentFragment();
     const makeCard = (d) => {
-        const card = buildCard(d);
-        deviceCards.set(d.id, card);
-        return card;
+        renderedData.set(d.id, d);
+        return buildCard(d);
     };
 
     if (groupByMfr) {
         const groups = new Map();
-        for (const d of devices.values()) {
+        for (const d of entries) {
             const key = d.manufacturers.length > 0
                 ? `${d.manufacturers[0].id} — ${d.manufacturers[0].name}`
                 : 'NO MANUFACTURER DATA';
@@ -415,12 +501,12 @@ function rebuildList() {
             header.className = 'group-header';
             header.textContent = `# ${key} (${items.length})`;
             frag.appendChild(header);
-            items.sort((a, b) => (b.rssi ?? -999) - (a.rssi ?? -999));
+            items.sort(deviceComparator);
             for (const d of items) frag.appendChild(makeCard(d));
         }
     } else {
-        const sorted = [...devices.values()].sort((a, b) => b.lastSeen - a.lastSeen);
-        for (const d of sorted) frag.appendChild(makeCard(d));
+        entries.sort(deviceComparator);
+        for (const d of entries) frag.appendChild(makeCard(d));
     }
 
     list.replaceChildren(frag);
@@ -446,7 +532,9 @@ function renderCardHTML(data) {
     const badgeClass = `badge-${data.classification.type}`;
     const badgeText  = data.classification.type.toUpperCase();
 
-    const timeStr = new Date(data.lastSeen).toLocaleTimeString();
+    const firstStr = new Date(data.firstSeen).toLocaleTimeString();
+    const lastStr  = new Date(data.lastSeen).toLocaleTimeString();
+    const duration = formatDuration(data.lastSeen - data.firstSeen);
 
     let manufacturerRows = '';
     if (data.manufacturers.length > 0) {
@@ -480,9 +568,30 @@ function renderCardHTML(data) {
            </div>`
         : '';
 
+    const aliasRow = data.aliasIds && data.aliasIds.length > 1
+        ? `<div class="device-detail">
+             <span class="detail-label">ALIASES</span>
+             <span class="detail-value dim small" title="Likely the same physical device rotating its MAC address (heuristic guess)">${data.aliasIds.length} addresses (MAC rotation?): ${data.aliasIds.map(escapeHTML).join(', ')}</span>
+           </div>`
+        : '';
+
+    const note = deviceNotes[data.id];
+    const noteRow = note
+        ? `<div class="device-detail note-row">
+             <span class="detail-label">NOTE</span>
+             <span class="detail-value note-text">${escapeHTML(note)}</span>
+           </div>`
+        : '';
+
     return `
         <div class="device-card-header">
             <div class="device-name">${name}</div>
+            <div class="device-actions">
+                <button class="icon-btn" type="button" data-action="copy" title="Copy device info" aria-label="Copy device info">⧉</button>
+                <button class="icon-btn" type="button" data-action="google" title="Search on Google" aria-label="Search device on Google">G</button>
+                <button class="icon-btn" type="button" data-action="ddg" title="Search on DuckDuckGo" aria-label="Search device on DuckDuckGo">D</button>
+                <button class="icon-btn" type="button" data-action="note" title="Add or edit note" aria-label="Add or edit note">✎</button>
+            </div>
             <span class="badge ${badgeClass}">${badgeText}</span>
         </div>
         <div class="device-details">
@@ -495,9 +604,15 @@ function renderCardHTML(data) {
             ${manufacturerRows}
             ${reasonRow}
             ${uuidsRow}
+            ${aliasRow}
+            ${noteRow}
             <div class="device-detail">
-                <span class="detail-label">SEEN</span>
-                <span class="detail-value dim">${timeStr}</span>
+                <span class="detail-label">FIRST</span>
+                <span class="detail-value dim">${firstStr}</span>
+            </div>
+            <div class="device-detail">
+                <span class="detail-label">LAST</span>
+                <span class="detail-value dim">${lastStr} <span class="small">(seen for ${duration})</span></span>
             </div>
             <div class="device-detail">
                 <span class="detail-label">ID</span>
@@ -505,6 +620,15 @@ function renderCardHTML(data) {
             </div>
         </div>
     `;
+}
+
+/** Human-friendly duration, e.g. "42s", "12m 3s", "1h 05m". */
+function formatDuration(ms) {
+    const s = Math.max(0, Math.round(ms / 1000));
+    if (s < 60) return `${s}s`;
+    const m = Math.floor(s / 60);
+    if (m < 60) return `${m}m ${s % 60}s`;
+    return `${Math.floor(m / 60)}h ${String(m % 60).padStart(2, '0')}m`;
 }
 
 function buildRssiBar(rssi) {
@@ -583,14 +707,16 @@ function setFilter(filter) {
     applyCurrentFilter();
 }
 
-/** Returns true if a device passes all active filters (type, signal, text). */
+/** Returns true if a device passes all active filters (type, signal, staleness, text). */
 function deviceMatchesFilters(data) {
     if (currentFilter !== 'all' && data.classification.type !== currentFilter) return false;
     if (rssiFilter != null && (data.rssi == null || data.rssi < rssiFilter)) return false;
+    if (hideStale && Date.now() - data.lastSeen > STALE_THRESHOLD_MS) return false;
     if (textFilter) {
         const haystack = [
             data.name || '',
             data.id,
+            deviceNotes[data.id] || '',
             ...data.manufacturers.map(m => `${m.id} ${m.name}`),
         ].join(' ').toLowerCase();
         if (!haystack.includes(textFilter)) return false;
@@ -600,7 +726,7 @@ function deviceMatchesFilters(data) {
 
 /** Show/hide a single card according to the active filters. */
 function applyFilterToCard(card) {
-    const data = devices.get(card.dataset.deviceId);
+    const data = renderedData.get(card.dataset.deviceId) || devices.get(card.dataset.deviceId);
     card.style.display = data && deviceMatchesFilters(data) ? '' : 'none';
 }
 
@@ -626,13 +752,127 @@ function updateGroupHeaders() {
     if (header) header.style.display = anyVisible ? '' : 'none';
 }
 
-/** Toggle grouping of the device list by manufacturer. */
-function toggleGroupByMfr() {
-    groupByMfr = !groupByMfr;
-    const btn = document.getElementById('btn-group');
-    btn.classList.toggle('active', groupByMfr);
-    btn.setAttribute('aria-pressed', String(groupByMfr));
-    rebuildList();
+/** Toggle a boolean view option bound to a button, then re-render. */
+function bindViewToggle(buttonId, apply) {
+    const btn = document.getElementById(buttonId);
+    btn.addEventListener('click', () => {
+        const active = apply();
+        btn.classList.toggle('active', active);
+        btn.setAttribute('aria-pressed', String(active));
+        renderDeviceList();
+    });
+}
+
+// ================================================================
+// Device Notes (localStorage)
+// ================================================================
+
+/** Load saved notes from localStorage. */
+function loadNotes() {
+    try {
+        deviceNotes = JSON.parse(localStorage.getItem(NOTES_STORAGE_KEY)) || {};
+    } catch (_) {
+        deviceNotes = {};
+    }
+}
+
+/** Save (or delete, when empty) a note for a device and persist. */
+function saveNote(deviceId, text) {
+    if (text) deviceNotes[deviceId] = text;
+    else delete deviceNotes[deviceId];
+    try {
+        localStorage.setItem(NOTES_STORAGE_KEY, JSON.stringify(deviceNotes));
+    } catch (_) { /* storage full/blocked — note stays for this session only */ }
+}
+
+/** Open an inline note editor inside a device card. */
+function openNoteEditor(card, deviceId) {
+    if (card.querySelector('.note-editor')) return;
+
+    const editor = document.createElement('div');
+    editor.className = 'device-detail note-editor';
+    editor.innerHTML = `
+        <span class="detail-label">NOTE</span>
+        <input class="note-input terminal-input" type="text" maxlength="200"
+               placeholder="e.g. 3rd floor meeting room — seen daily" aria-label="Device note">
+        <button class="icon-btn" type="button" data-action="note-save" title="Save note" aria-label="Save note">✔</button>
+        <button class="icon-btn" type="button" data-action="note-cancel" title="Cancel" aria-label="Cancel note editing">✕</button>`;
+
+    const input = editor.querySelector('.note-input');
+    input.value = deviceNotes[deviceId] || '';
+    input.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') closeNoteEditor(card, deviceId, true);
+        else if (e.key === 'Escape') closeNoteEditor(card, deviceId, false);
+    });
+
+    card.querySelector('.note-row')?.classList.add('hidden');
+    card.querySelector('.device-details').appendChild(editor);
+    input.focus();
+}
+
+/** Close the note editor, optionally saving, and refresh the list. */
+function closeNoteEditor(card, deviceId, save) {
+    const editor = card.querySelector('.note-editor');
+    if (!editor) return;
+    if (save) saveNote(deviceId, editor.querySelector('.note-input').value.trim());
+    editor.remove();
+    renderDeviceList();
+}
+
+// ================================================================
+// Card Actions (event delegation — cards are re-rendered constantly)
+// ================================================================
+
+function handleCardAction(e) {
+    const btn = e.target.closest('[data-action]');
+    if (!btn) return;
+    const card = btn.closest('.device-card');
+    if (!card) return;
+    const deviceId = card.dataset.deviceId;
+    const data = renderedData.get(deviceId) || devices.get(deviceId);
+    if (!data) return;
+
+    switch (btn.dataset.action) {
+        case 'copy': {
+            const mfr = data.manufacturers.map(m => `${m.id} (${m.name})`).join(', ');
+            const text = [
+                data.name || 'Unknown Device',
+                `ID: ${data.id}`,
+                mfr && `MFR: ${mfr}`,
+                data.rssi != null && `RSSI: ${data.rssi} dBm`,
+            ].filter(Boolean).join(' | ');
+            navigator.clipboard?.writeText(text).then(
+                () => flashButton(btn, '✓'),
+                () => flashButton(btn, '✕'),
+            );
+            break;
+        }
+        case 'google':
+        case 'ddg': {
+            const q = encodeURIComponent(`${data.name || data.manufacturers[0]?.name || data.id} bluetooth device`);
+            const url = btn.dataset.action === 'google'
+                ? `https://www.google.com/search?q=${q}`
+                : `https://duckduckgo.com/?q=${q}`;
+            window.open(url, '_blank', 'noopener');
+            break;
+        }
+        case 'note':
+            openNoteEditor(card, deviceId);
+            break;
+        case 'note-save':
+            closeNoteEditor(card, deviceId, true);
+            break;
+        case 'note-cancel':
+            closeNoteEditor(card, deviceId, false);
+            break;
+    }
+}
+
+/** Briefly swap a button's label to give action feedback. */
+function flashButton(btn, symbol) {
+    const original = btn.textContent;
+    btn.textContent = symbol;
+    setTimeout(() => { btn.textContent = original; }, 1000);
 }
 
 // ================================================================
@@ -869,8 +1109,7 @@ async function addDevice() {
 
         if (!devices.has(device.id)) {
             devices.set(device.id, deviceData);
-            addDeviceCard(deviceData);
-            updateCounts();
+            scheduleRender();
         }
 
         // Try to start advertisement watching for live RSSI + manufacturer data
@@ -898,10 +1137,9 @@ function clearDevices() {
     stopWatchingDevices();
 
     devices.clear();
-    deviceCards.clear();
-    dirtyDevices.clear();
-    clearTimeout(flushTimer);
-    flushTimer = null;
+    renderedData.clear();
+    clearTimeout(renderTimer);
+    renderTimer = null;
 
     document.getElementById('device-list').replaceChildren(renderEmptyState());
 
@@ -952,7 +1190,25 @@ function escapeHTML(str) {
         rssiFilter = e.target.value ? Number(e.target.value) : null;
         applyCurrentFilter();
     });
-    document.getElementById('btn-group').addEventListener('click', toggleGroupByMfr);
+    document.getElementById('sort-mode').addEventListener('change', (e) => {
+        sortMode = e.target.value;
+        renderDeviceList();
+    });
+
+    bindViewToggle('btn-group',      () => (groupByMfr = !groupByMfr));
+    bindViewToggle('btn-hide-stale', () => (hideStale = !hideStale));
+    bindViewToggle('btn-bundle',     () => (bundleRotating = !bundleRotating));
+
+    // Card action buttons (copy / search / notes) via delegation
+    document.getElementById('device-list').addEventListener('click', handleCardAction);
+
+    // Re-apply the staleness filter periodically while it is active
+    setInterval(() => {
+        if (hideStale) applyCurrentFilter();
+    }, 30000);
+
+    loadNotes();
+    loadCompanyIdentifiers();
 
     // Render the initial empty state from the template
     document.getElementById('device-list').appendChild(renderEmptyState());
