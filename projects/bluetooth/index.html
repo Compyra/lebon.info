@@ -80,7 +80,7 @@
             <template id="tpl-empty">
                 <div class="device-list-empty">
                     <span class="dim">No devices detected.</span><br>
-                    <span class="dim small">Click <strong>[ START SCAN ]</strong> to begin passive BLE scanning (requires Chrome with experimental Web Bluetooth flag).<br>
+                    <span class="dim small">Click <strong>[ START SCAN ]</strong> to begin scanning — on Windows, first start the local bridge (see <strong># SCAN MODES</strong> below).<br>
                     Or use <strong>[ + ADD DEVICE ]</strong> to manually select a specific device.</span>
                 </div>
             </template>
@@ -128,15 +128,28 @@
 
             <!-- Requirements -->
             <div class="info-section">
-                <span class="section-label"># REQUIREMENTS</span>
+                <span class="section-label"># SCAN MODES &amp; REQUIREMENTS</span>
                 <p class="dim">
-                    <strong>Full scan mode</strong> (START SCAN): Requires Chrome or Edge with the experimental Web Bluetooth scanning flag:<br>
+                    <strong>Why a local bridge?</strong> A webpage cannot access the Bluetooth radio directly —
+                    browsers only expose the experimental Web Bluetooth API, and on <strong>Windows</strong> its
+                    passive scanning never starts radio discovery (a known Chromium limitation, in Chrome, Edge
+                    and Brave alike). The bridge is a small Python script that runs on your own machine, performs
+                    the native BLE scan, and feeds live results to this page over <code>127.0.0.1:8437</code>.
+                    Nothing leaves your computer: the bridge only listens on localhost and this page reads from it locally.
+                </p>
+                <p class="dim">
+                    <strong>Local bridge mode</strong> (recommended, required on Windows):<br>
+                    1. <a href="bt-bridge.py" download class="terminal-link">⬇ Download bt-bridge.py</a><br>
+                    2. Install the scanner library (once): <code>pip install bleak</code><br>
+                    3. Start the bridge: <code>python bt-bridge.py</code><br>
+                    4. Click <strong>[ START SCAN ]</strong> — the page connects automatically and shows every
+                    advertising BLE device your radio can see. Stop the bridge with <code>Ctrl+C</code> when done.<br>
+                    Requires Python 3.9+ (<a href="https://www.python.org/downloads/" target="_blank" rel="noopener noreferrer" class="terminal-link">python.org</a>).<br><br>
+                    <strong>Full scan mode</strong> (browser-only, Android/ChromeOS): Requires Chrome or Edge with the experimental Web Bluetooth scanning flag:<br>
                     <code>chrome://flags/#enable-experimental-web-platform-features</code><br>
-                    On <strong>Windows</strong>, additionally enable:<br>
-                    <code>chrome://flags/#enable-web-bluetooth-new-permissions-backend</code><br>
-                    then restart the browser.<br><br>
+                    ⚠ On <strong>Windows</strong>, Chromium's Web Bluetooth scanning does not start radio discovery — use the local bridge instead.<br><br>
                     <strong>Single device mode</strong> (+ ADD DEVICE): Works in any Chromium browser with Web Bluetooth support over HTTPS.<br><br>
-                    <strong>Does not work in:</strong> Firefox, Safari, or HTTP (non-secure) connections.
+                    <strong>Does not work in:</strong> Firefox, Safari, or HTTP (non-secure) connections (bridge mode excepted).
                 </p>
                 <p class="dim small">
                     ⚠ <strong>Seeing no devices?</strong> Only BLE devices that are actively <em>advertising</em> are visible.

@@ -62,6 +62,7 @@ const SURVEILLANCE_NAME_PATTERNS = [
     /oppo.?air.?glass/i,
     /envision.?glass/i,
     /\bora\b.*glass/i,        // Ora-2 smart glasses
+    /\bplaud\b/i,             // Plaud Note / NotePin AI voice recorders
 ];
 
 /** Regex patterns that match known tracker device names. */
@@ -125,6 +126,15 @@ const WATCHDOG_DELAY_MS = 10000;
 
 /** Currently active BluetoothLEScan (from requestLEScan), or null. */
 let activeScan = null;
+
+/** Local scanner bridge (bt-bridge.py) — native BLE scan exposed on localhost. */
+const BRIDGE_URL = 'http://127.0.0.1:8437';
+
+/** Poll interval for the local bridge (ms). */
+const BRIDGE_POLL_MS = 2000;
+
+/** Timer handle for bridge polling, or null when bridge mode is inactive. */
+let bridgeTimer = null;
 
 /** Set of device objects being watched via watchAdvertisements(). */
 const watchedDevices = new Set();
@@ -492,16 +502,29 @@ function applyCurrentFilter() {
 // Scan Controls — Public API (called from HTML)
 // ================================================================
 
-/** Start a passive BLE advertisement scan using requestLEScan (experimental). */
+/**
+ * Start scanning. Prefers the local scanner bridge (bt-bridge.py), which
+ * performs a native BLE scan — required on Windows, where Chromium's
+ * requestLEScan never starts radio discovery. Falls back to Web Bluetooth
+ * passive scanning (works on Android / ChromeOS with the experimental flag).
+ */
 async function startScan() {
-    if (!navigator.bluetooth) {
-        showNotice('error', 'Web Bluetooth API is not available. Use Chrome or Edge on an HTTPS page.');
-        return;
-    }
-
     clearNotice();
     setStatus('REQUESTING...', 'scanning');
     document.getElementById('btn-scan').disabled = true;
+
+    // 1) Local scanner bridge — full native scan, no browser limitations
+    if (await startBridgeScan()) return;
+
+    // 2) Web Bluetooth passive scanning
+    if (!navigator.bluetooth) {
+        setStatus('UNSUPPORTED', 'error');
+        showNotice('error',
+            'Web Bluetooth API is not available and no local scanner bridge was found. ' +
+            'Run "python bt-bridge.py" on this machine, then click [ START SCAN ] again.');
+        document.getElementById('btn-scan').disabled = false;
+        return;
+    }
 
     try {
         if (typeof navigator.bluetooth.requestLEScan !== 'function') {
@@ -509,9 +532,10 @@ async function startScan() {
             setStatus('UNSUPPORTED', 'error');
             showNotice(
                 'warn',
-                'BLE passive scanning is not available in this browser. ' +
-                'Enable chrome://flags/#enable-experimental-web-platform-features, ' +
-                'then reload — or use [ + ADD DEVICE ] to add devices one at a time.'
+                'BLE passive scanning is not available in this browser and no local scanner bridge was found. ' +
+                'Recommended: run "python bt-bridge.py" on this machine, then scan again. ' +
+                'Alternatively enable chrome://flags/#enable-experimental-web-platform-features ' +
+                'or use [ + ADD DEVICE ] to add devices one at a time.'
             );
             document.getElementById('btn-scan').disabled = false;
             return;
@@ -538,10 +562,10 @@ async function startScan() {
             if (activeScan && packetsReceived === 0) {
                 showNotice(
                     'warn',
-                    'Scan is running but no advertisement packets have been received. Likely causes: ' +
-                    '1) On Windows, Chrome also needs chrome://flags/#enable-web-bluetooth-new-permissions-backend — enable it and restart the browser. ' +
-                    '2) Only BLE devices that are actively ADVERTISING appear — classic Bluetooth devices and already-connected devices (your paired earbuds, watch…) usually don\u2019t advertise. ' +
-                    '3) Verify your adapter sees packets at chrome://bluetooth-internals (Adapter → Start Discovery).'
+                    'Scan is running but no advertisement packets have been received. ' +
+                    'On Windows, Chromium\u2019s Web Bluetooth scanning is known to be non-functional — ' +
+                    'run the local scanner bridge instead: "python bt-bridge.py", then click [ STOP SCAN ] and [ START SCAN ] again. ' +
+                    'Also note that only BLE devices actively ADVERTISING are visible.'
                 );
             }
         }, WATCHDOG_DELAY_MS);
@@ -572,10 +596,15 @@ async function startScan() {
 
 /** Stop the active passive scan. */
 function stopScan() {
-    const wasActive = activeScan !== null || watchedDevices.size > 0;
+    const wasActive = activeScan !== null || watchedDevices.size > 0 || bridgeTimer !== null;
 
     clearTimeout(scanWatchdog);
     scanWatchdog = null;
+
+    if (bridgeTimer !== null) {
+        clearInterval(bridgeTimer);
+        bridgeTimer = null;
+    }
 
     if (activeScan) {
         activeScan.stop();
@@ -599,6 +628,65 @@ function stopWatchingDevices() {
         device.removeEventListener('advertisementreceived', handleAdvertisement);
     }
     watchedDevices.clear();
+}
+
+// ================================================================
+// Local Scanner Bridge (bt-bridge.py)
+// ================================================================
+
+/** Fetch the device list from the local bridge. Throws on failure. */
+async function fetchBridgeDevices() {
+    const res = await fetch(`${BRIDGE_URL}/api/devices`, { signal: AbortSignal.timeout(1500) });
+    if (!res.ok) throw new Error(`Bridge HTTP ${res.status}`);
+    const data = await res.json();
+    return Array.isArray(data.devices) ? data.devices : [];
+}
+
+/**
+ * Try to connect to the local scanner bridge and start polling.
+ * @returns {Promise<boolean>} true if bridge mode started.
+ */
+async function startBridgeScan() {
+    let list;
+    try {
+        list = await fetchBridgeDevices();
+    } catch (_) {
+        return false; // bridge not running — caller falls back to Web Bluetooth
+    }
+
+    processBridgeDevices(list);
+    setStatus('SCANNING (BRIDGE)', 'scanning');
+    showNotice('info',
+        'Connected to the local scanner bridge — live native BLE scan active. ' +
+        'All nearby advertising devices will appear below. Click [ STOP SCAN ] when done.');
+    document.getElementById('btn-stop').disabled = false;
+
+    bridgeTimer = setInterval(pollBridge, BRIDGE_POLL_MS);
+    return true;
+}
+
+/** Periodic bridge poll; stops with an error notice if the bridge goes away. */
+async function pollBridge() {
+    try {
+        processBridgeDevices(await fetchBridgeDevices());
+    } catch (_) {
+        stopScan();
+        setStatus('BRIDGE LOST', 'error');
+        showNotice('error', 'Lost connection to the local scanner bridge. Restart "python bt-bridge.py" and scan again.');
+    }
+}
+
+/** Feed bridge JSON entries through the normal advertisement pipeline. */
+function processBridgeDevices(list) {
+    for (const d of list) {
+        handleAdvertisement({
+            device: { id: d.address, name: d.name || null },
+            rssi: d.rssi,
+            txPower: d.tx_power,
+            manufacturerData: new Map((d.manufacturer_ids || []).map(id => [id, null])),
+            uuids: d.uuids || [],
+        });
+    }
 }
 
 /**
