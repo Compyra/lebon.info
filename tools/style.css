@@ -1462,3 +1462,46 @@ body.bright-theme * {
     scrollbar-width: thin;
     scrollbar-color: #c8c6c4 #f3f2f1;
 }
+
+/* ==========================================================
+   Page polish: entrance animations
+   ========================================================== */
+
+.header,
+.search-container,
+.filter-container {
+    animation: fade-in-up 0.4s ease both;
+}
+
+.search-container { animation-delay: 0.05s; }
+.filter-container { animation-delay: 0.1s; }
+
+.tool-card {
+    animation: fade-in-up 0.4s ease both;
+}
+
+/* Stagger only the first rows of cards to keep load snappy */
+.tool-card:nth-child(1)  { animation-delay: 0.05s; }
+.tool-card:nth-child(2)  { animation-delay: 0.10s; }
+.tool-card:nth-child(3)  { animation-delay: 0.15s; }
+.tool-card:nth-child(4)  { animation-delay: 0.20s; }
+.tool-card:nth-child(5)  { animation-delay: 0.25s; }
+.tool-card:nth-child(6)  { animation-delay: 0.30s; }
+
+@keyframes fade-in-up {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Accessibility: respect reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+    .header,
+    .search-container,
+    .filter-container,
+    .tool-card {
+        animation: none;
+    }
+    .tool-card:hover {
+        transform: none;
+    }
+}

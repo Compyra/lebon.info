@@ -16,7 +16,7 @@
     --gray:            #222826;
     --border:          #00ff90;
     --text:            #e0e0e0;
-    --text-dim:        #7a8a7e;
+    --text-dim:        #8a9a8e;
     --card-normal:     #1e2320;
     --card-surv:       #2a1010;
     --card-tracker:    #201810;
@@ -37,7 +37,7 @@
 body.terminal-bg {
     background: var(--bg);
     color: var(--green);
-    font-family: 'Fira Mono', 'Consolas', 'Menlo', 'Monaco', monospace;
+    font-family: 'Consolas', 'Menlo', 'Monaco', monospace;
     font-size: 0.95rem;
     min-height: 100vh;
     padding: 0 0 40px;
@@ -47,7 +47,7 @@ a { color: var(--green); text-decoration: none; }
 a:hover { color: var(--amber); text-decoration: underline; }
 code { background: var(--gray); padding: 2px 6px; border-radius: 3px; font-size: 0.85em; color: var(--amber); }
 strong { color: var(--green); font-weight: 600; }
-small { font-size: 0.82em; }
+small { font-size: max(0.82em, 0.72rem); }
 
 /* ---- Terminal Window ---- */
 .terminal-window {
@@ -348,7 +348,7 @@ small { font-size: 0.82em; }
     flex-shrink: 0;
 }
 
-.detail-value { color: var(--text); }
+.detail-value { color: var(--text); min-width: 0; overflow-wrap: anywhere; }
 .detail-value.manufacturer { color: var(--green-dim); }
 
 .alert-reason .detail-value {
@@ -437,9 +437,18 @@ small { font-size: 0.82em; }
 
 /* ---- Utilities ---- */
 .dim   { color: var(--text-dim); }
-.small { font-size: 0.82em; }
+.small { font-size: max(0.82em, 0.72rem); }
 
 .hidden { display: none !important; }
+
+/* ---- Reduced Motion ---- */
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
 
 /* ---- Responsive ---- */
 @media (max-width: 600px) {

@@ -99,6 +99,21 @@ const TRACKER_SERVICE_UUIDS = new Set([
 /** Map of deviceId -> device data object. */
 const devices = new Map();
 
+/** Map of deviceId -> rendered card element (avoids brittle string-id DOM lookups). */
+const deviceCards = new Map();
+
+/** Device ids with a pending (throttled) card re-render. */
+const dirtyDevices = new Set();
+
+/** Timer handle for the throttled render flush, or null. */
+let flushTimer = null;
+
+/** Minimum interval between card re-renders for existing devices (ms). */
+const RENDER_INTERVAL_MS = 300;
+
+/** Timer handle for auto-hiding the alert banner, or null. */
+let alertTimer = null;
+
 /** Currently active BluetoothLEScan (from requestLEScan), or null. */
 let activeScan = null;
 
@@ -232,16 +247,35 @@ function handleAdvertisement(event) {
 
     if (isNew) {
         addDeviceCard(deviceData);
+        updateCounts();
+
+        // Show alert banner for newly found surveillance devices
+        if (finalClassification.type === 'surveillance') {
+            showAlertBanner(deviceData.name || 'Unknown Device');
+        }
     } else {
-        updateDeviceCard(deviceData);
+        // Throttle re-renders: BLE advertisements can arrive many times per second
+        scheduleCardUpdate(deviceId);
     }
+}
 
+/** Queue a throttled card re-render for an existing device. */
+function scheduleCardUpdate(deviceId) {
+    dirtyDevices.add(deviceId);
+    if (flushTimer === null) {
+        flushTimer = setTimeout(flushCardUpdates, RENDER_INTERVAL_MS);
+    }
+}
+
+/** Re-render all dirty device cards and refresh counters. */
+function flushCardUpdates() {
+    flushTimer = null;
+    for (const id of dirtyDevices) {
+        const data = devices.get(id);
+        if (data) updateDeviceCard(data);
+    }
+    dirtyDevices.clear();
     updateCounts();
-
-    // Show alert banner for newly found surveillance devices
-    if (isNew && finalClassification.type === 'surveillance') {
-        showAlertBanner(deviceData.name || 'Unknown Device');
-    }
 }
 
 /**
@@ -263,25 +297,26 @@ function addDeviceCard(data) {
     if (empty) empty.remove();
 
     const card = buildCard(data);
+    deviceCards.set(data.id, card);
     list.prepend(card);
-    applyCurrentFilter();
+    applyFilterToCard(card);
 }
 
 function updateDeviceCard(data) {
-    const existing = document.getElementById(`device-${CSS.escape(data.id)}`);
-    if (!existing) {
+    const existing = deviceCards.get(data.id);
+    if (!existing || !existing.isConnected) {
         addDeviceCard(data);
         return;
     }
     const newCard = buildCard(data);
+    deviceCards.set(data.id, newCard);
     existing.replaceWith(newCard);
-    applyCurrentFilter();
+    applyFilterToCard(newCard);
 }
 
 function buildCard(data) {
     const card = document.createElement('div');
     card.className = `device-card device-${data.classification.type}`;
-    card.id = `device-${data.id}`;
     card.innerHTML = renderCardHTML(data);
     return card;
 }
@@ -404,7 +439,8 @@ function showAlertBanner(deviceName) {
     document.getElementById('alert-text').textContent =
         `SURVEILLANCE DEVICE DETECTED NEARBY: ${deviceName}`;
     banner.classList.remove('hidden');
-    setTimeout(() => banner.classList.add('hidden'), 10000);
+    clearTimeout(alertTimer);
+    alertTimer = setTimeout(() => banner.classList.add('hidden'), 10000);
 }
 
 function showNotice(type, message) {
@@ -425,19 +461,21 @@ function clearNotice() {
 function setFilter(filter) {
     currentFilter = filter;
     document.querySelectorAll('.filter-btn').forEach(btn => {
-        btn.classList.toggle('active', btn.dataset.filter === filter);
+        const active = btn.dataset.filter === filter;
+        btn.classList.toggle('active', active);
+        btn.setAttribute('aria-pressed', String(active));
     });
     applyCurrentFilter();
 }
 
+/** Show/hide a single card according to the current filter. */
+function applyFilterToCard(card) {
+    const visible = currentFilter === 'all' || card.classList.contains(`device-${currentFilter}`);
+    card.style.display = visible ? '' : 'none';
+}
+
 function applyCurrentFilter() {
-    document.querySelectorAll('.device-card').forEach(card => {
-        if (currentFilter === 'all') {
-            card.style.display = '';
-        } else {
-            card.style.display = card.classList.contains(`device-${currentFilter}`) ? '' : 'none';
-        }
-    });
+    document.querySelectorAll('.device-card').forEach(applyFilterToCard);
 }
 
 // ================================================================
@@ -506,6 +544,8 @@ async function startScan() {
 
 /** Stop the active passive scan. */
 function stopScan() {
+    const wasActive = activeScan !== null || watchedDevices.size > 0;
+
     if (activeScan) {
         activeScan.stop();
         activeScan = null;
@@ -513,15 +553,21 @@ function stopScan() {
     }
 
     // Also stop all watched devices
-    for (const device of watchedDevices) {
-        try { device.unwatchAdvertisements?.(); } catch (_) { /* ignore */ }
-    }
-    watchedDevices.clear();
+    stopWatchingDevices();
 
     setStatus('STOPPED', '');
     document.getElementById('btn-scan').disabled  = false;
     document.getElementById('btn-stop').disabled  = true;
-    showNotice('info', 'Scan stopped.');
+    if (wasActive) showNotice('info', 'Scan stopped.');
+}
+
+/** Unwatch all manually added devices and detach their event listeners. */
+function stopWatchingDevices() {
+    for (const device of watchedDevices) {
+        try { device.unwatchAdvertisements?.(); } catch (_) { /* ignore */ }
+        device.removeEventListener('advertisementreceived', handleAdvertisement);
+    }
+    watchedDevices.clear();
 }
 
 /**
@@ -592,18 +638,25 @@ async function addDevice() {
 
 /** Clear all detected devices from the list. */
 function clearDevices() {
-    devices.clear();
+    // Stop watching manually added devices so cleared entries don't reappear
+    stopWatchingDevices();
 
-    const list = document.getElementById('device-list');
-    list.innerHTML = `
-        <div class="device-list-empty">
-            <span class="dim">No devices detected.</span><br>
-            <span class="dim small">Click <strong>[ START SCAN ]</strong> to begin passive BLE scanning (requires Chrome with experimental Web Bluetooth flag).<br>
-            Or use <strong>[ + ADD DEVICE ]</strong> to manually select a specific device.</span>
-        </div>`;
+    devices.clear();
+    deviceCards.clear();
+    dirtyDevices.clear();
+    clearTimeout(flushTimer);
+    flushTimer = null;
+
+    document.getElementById('device-list').replaceChildren(renderEmptyState());
 
     updateCounts();
+    clearTimeout(alertTimer);
     document.getElementById('alert-banner').classList.add('hidden');
+}
+
+/** Build the empty-state placeholder from the HTML template. */
+function renderEmptyState() {
+    return document.getElementById('tpl-empty').content.cloneNode(true);
 }
 
 // ================================================================
@@ -626,6 +679,18 @@ function escapeHTML(str) {
 // ================================================================
 
 (function init() {
+    // Wire up controls (script is loaded at end of <body>, DOM is ready)
+    document.getElementById('btn-scan').addEventListener('click', startScan);
+    document.getElementById('btn-stop').addEventListener('click', stopScan);
+    document.getElementById('btn-add').addEventListener('click', addDevice);
+    document.getElementById('btn-clear').addEventListener('click', clearDevices);
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.addEventListener('click', () => setFilter(btn.dataset.filter));
+    });
+
+    // Render the initial empty state from the template
+    document.getElementById('device-list').appendChild(renderEmptyState());
+
     // Warn if page is not served over HTTPS (required for Web Bluetooth)
     if (location.protocol !== 'https:' && location.hostname !== 'localhost' && location.hostname !== '127.0.0.1') {
         showNotice(

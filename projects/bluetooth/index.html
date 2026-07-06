@@ -5,31 +5,33 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BT Scanner // Surveillance & Tracker Detector</title>
     <meta name="description" content="Scan for nearby Bluetooth devices and identify surveillance devices and trackers.">
+    <meta name="theme-color" content="#181c1b">
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' rx='3' fill='%23181c1b'/%3E%3Ctext x='8' y='12.5' font-size='11' text-anchor='middle' fill='%2300ff90' font-family='monospace'%3EB%3C/text%3E%3C/svg%3E">
     <link rel="stylesheet" href="style.css">
 </head>
 <body class="terminal-bg">
     <div class="terminal-window">
 
         <!-- Header -->
-        <div class="terminal-header">
+        <header class="terminal-header">
             <a href="../../" class="back-link">← lebon.info</a>
             <span class="prompt-title">bt-scanner:~$</span>
-            <span class="prompt-blink">█</span>
-        </div>
+            <span class="prompt-blink" aria-hidden="true">█</span>
+        </header>
 
-        <div class="terminal-body">
+        <main class="terminal-body">
 
             <!-- Title -->
-            <div class="tool-title">
+            <h1 class="tool-title">
                 <span class="title-prefix">// </span>BLUETOOTH SURVEILLANCE SCANNER
                 <span class="title-suffix"> v1.0</span>
-            </div>
+            </h1>
 
             <!-- Status Bar -->
             <div class="status-bar">
                 <div class="status-item">
                     <span class="status-label">STATUS</span>
-                    <span id="status" class="status-value">IDLE</span>
+                    <span id="status" class="status-value" aria-live="polite">IDLE</span>
                 </div>
                 <div class="status-item">
                     <span class="status-label">DEVICES</span>
@@ -47,38 +49,41 @@
 
             <!-- Controls -->
             <div class="controls">
-                <button id="btn-scan" class="terminal-btn primary" onclick="startScan()">[ START SCAN ]</button>
-                <button id="btn-stop" class="terminal-btn" onclick="stopScan()" disabled>[ STOP SCAN ]</button>
-                <button id="btn-add" class="terminal-btn secondary" onclick="addDevice()" title="Manually add one device via browser picker">[ + ADD DEVICE ]</button>
-                <button id="btn-clear" class="terminal-btn danger" onclick="clearDevices()">[ CLEAR ]</button>
+                <button id="btn-scan" class="terminal-btn primary" type="button">[ START SCAN ]</button>
+                <button id="btn-stop" class="terminal-btn" type="button" disabled>[ STOP SCAN ]</button>
+                <button id="btn-add" class="terminal-btn secondary" type="button" title="Manually add one device via browser picker">[ + ADD DEVICE ]</button>
+                <button id="btn-clear" class="terminal-btn danger" type="button">[ CLEAR ]</button>
             </div>
 
             <!-- Filters -->
-            <div class="filter-bar">
-                <span class="filter-label">FILTER:</span>
-                <button class="filter-btn active" onclick="setFilter('all')" data-filter="all">ALL</button>
-                <button class="filter-btn" onclick="setFilter('surveillance')" data-filter="surveillance">SURVEILLANCE</button>
-                <button class="filter-btn" onclick="setFilter('tracker')" data-filter="tracker">TRACKERS</button>
-                <button class="filter-btn" onclick="setFilter('normal')" data-filter="normal">NORMAL</button>
+            <div class="filter-bar" role="group" aria-label="Filter device list">
+                <span class="filter-label" aria-hidden="true">FILTER:</span>
+                <button class="filter-btn active" type="button" data-filter="all" aria-pressed="true">ALL</button>
+                <button class="filter-btn" type="button" data-filter="surveillance" aria-pressed="false">SURVEILLANCE</button>
+                <button class="filter-btn" type="button" data-filter="tracker" aria-pressed="false">TRACKERS</button>
+                <button class="filter-btn" type="button" data-filter="normal" aria-pressed="false">NORMAL</button>
             </div>
 
             <!-- Alert Banner -->
-            <div id="alert-banner" class="alert-banner hidden">
-                <span class="alert-icon">⚠</span>
+            <div id="alert-banner" class="alert-banner hidden" role="alert">
+                <span class="alert-icon" aria-hidden="true">⚠</span>
                 <span id="alert-text">SURVEILLANCE DEVICE DETECTED NEARBY</span>
             </div>
 
             <!-- Notice Box -->
-            <div id="notice-box" class="notice-box hidden"></div>
+            <div id="notice-box" class="notice-box hidden" aria-live="polite"></div>
 
             <!-- Device List -->
-            <div id="device-list" class="device-list">
+            <div id="device-list" class="device-list"></div>
+
+            <!-- Empty-state template (rendered by script.js) -->
+            <template id="tpl-empty">
                 <div class="device-list-empty">
                     <span class="dim">No devices detected.</span><br>
                     <span class="dim small">Click <strong>[ START SCAN ]</strong> to begin passive BLE scanning (requires Chrome with experimental Web Bluetooth flag).<br>
                     Or use <strong>[ + ADD DEVICE ]</strong> to manually select a specific device.</span>
                 </div>
-            </div>
+            </template>
 
             <!-- Legend -->
             <div class="legend-section">
@@ -132,7 +137,7 @@
                 </p>
             </div>
 
-        </div><!-- /terminal-body -->
+        </main><!-- /terminal-body -->
     </div><!-- /terminal-window -->
 
     <script src="script.js"></script>

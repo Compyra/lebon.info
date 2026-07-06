@@ -4,7 +4,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="IT Toolkit — curated collection of IT tools and resources: network, security, development, system utilities, Microsoft portals, and more.">
+    <meta name="theme-color" content="#001100">
     <title>IT Toolkit - Lebon.info</title>
+    <link rel="icon" type="image/png" href="../logoConsole.png">
     <link rel="stylesheet" href="style.css">
 </head>
 
@@ -46,25 +49,25 @@
         <div class="filter-container">
             <p class="prompt">$ filter --category</p>
             <div class="filter-buttons">
-                <button class="filter-btn active" onclick="filterCategory('all')">All Tools</button>
+                <button class="filter-btn active" onclick="filterCategory('all', this)">All Tools</button>
                 <span class="filter-separator"></span>
-                <button class="filter-btn" onclick="filterCategory('online')">🌐 Online only tool</button>
-                <button class="filter-btn" onclick="filterCategory('hybrid')">🔄 Both online and app possible</button>
-                <button class="filter-btn" onclick="filterCategory('download')">💾 Download needed to use tool</button>
+                <button class="filter-btn" onclick="filterCategory('online', this)">🌐 Online only tool</button>
+                <button class="filter-btn" onclick="filterCategory('hybrid', this)">🔄 Both online and app possible</button>
+                <button class="filter-btn" onclick="filterCategory('download', this)">💾 Download needed to use tool</button>
                 <span class="filter-separator"></span>
-                <button class="filter-btn" onclick="filterCategory('network')">🔌 Network</button>
-                <button class="filter-btn" onclick="filterCategory('development')">💻 Development</button>
-                <button class="filter-btn" onclick="filterCategory('system')">⚙️ System Tools</button>
-                <button class="filter-btn" onclick="filterCategory('security')">🔒 Security</button>
-                <button class="filter-btn" onclick="filterCategory('forensics')">🔍 Forensics</button>
-                <button class="filter-btn" onclick="filterCategory('media')">🎥 Media & Creative</button>
-                <button class="filter-btn" onclick="filterCategory('selfhost')">🏠 Self-host</button>
+                <button class="filter-btn" onclick="filterCategory('network', this)">🔌 Network</button>
+                <button class="filter-btn" onclick="filterCategory('development', this)">💻 Development</button>
+                <button class="filter-btn" onclick="filterCategory('system', this)">⚙️ System Tools</button>
+                <button class="filter-btn" onclick="filterCategory('security', this)">🔒 Security</button>
+                <button class="filter-btn" onclick="filterCategory('forensics', this)">🔍 Forensics</button>
+                <button class="filter-btn" onclick="filterCategory('media', this)">🎥 Media & Creative</button>
+                <button class="filter-btn" onclick="filterCategory('selfhost', this)">🏠 Self-host</button>
                 <span class="filter-separator"></span>
-                <button class="filter-btn" onclick="filterCategory('temp')" style="display: none;">🔐 Entra ID</button>
-                <button class="filter-btn" onclick="filterCategory('language')">🔠 Programming Languages</button>
-                <button class="filter-btn" onclick="filterCategory('browser')">🌍 Browsers</button>
-                <button class="filter-btn" onclick="filterCategory('microsoft')">🪟 Microsoft Portals</button>
-                <button class="filter-btn" onclick="filterCategory('rdh')">🕸️ Registrar, DNS & Hosting</button>
+                <button class="filter-btn" onclick="filterCategory('temp', this)" style="display: none;">🔐 Entra ID</button>
+                <button class="filter-btn" onclick="filterCategory('language', this)">🔠 Programming Languages</button>
+                <button class="filter-btn" onclick="filterCategory('browser', this)">🌍 Browsers</button>
+                <button class="filter-btn" onclick="filterCategory('microsoft', this)">🪟 Microsoft Portals</button>
+                <button class="filter-btn" onclick="filterCategory('rdh', this)">🕸️ Registrar, DNS & Hosting</button>
             </div>
         </div>
 
@@ -101,7 +104,7 @@
                 <div class="tool-links">
                     <a href="https://gchq.github.io/CyberChef/" target="_blank">🌐 Official Site</a>
                     <a href="https://github.com/gchq/CyberChef" target="_blank">📦 GitHub</a>
-                    <a href="./CyberChef_v10.19.4"" target="_blank">🔗 Open Local copy (2025-11)</a>
+                    <a href="./CyberChef_v10.19.4/" target="_blank">🔗 Open Local copy (2025-11)</a>
                 </div>
             </div>
 
@@ -335,24 +338,24 @@
                 </div>
             </div>
 
-            <div class="tool-card" data-category="online" data-price="free">
+            <div class="tool-card" data-category="online" data-price="freemium">
                 <h3>Grok</h3>
                 <div class="tool-type">
                     <span class="badge online">Online Only</span>
-                    <span class="badge free">Free</span>
+                    <span class="badge freemium">Freemium</span>
                 </div>
                 <p class="tool-desc">xAI's conversational AI-powered assistant with real-time information access, chats and witty responses.</p>
                 <div class="tool-links">
-                    <a href="https://grok.x.ai/" target="_blank">🌐 Official Site</a>
-                    <a href="https://x.com/i/grok" target="_blank">🔗 Open Tool</a>
+                    <a href="https://x.ai/grok" target="_blank">🌐 Official Site</a>
+                    <a href="https://grok.com/" target="_blank">🔗 Open Tool</a>
                 </div>
             </div>
 
-            <div class="tool-card" data-category="online network" data-price="free">
+            <div class="tool-card" data-category="online network" data-price="freemium">
                 <h3>MXToolbox</h3>
                 <div class="tool-type">
                     <span class="badge online">Online Only</span>
-                    <span class="badge free">Free</span>
+                    <span class="badge freemium">Freemium</span>
                 </div>
                 <p class="tool-desc">Email server testing and DNS lookup tool for troubleshooting mail delivery issues. </p>
                 <div class="tool-links">
@@ -385,11 +388,11 @@
                 </div>
             </div>
 
-            <div class="tool-card" data-category="online security" data-price="free">
+            <div class="tool-card" data-category="online security" data-price="freemium">
                 <h3>AbuseIPDB</h3>
                 <div class="tool-type">
                     <span class="badge online">Online Only</span>
-                    <span class="badge free">Free</span>
+                    <span class="badge freemium">Freemium</span>
                 </div>
                 <p class="tool-desc">Community-driven IP abuse database for reporting and checking malicious IP addresses.</p>
                 <div class="tool-links">
@@ -515,11 +518,11 @@
                 </div>
             </div>
 
-            <div class="tool-card" data-category="download network" data-price="free">
+            <div class="tool-card" data-category="download network" data-price="freemium">
                 <h3>Kiwi Syslog Server</h3>
                 <div class="tool-type">
                     <span class="badge download">Download Required</span>
-                    <span class="badge free">Freemium</span>
+                    <span class="badge freemium">Freemium</span>
                 </div>
                 <p class="tool-desc">Free syslog server for Windows to receive, log, display, and forward syslog messages from network devices, servers, and applications. Essential for centralized log management and monitoring.</p>
                 <div class="tool-links">
@@ -556,11 +559,11 @@
                 </div>
             </div>
 
-            <div class="tool-card" data-category="download network" data-price="free">
+            <div class="tool-card" data-category="download network" data-price="freemium">
                 <h3>AnyDesk <span class="verified-stamp gdpr-stamp">GDPR</span></h3>
                 <div class="tool-type">
                     <span class="badge download">Download Required</span>
-                    <span class="badge free">Free</span>
+                    <span class="badge freemium">Freemium</span>
                 </div>
                 <p class="tool-desc">Fast remote desktop software for accessing computers anywhere with low latency.</p>
                 <div class="tool-links">
@@ -584,11 +587,11 @@
                 </div>
             </div>
 
-            <div class="tool-card" data-category="download network" data-price="free">
+            <div class="tool-card" data-category="download network" data-price="freemium">
                 <h3>MobaXterm</h3>
                 <div class="tool-type">
                     <span class="badge download">Download Required</span>
-                    <span class="badge free">Free</span>
+                    <span class="badge freemium">Freemium</span>
                 </div>
                 <p class="tool-desc">Enhanced terminal with SSH, RDP, VNC, X11, and file transfer - all-in-one network
                     tool.</p>
@@ -671,11 +674,11 @@
                 </div>
             </div>
 
-            <div class="tool-card" data-category="download network" data-price="free">
+            <div class="tool-card" data-category="download network" data-price="trial">
                 <h3>LANTopolog</h3>
                 <div class="tool-type">
                     <span class="badge download">Download Required</span>
-                    <span class="badge free">Free</span>
+                    <span class="badge trial">Trial</span>
                 </div>
                 <p class="tool-desc">Network topology discovery and visualization tool for mapping network
                     infrastructure.</p>
@@ -685,11 +688,11 @@
                 </div>
             </div>
 
-            <div class="tool-card" data-category="download network security" data-price="free">
+            <div class="tool-card" data-category="download network security" data-price="freemium">
                 <h3>ntopng <span class="verified-stamp">GDPR?</span></h3>
                 <div class="tool-type">
                     <span class="badge download">Download Required</span>
-                    <span class="badge free">Free</span>
+                    <span class="badge freemium">Freemium</span>
                 </div>
                 <p class="tool-desc">Web-based network traffic monitoring and analysis tool for real-time network visibility and performance metrics.</p>
                 <div class="tool-links">
@@ -713,11 +716,11 @@
             </div>
 
             <!-- SYSTEM TOOLS -->
-            <div class="tool-card" data-category="online system" data-price="free">
+            <div class="tool-card" data-category="hybrid system" data-price="freemium">
                 <h3>Ninite <span class="verified-stamp">GDPR?</span></h3>
                 <div class="tool-type">
-                    <span class="badge online">Online Only</span>
-                    <span class="badge free">Free</span>
+                    <span class="badge hybrid">Online + App</span>
+                    <span class="badge freemium">Freemium</span>
                 </div>
                 <p class="tool-desc">Automated installer and updater for multiple popular applications. Select the apps you want, download one installer, and it installs them all at once. Skips toolbars and bloatware automatically.</p>
                 <div class="tool-links">
@@ -739,11 +742,11 @@
                 </div>
             </div>
 
-            <div class="tool-card" data-category="download system" data-price="freemium">
+            <div class="tool-card" data-category="download system" data-price="trial">
                 <h3>WinRAR <span class="verified-stamp">GDPR?</span></h3>
                 <div class="tool-type">
                     <span class="badge download">Download Required</span>
-                    <span class="badge freemium">Freemium</span>
+                    <span class="badge trial">Trial</span>
                 </div>
                 <p class="tool-desc">Popular file compression and archival utility with support for RAR and ZIP formats.</p>
                 <p class="warning">⚠️ NOTE: WinRAR has a 40-day trial period and shows license purchase popups after expiration (though it continues to function). Consider free alternatives like 7-Zip for similar functionality without ads.</p>
@@ -853,11 +856,11 @@
                 </div>
             </div>
 
-            <div class="tool-card" data-category="download system" data-price="free">
+            <div class="tool-card" data-category="download system" data-price="freemium">
                 <h3>RCSetup (Recuva)</h3>
                 <div class="tool-type">
                     <span class="badge download">Download Required</span>
-                    <span class="badge free">Free</span>
+                    <span class="badge freemium">Freemium</span>
                 </div>
                 <p class="tool-desc">File recovery tool to restore accidentally deleted files from hard drives.</p>
                 <div class="tool-links">
@@ -990,11 +993,11 @@
                 </div>
             </div>
 
-            <div class="tool-card" data-category="download system" data-price="free">
+            <div class="tool-card" data-category="download system" data-price="freemium">
                 <h3>Chocolatey</h3>
                 <div class="tool-type">
                     <span class="badge download">Download Required</span>
-                    <span class="badge free">Free</span>
+                    <span class="badge freemium">Freemium</span>
                 </div>
                 <p class="tool-desc">Package manager for Windows to automate software installation, updates, and management.</p>
                 <div class="tool-links">
@@ -1089,11 +1092,11 @@
                 </div>
             </div>
 
-            <div class="tool-card" data-category="system hybrid selfhost" data-price="free">
+            <div class="tool-card" data-category="system hybrid selfhost" data-price="freemium">
                 <h3>Joplin <span class="verified-stamp">GDPR?</span></h3>
                 <div class="tool-type">
                     <span class="badge hybrid">Online + App</span>
-                    <span class="badge free">Free</span>
+                    <span class="badge freemium">Freemium</span>
                 </div>
                 <p class="tool-desc">Open source note-taking and to-do app with Markdown support and end-to-end
                     encryption. Desktop/mobile apps with cloud sync and web clipper.</p>
@@ -1152,24 +1155,24 @@
                 </div>
             </div>
 
-            <div class="tool-card" data-category="download system" data-price="free">
-                <h3>Macrium Reflect Free</h3>
+            <div class="tool-card" data-category="download system" data-price="trial">
+                <h3>Macrium Reflect</h3>
                 <div class="tool-type">
                     <span class="badge download">Download Required</span>
-                    <span class="badge free">Free</span>
+                    <span class="badge trial">Trial</span>
                 </div>
                 <p class="tool-desc">Disk cloning and imaging software for backup and system migration.</p>
+                <p class="warning">⚠️ NOTE: Macrium Reflect Free was retired in 2024. Reflect X is now trial/paid only.</p>
                 <div class="tool-links">
-                    <a href="https://www.macrium.com/reflectfree" target="_blank">🌐 Official Site</a>
-                    <a href="https://www.macrium.com/reflectfree" target="_blank">⬇️ Download</a>
+                    <a href="https://www.macrium.com/" target="_blank">🌐 Official Site</a>
                 </div>
             </div>
 
-            <div class="tool-card" data-category="download system" data-price="free">
+            <div class="tool-card" data-category="download system" data-price="freemium">
                 <h3>Speccy</h3>
                 <div class="tool-type">
                     <span class="badge download">Download Required</span>
-                    <span class="badge free">Free</span>
+                    <span class="badge freemium">Freemium</span>
                 </div>
                 <p class="tool-desc">System information tool showing detailed hardware specs and temperatures.</p>
                 <div class="tool-links">
@@ -1179,7 +1182,7 @@
             </div>
 
             <div class="tool-card" data-category="download system" data-price="free">
-                <h3>Touslesdriver</h3>
+                <h3>TousLesDrivers</h3>
                 <div class="tool-type">
                     <span class="badge download">Download Required</span>
                     <span class="badge free">Free</span>
@@ -1317,11 +1320,11 @@
                 </div>
             </div>
 
-            <div class="tool-card" data-category="hybrid" data-price="free">
+            <div class="tool-card" data-category="hybrid" data-price="freemium">
                 <h3>Discord <span class="verified-stamp gdpr-stamp">GDPR</span></h3>
                 <div class="tool-type">
                     <span class="badge hybrid">Online + App</span>
-                    <span class="badge free">Free</span>
+                    <span class="badge freemium">Freemium</span>
                 </div>
                 <p class="tool-desc">Voice, video, and text communication platform for communities and teams. Available as web app and desktop/mobile apps.</p>
                 <div class="tool-links">
@@ -1357,7 +1360,7 @@
                 </div>
             </div>
 
-            <div class="tool-card" data-category="download development" data-price="free">
+            <div class="tool-card" data-category="download network" data-price="free">
                 <h3>Iris (Intangi)</h3>
                 <div class="tool-type">
                     <span class="badge download">Download Required</span>
@@ -1558,6 +1561,7 @@
                     <span class="badge free">Free</span>
                 </div>
                 <p class="tool-desc">PowerShell module for managing Azure Active Directory/Entra ID resources.</p>
+                <p class="warning">⚠️ DEPRECATED: The AzureAD PowerShell module has been retired by Microsoft. Use Microsoft Graph PowerShell instead.</p>
                 <div class="tool-links">
                     <a href="https://learn.microsoft.com/en-us/powershell/azure/active-directory/install-adv2"
                         target="_blank">🌐 Official Site</a>
@@ -1653,11 +1657,11 @@
                 </div>
             </div>
 
-            <div class="tool-card" data-category="development hybrid" data-price="free">
+            <div class="tool-card" data-category="development hybrid" data-price="freemium">
                 <h3>Postman <span class="verified-stamp gdpr-stamp">GDPR</span></h3>
                 <div class="tool-type">
                     <span class="badge hybrid">Online + App</span>
-                    <span class="badge free">Free</span>
+                    <span class="badge freemium">Freemium</span>
                 </div>
                 <p class="tool-desc">API platform for building, testing, and documenting APIs with collaboration
                     features. Available as desktop app and web version.</p>
@@ -1681,11 +1685,11 @@
                 </div>
             </div>
 
-            <div class="tool-card" data-category="download development selfhost" data-price="free">
+            <div class="tool-card" data-category="download development selfhost" data-price="freemium">
                 <h3>Beekeeper Studio</h3>
                 <div class="tool-type">
                     <span class="badge download">Download Required</span>
-                    <span class="badge free">Free</span>
+                    <span class="badge freemium">Freemium</span>
                 </div>
                 <p class="tool-desc">Modern SQL editor and database manager for MySQL, Postgres, SQLite, and more.</p>
                 <div class="tool-links">
@@ -1695,11 +1699,11 @@
                 </div>
             </div>
 
-            <div class="tool-card" data-category="download development selfhost" data-price="free">
+            <div class="tool-card" data-category="download development selfhost" data-price="freemium">
                 <h3>Grafana <span class="verified-stamp gdpr-stamp">GDPR</span></h3>
                 <div class="tool-type">
                     <span class="badge download">Download Required</span>
-                    <span class="badge free">Free</span>
+                    <span class="badge freemium">Freemium</span>
                 </div>
                 <p class="tool-desc">Open-source analytics and monitoring platform with dashboards for metrics visualization.</p>
                 <div class="tool-links">
@@ -1709,11 +1713,11 @@
                 </div>
             </div>
 
-            <div class="tool-card" data-category="development hybrid selfhost" data-price="free">
+            <div class="tool-card" data-category="development hybrid selfhost" data-price="freemium">
                 <h3>Insomnia</h3>
                 <div class="tool-type">
                     <span class="badge hybrid">Online + App</span>
-                    <span class="badge free">Free</span>
+                    <span class="badge freemium">Freemium</span>
                 </div>
                 <p class="tool-desc">API client and testing tool - modern alternative to Postman with GraphQL support. Available as desktop app and web version.
                 </p>
@@ -1724,7 +1728,7 @@
                 </div>
             </div>
 
-            <div class="tool-card" data-category="download development" data-price="paid">
+            <div class="tool-card" data-category="download system" data-price="paid">
                 <h3>Adobe Acrobat Pro <span class="verified-stamp gdpr-stamp">GDPR</span></h3>
                 <div class="tool-type">
                     <span class="badge download">Download Required</span>
@@ -1738,7 +1742,7 @@
                 </div>
             </div>
 
-            <div class="tool-card" data-category="download development selfhost" data-price="free">
+            <div class="tool-card" data-category="download system" data-price="free">
                 <h3>PDFsam Basic</h3>
                 <div class="tool-type">
                     <span class="badge download">Download Required</span>
@@ -1783,11 +1787,11 @@
                 </div>
             </div>
 
-            <div class="tool-card" data-category="online media" data-price="free">
+            <div class="tool-card" data-category="online media" data-price="freemium">
                 <h3>Photopea <span class="verified-stamp">GDPR?</span></h3>
                 <div class="tool-type">
                     <span class="badge online">Online Only</span>
-                    <span class="badge free">Free</span>
+                    <span class="badge freemium">Freemium</span>
                 </div>
                 <p class="tool-desc">Free online photo editor supporting PSD, XCF, Sketch, XD and CDR formats. Advanced image editing with layers, masks, and filters. Works completely in your browser without any downloads.</p>
                 <div class="tool-links">
@@ -1871,8 +1875,7 @@
                     <span class="badge download">Download Required</span>
                     <span class="badge free">Free</span>
                 </div>
-                <p class="tool-desc">Free image stacking software for astrophotography, particularly useful for
-                    planetary imaging.</p>
+                <p class="tool-desc">Free image stacking software for deep-sky astrophotography, combining many exposures to reduce noise and bring out faint detail.</p>
                 <div class="tool-links">
                     <a href="http://deepskystacker.free.fr/" target="_blank">🌐 Official Site</a>
                     <a href="http://deepskystacker.free.fr/english/download.htm" target="_blank">⬇️ Download</a>
@@ -1935,7 +1938,7 @@
                 </div>
             </div>
 
-            <div class="tool-card" data-category="download security" data-price="free">
+            <div class="tool-card" data-category="download system media" data-price="free">
                 <h3>ShareX</h3>
                 <div class="tool-type">
                     <span class="badge download">Download Required</span>
@@ -2027,10 +2030,11 @@
                 </div>
                 <p class="tool-desc">Efficient ad blocker and content filter - supports Chrome, Firefox, Edge, Opera,
                     and Safari.</p>
+                <p class="warning">⚠️ NOTE: Chrome (Manifest V3) no longer supports the full uBlock Origin. Use uBlock Origin Lite on Chrome, or Firefox for the full version.</p>
                 <div class="tool-links">
                     <a href="https://github.com/gorhill/uBlock" target="_blank">🌐 Official Site</a>
-                    <a href="https://chrome.google.com/webstore/detail/ublock-origin/cjpalhdlnbpafiamejdnhcphjbkeiagm"
-                        target="_blank">🌐 Chrome</a>
+                    <a href="https://chromewebstore.google.com/detail/ublock-origin-lite/ddkjiahejlhfcafbddmgiahcphecmpfh"
+                        target="_blank">🌐 Chrome (uBO Lite)</a>
                     <a href="https://addons.mozilla.org/firefox/addon/ublock-origin/" target="_blank">🦊 Firefox</a>
                     <a href="https://microsoftedge.microsoft.com/addons/detail/ublock-origin/odfafepnkmbhccpbejgmiehpchacaeak"
                         target="_blank">🌐 Edge</a>
@@ -2146,7 +2150,7 @@
             </div>
 
             <!-- EDITOR EXTENSIONS -->
-            <div class="tool-card" data-category="download" data-price="free">
+            <div class="tool-card" data-category="download development" data-price="free">
                 <h3>Notepad++ Compare Plugin</h3>
                 <div class="tool-type">
                     <span class="badge download">Download Required</span>
@@ -2161,18 +2165,6 @@
             </div>
 
             <!-- DNS & DOMAIN TOOLS -->
-            <div class="tool-card" data-category="online rdh" data-price="free">
-                <h3>TransIP (NL)</h3>
-                <div class="tool-type">
-                    <span class="badge online">Online Only</span>
-                    <span class="badge free">Free</span>
-                </div>
-                <p class="tool-desc">Dutch domain registrar and hosting provider offering various TLDs and web hosting services.</p>
-                <div class="tool-links">
-                    <a href="https://www.transip.be/" target="_blank">🌐 Official Site</a>
-                </div>
-            </div>
-
             <div class="tool-card" data-category="online rdh" data-price="free">
                 <h3>Dynu</h3>
                 <div class="tool-type">
@@ -2313,7 +2305,7 @@
             </div>
 
             <!-- PROJECT FOLDERS -->
-            <div class="tool-card" data-category="development" data-price="free" data-verified="true">
+            <div class="tool-card" data-category="online development" data-price="free" data-verified="true">
                 <h3>Project Folder</h3>
                 <div class="tool-type">
                     <span class="badge online">Online Only</span>
@@ -2587,7 +2579,7 @@
                 </div>
             </div>
 
-            <div class="tool-card" data-category="online microsoft security" data-price="free">
+            <div class="tool-card" data-category="download microsoft security" data-price="free">
                 <h3>Azure AD Assessment</h3>
                 <div class="tool-type">
                     <span class="badge download">Download Required</span>
@@ -2741,11 +2733,11 @@
                 </div>
             </div>
 
-            <div class="tool-card" data-category="online security" data-price="freemium">
+            <div class="tool-card" data-category="online security" data-price="paid">
                 <h3>SentinelOne <span class="verified-stamp gdpr-stamp">GDPR</span></h3>
                 <div class="tool-type">
                     <span class="badge online">Online Only</span>
-                    <span class="badge freemium">Paid</span>
+                    <span class="badge paid">Paid</span>
                 </div>
                 <p class="tool-desc">AI-powered endpoint security platform for threat detection, prevention, and
                     response. Autonomous protection against ransomware, malware, and advanced threats with real-time
@@ -2756,11 +2748,11 @@
                 </div>
             </div>
 
-            <div class="tool-card" data-category="online microsoft security" data-price="free">
+            <div class="tool-card" data-category="online microsoft security" data-price="paid">
                 <h3>Security Copilot</h3>
                 <div class="tool-type">
                     <span class="badge online">Online Only</span>
-                    <span class="badge free">Free</span>
+                    <span class="badge paid">Paid</span>
                 </div>
                 <p class="tool-desc">AI-powered security analyst assistant.</p>
                 <div class="tool-links">
@@ -2812,7 +2804,7 @@
             <div class="tool-card" data-category="online microsoft" data-price="free">
                 <h3>Microsoft Entra ID (Azure AD)</h3>
                 <div class="tool-type">
-                    <span class="badge online">Online</span>
+                    <span class="badge online">Online Only</span>
                     <span class="badge free">Free</span>
                 </div>
                 <p class="tool-desc">Identity and access management for Microsoft cloud services.</p>
@@ -2861,7 +2853,7 @@
             <div class="tool-card" data-category="online microsoft" data-price="free">
                 <h3>Azure Portal</h3>
                 <div class="tool-type">
-                    <span class="badge online">Online</span>
+                    <span class="badge online">Online Only</span>
                     <span class="badge free">Free</span>
                 </div>
                 <p class="tool-desc">Unified hub for managing Azure cloud resources and services.</p>
@@ -2902,7 +2894,7 @@
             <div class="tool-card" data-category="online microsoft" data-price="free">
                 <h3>Microsoft 365 Admin Center</h3>
                 <div class="tool-type">
-                    <span class="badge online">Online</span>
+                    <span class="badge online">Online Only</span>
                     <span class="badge free">Free</span>
                 </div>
                 <p class="tool-desc">Central hub for managing Microsoft 365 services and users.</p>
@@ -2938,7 +2930,7 @@
             <div class="tool-card" data-category="online microsoft security" data-price="free">
                 <h3>Microsoft Defender / Security</h3>
                 <div class="tool-type">
-                    <span class="badge online">Online</span>
+                    <span class="badge online">Online Only</span>
                     <span class="badge free">Free</span>
                 </div>
                 <p class="tool-desc">Unified security portal for Microsoft Defender services and threat protection.</p>
@@ -2982,7 +2974,7 @@
             <div class="tool-card" data-category="online microsoft security" data-price="free">
                 <h3>Microsoft Sentinel</h3>
                 <div class="tool-type">
-                    <span class="badge online">Online</span>
+                    <span class="badge online">Online Only</span>
                     <span class="badge free">Free</span>
                 </div>
                 <p class="tool-desc">Cloud-native SIEM and SOAR solution for intelligent security analytics.</p>
@@ -2997,7 +2989,7 @@
             <div class="tool-card" data-category="online microsoft" data-price="free">
                 <h3>Microsoft Purview / Compliance</h3>
                 <div class="tool-type">
-                    <span class="badge online">Online</span>
+                    <span class="badge online">Online Only</span>
                     <span class="badge free">Free</span>
                 </div>
                 <p class="tool-desc">Data governance, compliance, and risk management platform.</p>
@@ -3032,7 +3024,7 @@
             <div class="tool-card" data-category="online microsoft" data-price="free">
                 <h3>Microsoft Intune</h3>
                 <div class="tool-type">
-                    <span class="badge online">Online</span>
+                    <span class="badge online">Online Only</span>
                     <span class="badge free">Free</span>
                 </div>
                 <p class="tool-desc">Cloud-based endpoint management for mobile devices, desktops, and apps.</p>
@@ -3085,7 +3077,7 @@
             <div class="tool-card" data-category="online microsoft" data-price="free">
                 <h3>Power Platform Admin</h3>
                 <div class="tool-type">
-                    <span class="badge online">Online</span>
+                    <span class="badge online">Online Only</span>
                     <span class="badge free">Free</span>
                 </div>
                 <p class="tool-desc">Administration portal for Power Apps, Power Automate, and Power BI.</p>
@@ -3100,7 +3092,7 @@
             <div class="tool-card" data-category="online microsoft" data-price="free">
                 <h3>Azure Services & Tools</h3>
                 <div class="tool-type">
-                    <span class="badge online">Online</span>
+                    <span class="badge online">Online Only</span>
                     <span class="badge free">Free</span>
                 </div>
                 <p class="tool-desc">Collection of specialized Azure services and management tools.</p>
@@ -3159,7 +3151,7 @@
             <div class="tool-card" data-category="online microsoft" data-price="free">
                 <h3>Microsoft User Portals</h3>
                 <div class="tool-type">
-                    <span class="badge online">Online</span>
+                    <span class="badge online">Online Only</span>
                     <span class="badge free">Free</span>
                 </div>
                 <p class="tool-desc">End-user facing portals for Microsoft services and self-service.</p>
@@ -3192,7 +3184,7 @@
             <div class="tool-card" data-category="online microsoft" data-price="free">
                 <h3>Microsoft Developer & Learning</h3>
                 <div class="tool-type">
-                    <span class="badge online">Online</span>
+                    <span class="badge online">Online Only</span>
                     <span class="badge free">Free</span>
                 </div>
                 <p class="tool-desc">Developer tools, documentation, and learning resources for Microsoft technologies.
@@ -3224,7 +3216,7 @@
             <div class="tool-card" data-category="online microsoft" data-price="free">
                 <h3>Microsoft Lighthouse (MSP)</h3>
                 <div class="tool-type">
-                    <span class="badge online">Online</span>
+                    <span class="badge online">Online Only</span>
                     <span class="badge free">Free</span>
                 </div>
                 <p class="tool-desc">Multi-tenant management portal for Managed Service Providers.</p>
@@ -3242,7 +3234,7 @@
             <div class="tool-card" data-category="online microsoft" data-price="free">
                 <h3>Windows 365 & Virtual Desktop</h3>
                 <div class="tool-type">
-                    <span class="badge online">Online</span>
+                    <span class="badge online">Online Only</span>
                     <span class="badge free">Free</span>
                 </div>
                 <p class="tool-desc">Cloud PC and virtual desktop infrastructure services.</p>
@@ -3261,7 +3253,7 @@
             <div class="tool-card" data-category="online microsoft" data-price="free">
                 <h3>Microsoft PIM & Governance</h3>
                 <div class="tool-type">
-                    <span class="badge online">Online</span>
+                    <span class="badge online">Online Only</span>
                     <span class="badge free">Free</span>
                 </div>
                 <p class="tool-desc">Privileged Identity Management and access governance tools.</p>
@@ -3291,7 +3283,7 @@
             <div class="tool-card" data-category="online microsoft" data-price="free">
                 <h3>Specialized Microsoft Services</h3>
                 <div class="tool-type">
-                    <span class="badge online">Online</span>
+                    <span class="badge online">Online Only</span>
                     <span class="badge free">Free</span>
                 </div>
                 <p class="tool-desc">Additional Microsoft cloud services and specialized portals.</p>
@@ -3334,9 +3326,10 @@
                     <span class="badge online">Online Only</span>
                     <span class="badge paid">Paid</span>
                 </div>
-                <p class="tool-desc">Belgian domain registrar and hosting provider offering .be domains and web hosting services.</p>
+                <p class="tool-desc">Dutch and Belgian domain registrar and hosting provider offering domain registration, web hosting, and VPS services.</p>
                 <div class="tool-links">
-                    <a href="https://www.transip.be/domeinnaam-extensie/be/" target="_blank">🌐 Official Site</a>
+                    <a href="https://www.transip.nl/" target="_blank">🌐 TransIP NL</a>
+                    <a href="https://www.transip.be/" target="_blank">🌐 TransIP BE</a>
                 </div>
             </div>
 
@@ -3442,312 +3435,7 @@
         </footer>
     </div>
 
-    <script>
-        // View mode management
-        let currentView = localStorage.getItem('viewMode') || 'grid';
-        let toolsData = [];
-
-        // Toggle between grid and compact view
-        function toggleView(mode) {
-            currentView = mode;
-            localStorage.setItem('viewMode', mode);
-
-            const gridView = document.getElementById('toolsGrid');
-            const tableView = document.getElementById('toolsTable');
-            const sortControls = document.getElementById('sortControls');
-            const gridBtn = document.getElementById('gridViewBtn');
-            const compactBtn = document.getElementById('compactViewBtn');
-
-            if (mode === 'compact') {
-                gridView.style.display = 'none';
-                tableView.style.display = 'block';
-                sortControls.style.display = 'inline-block';
-                gridBtn.classList.remove('active');
-                compactBtn.classList.add('active');
-                generateTableView();
-            } else {
-                gridView.style.display = 'grid';
-                tableView.style.display = 'none';
-                sortControls.style.display = 'none';
-                gridBtn.classList.add('active');
-                compactBtn.classList.remove('active');
-            }
-        }
-
-        // Generate table view from cards
-        function generateTableView() {
-            const cards = Array.from(document.querySelectorAll('.tool-card'));
-            const tableBody = document.getElementById('tableBody');
-            tableBody.innerHTML = '';
-
-            toolsData = cards.map(card => {
-                const h3Element = card.querySelector('h3');
-                const name = h3Element.textContent;
-                const nameHtml = h3Element.innerHTML; // Preserve HTML including stamps
-                const type = card.querySelector('.badge.online, .badge.hybrid, .badge.download, .badge.browser').textContent;
-                const priceEl = card.querySelector('.badge.free, .badge.freemium, .badge.trial, .badge.paid');
-                const price = priceEl ? priceEl.textContent : 'N/A';
-                const desc = card.querySelector('.tool-desc').textContent;
-                const warning = card.querySelector('.warning') ? card.querySelector('.warning').textContent : '';
-                const category = card.dataset.category;
-                const verified = card.dataset.verified === 'true';
-                // Get only direct links, not those inside details/expandable sections
-                const toolLinksDiv = card.querySelector('.tool-links');
-                const links = toolLinksDiv ? Array.from(toolLinksDiv.querySelectorAll(':scope > a, :scope > .portal-details > .portal-links > a')) : [];
-                const isVisible = card.style.display !== 'none';
-
-                return { name, nameHtml, type, price, desc, warning, category, links, isVisible, verified, element: card };
-            });
-
-            sortTools();
-        }
-
-        // Sort tools in table view
-        function sortTools() {
-            const sortBy = document.getElementById('sortSelect').value;
-            const tableBody = document.getElementById('tableBody');
-
-            let sorted = [...toolsData].filter(tool => tool.isVisible);
-
-            switch (sortBy) {
-                case 'name':
-                    sorted.sort((a, b) => a.name.localeCompare(b.name));
-                    break;
-                case 'name-desc':
-                    sorted.sort((a, b) => b.name.localeCompare(a.name));
-                    break;
-                case 'category':
-                    sorted.sort((a, b) => a.category.localeCompare(b.category));
-                    break;
-                case 'type':
-                    sorted.sort((a, b) => a.type.localeCompare(b.type));
-                    break;
-                case 'price':
-                    sorted.sort((a, b) => a.price.localeCompare(b.price));
-                    break;
-            }
-
-            tableBody.innerHTML = '';
-            sorted.forEach(tool => {
-                // Separate main link from specific links
-                const mainLink = tool.links[0];
-                const specificLinks = tool.links.slice(1);
-
-                // Build links HTML
-                let linksHtml = '';
-                if (mainLink) {
-                    const mainIcon = mainLink.innerHTML.split(' ')[0];
-                    linksHtml = `<a href="${mainLink.href}" target="_blank">${mainIcon}</a>`;
-                }
-
-                // Add expandable section if there are specific links
-                if (specificLinks.length > 0) {
-                    linksHtml += `<details class="portal-details-compact">
-                        <summary>⚙️</summary>
-                        <div class="portal-links-compact">
-                            ${specificLinks.map(link => {
-                        return `<a href="${link.href}" target="_blank">${link.innerHTML}</a>`;
-                    }).join(' ')}
-                        </div>
-                    </details>`;
-                }
-
-                const row = document.createElement('tr');
-                const verifiedStamp = tool.verified ? ' <span class="verified-stamp">📍 lebon.info</span>' : '';
-                row.innerHTML = `
-                    <td class="tool-name">${tool.nameHtml}${verifiedStamp}</td>
-                    <td class="tool-type-cell">${tool.type}</td>
-                    <td class="tool-price-cell">${tool.price}</td>
-                    <td class="tool-category">${formatCategory(tool.category)}</td>
-                    <td class="tool-description">${tool.desc}${tool.warning ? '<br><span class="warning" style="font-size: 11px;">' + tool.warning + '</span>' : ''}</td>
-                    <td class="tool-links-cell">${linksHtml}</td>
-                `;
-                tableBody.appendChild(row);
-            });
-
-            updateToolCount(sorted.length);
-        }
-
-        // Format category for display
-        function formatCategory(category) {
-            const cats = category.split(' ');
-            const icons = {
-                'online': '🌐',
-                'download': '💾',
-                'network': '🔌',
-                'security': '🔒',
-                'development': '💻',
-                'system': '⚙️',
-                'entra': '🪟',
-                'microsoft': '🪟',
-                'docker': '🐳',
-                'browser': '🌍',
-                'forensics': '🔍',
-                'media': '🎥',
-                'language': '🔠',
-                'rdh': '🕸️',
-                'hybrid': '🔀'
-            };
-            return cats.map(c => icons[c] ? `${icons[c]} ${c}` : c).join(', ');
-        }
-
-        // Filter by category
-        function filterCategory(category) {
-            const cards = document.querySelectorAll('.tool-card');
-            const buttons = document.querySelectorAll('.filter-btn');
-
-            // Clear search input when using category filter
-            document.getElementById('searchInput').value = '';
-
-            // Update active button
-            buttons.forEach(btn => btn.classList.remove('active'));
-            event.target.classList.add('active');
-
-            // Filter cards
-            let visibleCount = 0;
-            cards.forEach(card => {
-                if (category === 'all' || card.dataset.category.includes(category)) {
-                    card.style.display = 'block';
-                    visibleCount++;
-                } else {
-                    card.style.display = 'none';
-                }
-            });
-
-            updateToolCount(visibleCount);
-
-            // Update table view if in compact mode
-            if (currentView === 'compact') {
-                generateTableView();
-            }
-        }
-
-        // Search filter
-        function filterTools() {
-            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
-            const advancedSearch = document.getElementById('advancedSearch').checked;
-            const cards = document.querySelectorAll('.tool-card');
-            let visibleCount = 0;
-
-            // Reset filter buttons to "All Tools" when searching
-            const buttons = document.querySelectorAll('.filter-btn');
-            buttons.forEach(btn => btn.classList.remove('active'));
-            buttons[0].classList.add('active'); // First button is "All Tools"
-
-            cards.forEach(card => {
-                const title = card.querySelector('h3').textContent.toLowerCase();
-                const desc = card.querySelector('.tool-desc').textContent.toLowerCase();
-                const category = card.dataset.category.toLowerCase();
-
-                let matches = title.includes(searchTerm) || desc.includes(searchTerm) || category.includes(searchTerm);
-
-                // If advanced search is enabled, also search link text and href values
-                if (advancedSearch && !matches && searchTerm) {
-                    const links = card.querySelectorAll('a');
-                    links.forEach(link => {
-                        const linkText = link.textContent.toLowerCase();
-                        const linkHref = link.href.toLowerCase();
-                        if (linkText.includes(searchTerm) || linkHref.includes(searchTerm)) {
-                            matches = true;
-                        }
-                    });
-                }
-
-                if (matches) {
-                    card.style.display = 'block';
-                    visibleCount++;
-                } else {
-                    card.style.display = 'none';
-                }
-            });
-
-            updateToolCount(visibleCount);
-
-            // Update table view if in compact mode
-            if (currentView === 'compact') {
-                generateTableView();
-            }
-        }
-
-        // Save search preference
-        function saveSearchPreference() {
-            const advancedSearch = document.getElementById('advancedSearch').checked;
-            localStorage.setItem('advancedSearch', advancedSearch);
-        }
-
-        // Toggle theme (remove/add borders and shadows)
-        function toggleTheme() {
-            const body = document.body;
-            body.classList.toggle('clean-theme');
-            const isCleanTheme = body.classList.contains('clean-theme');
-            localStorage.setItem('cleanTheme', isCleanTheme);
-            
-            // Close dropdown after selection
-            document.getElementById('themeDropdownContent').classList.remove('show');
-        }
-
-        // Toggle Bright theme
-        function toggleBrightTheme() {
-            const body = document.body;
-            body.classList.toggle('bright-theme');
-            const isBrightTheme = body.classList.contains('bright-theme');
-            localStorage.setItem('brightTheme', isBrightTheme);
-            
-            // Update button text
-            const btn = document.getElementById('brightThemeBtn');
-            if (isBrightTheme) {
-                btn.textContent = '🌑 Join the dark side';
-            } else {
-                btn.textContent = '☀️ I like it bright';
-            }
-            
-            // Close dropdown after selection
-            document.getElementById('themeDropdownContent').classList.remove('show');
-        }
-
-        // Update tool count
-        function updateToolCount(count) {
-            document.getElementById('toolCount').textContent = count || document.querySelectorAll('.tool-card').length;
-        }
-
-        // Initialize on load
-        window.onload = function () {
-            updateToolCount();
-            // Restore saved view mode
-            if (currentView === 'compact') {
-                toggleView('compact');
-            }
-            // Restore advanced search preference
-            const savedAdvancedSearch = localStorage.getItem('advancedSearch');
-            if (savedAdvancedSearch === 'true') {
-                document.getElementById('advancedSearch').checked = true;
-            }
-            // Restore theme preference
-            const savedTheme = localStorage.getItem('cleanTheme');
-            if (savedTheme === 'true') {
-                document.body.classList.add('clean-theme');
-            }
-            // Restore Bright theme preference
-            const savedBrightTheme = localStorage.getItem('brightTheme');
-            if (savedBrightTheme === 'true') {
-                document.body.classList.add('bright-theme');
-                document.getElementById('brightThemeBtn').textContent = '🌘 Join the dark side';
-            }
-        };
-
-        // Toggle dropdown menu
-        document.getElementById('themeDropdownBtn').addEventListener('click', function(e) {
-            e.stopPropagation();
-            const dropdown = document.getElementById('themeDropdownContent');
-            dropdown.classList.toggle('show');
-        });
-
-        // Close dropdown when clicking outside
-        window.addEventListener('click', function() {
-            const dropdown = document.getElementById('themeDropdownContent');
-            dropdown.classList.remove('show');
-        });
-    </script>
+    <script src="script.js"></script>
 </body>
 
 </html>
