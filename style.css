@@ -759,3 +759,65 @@ body:not([data-lang]) .lang.en {
         margin: 25px 0 15px 0;
     }
 }
+
+/* ==========================================================
+   Home page enhancements
+   ========================================================== */
+
+/* Header "Tech-savvy tools" shortcut */
+.header-tools-link {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.header-tools-icon {
+    height: 20px;
+}
+
+@media (max-width: 800px) {
+    .terminal-header {
+        flex-wrap: wrap;
+        padding-bottom: 8px;
+    }
+    .header-tools-link {
+        position: static;
+        transform: none;
+        margin-left: auto;
+    }
+}
+
+/* Subtle staggered entrance animation for terminal sections */
+.terminal-section {
+    animation: section-in 0.4s ease both;
+}
+.terminal-section:nth-of-type(1) { animation-delay: 0.04s; }
+.terminal-section:nth-of-type(2) { animation-delay: 0.08s; }
+.terminal-section:nth-of-type(3) { animation-delay: 0.12s; }
+.terminal-section:nth-of-type(4) { animation-delay: 0.16s; }
+.terminal-section:nth-of-type(5) { animation-delay: 0.20s; }
+.terminal-section:nth-of-type(6) { animation-delay: 0.24s; }
+.terminal-section:nth-of-type(7) { animation-delay: 0.28s; }
+.terminal-section:nth-of-type(8) { animation-delay: 0.32s; }
+
+@keyframes section-in {
+    from { opacity: 0; transform: translateY(6px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Soft glow on terminal link hover/focus */
+.terminal-link:hover,
+.terminal-link:focus {
+    box-shadow: 0 0 10px rgba(255, 224, 102, 0.35);
+}
+
+/* Accessibility: respect reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+    .terminal-section {
+        animation: none;
+    }
+}

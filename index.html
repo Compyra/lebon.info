@@ -3,12 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="lebon.info self-service terminal — support downloads, Microsoft 365 quick links, system tools, and service status dashboards.">
+    <meta name="theme-color" content="#181c1b">
     <title>lebon.info // Terminal</title>
+    <link rel="icon" type="image/png" href="logoConsole.png">
+    <link rel="manifest" href="site.webmanifest">
     <link rel="stylesheet" href="style.css">
 </head>
 <body class="terminal-bg">
     <div class="terminal-window">
-        <div class="terminal-header" style="position: relative;">
+        <div class="terminal-header">
             <span class="prompt-title">lebon.info:~$</span>
             <span class="prompt-blink">█</span>
             <div class="language-selector">
@@ -16,7 +20,7 @@
                 <button onclick="setLanguage('fr')" class="lang-btn" data-lang="fr">FR</button>
                 <button onclick="setLanguage('nl')" class="lang-btn" data-lang="nl">NL</button>
             </div>
-            <a href="./tools/" class="terminal-link" style="position: absolute; right: 15px; top: 50%; transform: translateY(-50%); display: flex; align-items: center; gap: 8px;"><img src="logoConsole.png" alt="All Tools" style="height: 20px;"> Tech-savvy tools</a>
+            <a href="./tools/" class="terminal-link header-tools-link"><img src="logoConsole.png" alt="All Tools" class="header-tools-icon"> Tech-savvy tools</a>
         </div>
         <div class="terminal-body">
             <div class="terminal-intro">
@@ -25,136 +29,74 @@
                 <span class="lang nl">Welkom bij de lebon.info self-service terminal. <br> Jouw bron voor Le Bon Info.</span>
             </div>
             <div class="terminal-section">
-                <span class="section-label">
-                    <span class="lang en"># Support</span>
-                    <span class="lang fr"># Support</span>
-                    <span class="lang nl"># Support</span>
-                </span>
+                <span class="section-label"># Site</span>
                 <div class="terminal-links">
-                    <a href="https://download.teamviewer.com/download/TeamViewerQS_x64.exe" class="terminal-link">
-                        <span class="lang en">teamviewer --Windows</span>
-                        <span class="lang fr">teamviewer --Windows</span>
-                        <span class="lang nl">teamviewer --Windows</span>
-                    </a>
-                    <a href="https://download.teamviewer.com/download/TeamViewerQS.dmg" class="terminal-link">
-                        <span class="lang en">teamviewer --Apple</span>
-                        <span class="lang fr">teamviewer --Apple</span>
-                        <span class="lang nl">teamviewer --Apple</span>
-                    </a>
-                    <a href="https://download.teamviewer.com/download/TeamViewerQS.apk" class="terminal-link">
-                        <span class="lang en">teamviewer --Android</span>
-                        <span class="lang fr">teamviewer --Android</span>
-                        <span class="lang nl">teamviewer --Android</span>
-                    </a>
-                    <a href="https://apps.apple.com/us/app/teamviewer-quicksupport/id661649585" class="terminal-link">
-                        <span class="lang en">teamviewer --iPhone</span>
-                        <span class="lang fr">teamviewer --iPhone</span>
-                        <span class="lang nl">teamviewer --iPhone</span>
-                    </a>
-                    <a href="https://download.teamviewer.com/download/linux/teamviewer_amd64.deb" class="terminal-link">
-                        <span class="lang en">teamviewer --Linux</span>
-                        <span class="lang fr">teamviewer --Linux</span>
-                        <span class="lang nl">teamviewer --Linux</span>
-                    </a>
+                    <a href="./projects/" class="terminal-link">projects</a>
+                    <a href="./notes/" class="terminal-link">notes</a>
                 </div>
             </div>
             <div class="terminal-section">
-                <span class="section-label">
-                    <span class="lang en"># Microsoft & Office 365</span>
-                    <span class="lang fr"># Microsoft & Office 365</span>
-                    <span class="lang nl"># Microsoft & Office 365</span>
-                </span>
+                <span class="section-label"># Support</span>
                 <div class="terminal-links">
-                    <a href="https://passwordreset.microsoftonline.com/passwordreset#!/" target="_blank" class="terminal-link">
+                    <a href="https://download.teamviewer.com/download/TeamViewerQS_x64.exe" class="terminal-link">teamviewer --Windows</a>
+                    <a href="https://download.teamviewer.com/download/TeamViewerQS.dmg" class="terminal-link">teamviewer --Apple</a>
+                    <a href="https://download.teamviewer.com/download/TeamViewerQS.apk" class="terminal-link">teamviewer --Android</a>
+                    <a href="https://apps.apple.com/us/app/teamviewer-quicksupport/id661649585" class="terminal-link">teamviewer --iPhone</a>
+                    <a href="https://download.teamviewer.com/download/linux/teamviewer_amd64.deb" class="terminal-link">teamviewer --Linux</a>
+                </div>
+            </div>
+            <div class="terminal-section">
+                <span class="section-label"># Microsoft & Office 365</span>
+                <div class="terminal-links">
+                    <a href="https://passwordreset.microsoftonline.com/passwordreset#!/" target="_blank" rel="noopener noreferrer" class="terminal-link">
                         <span class="lang en">Reset your Microsoft password (SSPR)</span>
                         <span class="lang fr">Réinitialiser votre mot de passe Microsoft (SSPR)</span>
                         <span class="lang nl">Reset je Microsoft wachtwoord hier (SSPR)</span>
                     </a>
-                    <a href="https://outlook.office365.com/mail/" target="_blank" class="terminal-link">
-                        <span class="lang en">Outlook online</span>
-                        <span class="lang fr">Outlook online</span>
-                        <span class="lang nl">Outlook online</span>
-                    </a>
-                    <a href="https://office.com" target="_blank" class="terminal-link">
-                        <span class="lang en">Microsoft 365 Copilot</span>
-                        <span class="lang fr">Microsoft 365 Copilot</span>
-                        <span class="lang nl">Microsoft 365 Copilot</span>
-                    </a>
-                    <a href="https://word.cloud.microsoft/" target="_blank" class="terminal-link">
-                        <span class="lang en">Word online</span>
-                        <span class="lang fr">Word online</span>
-                        <span class="lang nl">Word online</span>
-                    </a>
-                    <a href="https://excel.cloud.microsoft/" target="_blank" class="terminal-link">
-                        <span class="lang en">Excel online</span>
-                        <span class="lang fr">Excel online</span>
-                        <span class="lang nl">Excel online</span>
-                    </a>
-                    <a href="https://powerpoint.cloud.microsoft/" target="_blank" class="terminal-link">
-                        <span class="lang en">PowerPoint online</span>
-                        <span class="lang fr">PowerPoint online</span>
-                        <span class="lang nl">PowerPoint online</span>
-                    </a>
-                    <a href="https://onenote.cloud.microsoft/" target="_blank" class="terminal-link">
-                        <span class="lang en">OneNote online</span>
-                        <span class="lang fr">OneNote online</span>
-                        <span class="lang nl">OneNote online</span>
-                    </a>
-                    <a href="https://to-do.office.com/" target="_blank" class="terminal-link">
-                        <span class="lang en">Microsoft To Do</span>
-                        <span class="lang fr">Microsoft To Do</span>
-                        <span class="lang nl">Microsoft To Do</span>
-                    </a>
-                    <a href="https://teams.microsoft.com" target="_blank" class="terminal-link">
-                        <span class="lang en">Teams online</span>
-                        <span class="lang fr">Teams online</span>
-                        <span class="lang nl">Teams online</span>
-                    </a>
-                    <a href="https://onedrive.live.com" target="_blank" class="terminal-link">
-                        <span class="lang en">OneDrive online</span>
-                        <span class="lang fr">OneDrive online</span>
-                        <span class="lang nl">OneDrive online</span>
-                    </a>
-                    <a href="https://aka.ms/mfasetup" target="_blank" class="terminal-link">
+                    <a href="https://outlook.office365.com/mail/" target="_blank" rel="noopener noreferrer" class="terminal-link">Outlook online</a>
+                    <a href="https://office.com" target="_blank" rel="noopener noreferrer" class="terminal-link">Microsoft 365 Copilot</a>
+                    <a href="https://word.cloud.microsoft/" target="_blank" rel="noopener noreferrer" class="terminal-link">Word online</a>
+                    <a href="https://excel.cloud.microsoft/" target="_blank" rel="noopener noreferrer" class="terminal-link">Excel online</a>
+                    <a href="https://powerpoint.cloud.microsoft/" target="_blank" rel="noopener noreferrer" class="terminal-link">PowerPoint online</a>
+                    <a href="https://onenote.cloud.microsoft/" target="_blank" rel="noopener noreferrer" class="terminal-link">OneNote online</a>
+                    <a href="https://to-do.office.com/" target="_blank" rel="noopener noreferrer" class="terminal-link">Microsoft To Do</a>
+                    <a href="https://teams.microsoft.com" target="_blank" rel="noopener noreferrer" class="terminal-link">Teams online</a>
+                    <a href="https://onedrive.live.com" target="_blank" rel="noopener noreferrer" class="terminal-link">OneDrive online</a>
+                    <a href="https://aka.ms/mfasetup" target="_blank" rel="noopener noreferrer" class="terminal-link">
                         <span class="lang en">Multi-Factor Authentication Setup</span>
                         <span class="lang fr">Configuration de l'authentification multifacteur</span>
                         <span class="lang nl">Multi-Factor Authenticatie Instellen</span>
                     </a>
-                    <a href="https://myaccount.microsoft.com" target="_blank" class="terminal-link">
+                    <a href="https://myaccount.microsoft.com" target="_blank" rel="noopener noreferrer" class="terminal-link">
                         <span class="lang en">My Account</span>
                         <span class="lang fr">Mon compte</span>
                         <span class="lang nl">Mijn account</span>
                     </a>
-                    <a href="https://mysignins.microsoft.com" target="_blank" class="terminal-link">
+                    <a href="https://mysignins.microsoft.com" target="_blank" rel="noopener noreferrer" class="terminal-link">
                         <span class="lang en">My Sign-ins</span>
                         <span class="lang fr">Mes connexions</span>
                         <span class="lang nl">Mijn aanmeldingen</span>
                     </a>
-
                 </div>
             </div>
-                        <div class="terminal-section">
+            <div class="terminal-section">
                 <span class="section-label">
                     <span class="lang en"># Standard Apps Downloads</span>
                     <span class="lang fr"># Téléchargements d'Applications Standard</span>
                     <span class="lang nl"># Standaard Apps Downloads</span>
                 </span>
                 <div class="terminal-links">
-                    <a href="https://portal.office.com/account#installs" target="_blank" class="terminal-link">
+                    <a href="https://portal.office.com/account#installs" target="_blank" rel="noopener noreferrer" class="terminal-link">
                         <span class="lang en">Install Office Apps</span>
                         <span class="lang fr">Installer les applications Office</span>
                         <span class="lang nl">Office Apps installeren</span>
                     </a>
-                    <a href="https://brave.com/download/" target="_blank" class="terminal-link">
+                    <a href="https://brave.com/download/" target="_blank" rel="noopener noreferrer" class="terminal-link">
                         <span class="lang en">Brave Browser</span>
                         <span class="lang fr">Navigateur Brave</span>
                         <span class="lang nl">Brave Browser</span>
                     </a>
-                    <a href="https://www.7-zip.org/download.html" target="_blank" class="terminal-link">
-                        <span class="lang en">7-Zip</span>
-                        <span class="lang fr">7-Zip</span>
-                        <span class="lang nl">7-Zip</span>
-                    </a>
+                    <a href="https://www.7-zip.org/download.html" target="_blank" rel="noopener noreferrer" class="terminal-link">7-Zip</a>
                 </div>
             </div>
             <div class="terminal-section">
@@ -179,171 +121,47 @@
                     <span class="lang nl"># Servicestatus & Gezondheid</span>
                 </span>
                 <div class="terminal-links">
-                    <a href="https://status.cloud.microsoft/" target="_blank" class="terminal-link">
-                        <span class="lang en">Microsoft Cloud</span>
-                        <span class="lang fr">Microsoft Cloud</span>
-                        <span class="lang nl">Microsoft Cloud</span>
-                    </a>
-                    <a href="https://status.dstny.nl/" target="_blank" class="terminal-link">
-                        <span class="lang en">Dstny Status</span>
-                        <span class="lang fr">Dstny Status</span>
-                        <span class="lang nl">Dstny Status</span>
-                    </a>
-                    <a href="https://centralstatus.arubanetworking.hpe.com/" target="_blank" class="terminal-link">
-                        <span class="lang en">HPE Aruba Networking Central Status</span>
-                        <span class="lang fr">HPE Aruba Networking Central Status</span>
-                        <span class="lang nl">HPE Aruba Networking Central Status</span>
-                    </a>
-                    <a href="https://status.greenlake.hpe.com/" target="_blank" class="terminal-link">
-                        <span class="lang en">HPE GreenLake Platform Status</span>
-                        <span class="lang fr">HPE GreenLake Platform Status</span>
-                        <span class="lang nl">HPE GreenLake Platform Status</span>
-                    </a>
-                    <a href="https://status.wasabi.com/" target="_blank" class="terminal-link">
-                        <span class="lang en">Wasabi Technologies Status</span>
-                        <span class="lang fr">Wasabi Technologies Status</span>
-                        <span class="lang nl">Wasabi Technologies Status</span>
-                    </a>
-                    <a href="https://status.belnet.be/" target="_blank" class="terminal-link">
-                        <span class="lang en">Belnet Status</span>
-                        <span class="lang fr">Belnet Status</span>
-                        <span class="lang nl">Belnet Status</span>
-                    </a>
-                    <a href="https://issues.edpnet.be/?e-filter-8deb1df-category=belgium" target="_blank" class="terminal-link">
-                        <span class="lang en">Network info - Known issues &amp; scheduled maintenances</span>
-                        <span class="lang fr">Network info - Known issues &amp; scheduled maintenances</span>
-                        <span class="lang nl">Network info - Known issues &amp; scheduled maintenances</span>
-                    </a>
-                    <a href="https://www.eurofiber.com/incidents" target="_blank" class="terminal-link">
+                    <a href="https://status.cloud.microsoft/" target="_blank" rel="noopener noreferrer" class="terminal-link">Microsoft Cloud</a>
+                    <a href="https://status.dstny.nl/" target="_blank" rel="noopener noreferrer" class="terminal-link">Dstny Status</a>
+                    <a href="https://centralstatus.arubanetworking.hpe.com/" target="_blank" rel="noopener noreferrer" class="terminal-link">HPE Aruba Networking Central Status</a>
+                    <a href="https://status.greenlake.hpe.com/" target="_blank" rel="noopener noreferrer" class="terminal-link">HPE GreenLake Platform Status</a>
+                    <a href="https://status.wasabi.com/" target="_blank" rel="noopener noreferrer" class="terminal-link">Wasabi Technologies Status</a>
+                    <a href="https://status.belnet.be/" target="_blank" rel="noopener noreferrer" class="terminal-link">Belnet Status</a>
+                    <a href="https://issues.edpnet.be/?e-filter-8deb1df-category=belgium" target="_blank" rel="noopener noreferrer" class="terminal-link">Network info - Known issues &amp; scheduled maintenances</a>
+                    <a href="https://www.eurofiber.com/incidents" target="_blank" rel="noopener noreferrer" class="terminal-link">
                         <span class="lang en">Eurofiber Incidents</span>
                         <span class="lang fr">Eurofiber Incidents</span>
                         <span class="lang nl">Eurofiber Incidenten</span>
                     </a>
-                    <a href="https://admin.microsoft.com/Adminportal/Home#/servicehealth" target="_blank" class="terminal-link">
-                        <span class="lang en">Microsoft 365 (Admin)</span>
-                        <span class="lang fr">Microsoft 365 (Admin)</span>
-                        <span class="lang nl">Microsoft 365 (Admin)</span>
-                    </a>
-                    <a href="https://status.azure.com" target="_blank" class="terminal-link">
-                        <span class="lang en">Azure</span>
-                        <span class="lang fr">Azure</span>
-                        <span class="lang nl">Azure</span>
-                    </a>
-                    <a href="https://www.cloudflarestatus.com/" target="_blank" class="terminal-link">
-                        <span class="lang en">Cloudflare</span>
-                        <span class="lang fr">Cloudflare</span>
-                        <span class="lang nl">Cloudflare</span>
-                    </a>
-                    <a href="https://status.aws.amazon.com/" target="_blank" class="terminal-link">
-                        <span class="lang en">AWS</span>
-                        <span class="lang fr">AWS</span>
-                        <span class="lang nl">AWS</span>
-                    </a>
-                    <a href="https://www.google.com/appsstatus/dashboard/" target="_blank" class="terminal-link">
-                        <span class="lang en">Google Workspace</span>
-                        <span class="lang fr">Google Workspace</span>
-                        <span class="lang nl">Google Workspace</span>
-                    </a>
-                    <a href="https://www.githubstatus.com/" target="_blank" class="terminal-link">
-                        <span class="lang en">GitHub</span>
-                        <span class="lang fr">GitHub</span>
-                        <span class="lang nl">GitHub</span>
-                    </a>
-                    <a href="https://www.belgiantrain.be/nl/travel-info/current/ongoing-disturbances-and-works" target="_blank" class="terminal-link">
+                    <a href="https://admin.microsoft.com/Adminportal/Home#/servicehealth" target="_blank" rel="noopener noreferrer" class="terminal-link">Microsoft 365 (Admin)</a>
+                    <a href="https://status.azure.com" target="_blank" rel="noopener noreferrer" class="terminal-link">Azure</a>
+                    <a href="https://www.cloudflarestatus.com/" target="_blank" rel="noopener noreferrer" class="terminal-link">Cloudflare</a>
+                    <a href="https://status.aws.amazon.com/" target="_blank" rel="noopener noreferrer" class="terminal-link">AWS</a>
+                    <a href="https://www.google.com/appsstatus/dashboard/" target="_blank" rel="noopener noreferrer" class="terminal-link">Google Workspace</a>
+                    <a href="https://www.githubstatus.com/" target="_blank" rel="noopener noreferrer" class="terminal-link">GitHub</a>
+                    <a href="https://www.belgiantrain.be/nl/travel-info/current/ongoing-disturbances-and-works" target="_blank" rel="noopener noreferrer" class="terminal-link">
                         <span class="lang en">Belgian Rail Traffic Info</span>
                         <span class="lang fr">Info Trafic SNCB</span>
                         <span class="lang nl">NMBS Verkeersinfo</span>
                     </a>
-                    <a href="https://status.sentinelone.com/" target="_blank" class="terminal-link">
-                        <span class="lang en">SentinelOne</span>
-                        <span class="lang fr">SentinelOne</span>
-                        <span class="lang nl">SentinelOne</span>
-                    </a>
-                    <a href="https://status.phished.io/" target="_blank" class="terminal-link">
-                        <span class="lang en">Phished.io</span>
-                        <span class="lang fr">Phished.io</span>
-                        <span class="lang nl">Phished.io</span>
-                    </a>
-                    <a href="https://outkept.statuspage.io/" target="_blank" class="terminal-link">
-                        <span class="lang en">Outkept</span>
-                        <span class="lang fr">Outkept</span>
-                        <span class="lang nl">Outkept</span>
-                    </a>
-                    <a href="https://status.connectwise.com/" target="_blank" class="terminal-link">
-                        <span class="lang en">ConnectWise</span>
-                        <span class="lang fr">ConnectWise</span>
-                        <span class="lang nl">ConnectWise</span>
-                    </a>
-                    <a href="https://status.sonicwall.com/" target="_blank" class="terminal-link">
-                        <span class="lang en">SonicWall</span>
-                        <span class="lang fr">SonicWall</span>
-                        <span class="lang nl">SonicWall</span>
-                    </a>
-                    <a href="https://statuspage.keeper.io/" target="_blank" class="terminal-link">
-                        <span class="lang en">Keeper</span>
-                        <span class="lang fr">Keeper</span>
-                        <span class="lang nl">Keeper</span>
-                    </a>
-                    <a href="https://status.cloud.com/" target="_blank" class="terminal-link">
-                        <span class="lang en">Citrix Cloud</span>
-                        <span class="lang fr">Citrix Cloud</span>
-                        <span class="lang nl">Citrix Cloud</span>
-                    </a>
-                    <a href="https://status.myconnectsecure.com/" target="_blank" class="terminal-link">
-                        <span class="lang en">ConnectSecure</span>
-                        <span class="lang fr">ConnectSecure</span>
-                        <span class="lang nl">ConnectSecure</span>
-                    </a>
-                    <a href="https://status.combell.com/" target="_blank" class="terminal-link">
-                        <span class="lang en">Combell</span>
-                        <span class="lang fr">Combell</span>
-                        <span class="lang nl">Combell</span>
-                    </a>
-                    <a href="https://status.atlassian.com/" target="_blank" class="terminal-link">
-                        <span class="lang en">Confluence/Atlassian</span>
-                        <span class="lang fr">Confluence/Atlassian</span>
-                        <span class="lang nl">Confluence/Atlassian</span>
-                    </a>
-                    <a href="https://status.teamviewer.com/" target="_blank" class="terminal-link">
-                        <span class="lang en">TeamViewer</span>
-                        <span class="lang fr">TeamViewer</span>
-                        <span class="lang nl">TeamViewer</span>
-                    </a>
-                    <a href="https://status.patchmypc.com/" target="_blank" class="terminal-link">
-                        <span class="lang en">Patch My PC</span>
-                        <span class="lang fr">Patch My PC</span>
-                        <span class="lang nl">Patch My PC</span>
-                    </a>
-                    <a href="https://status.dev.azure.com/" target="_blank" class="terminal-link">
-                        <span class="lang en">Azure DevOps</span>
-                        <span class="lang fr">Azure DevOps</span>
-                        <span class="lang nl">Azure DevOps</span>
-                    </a>
-                    <a href="https://uptime.n-able.com/" target="_blank" class="terminal-link">
-                        <span class="lang en">N-able</span>
-                        <span class="lang fr">N-able</span>
-                        <span class="lang nl">N-able</span>
-                    </a>
-                    <a href="https://status.ninjaone.com/" target="_blank" class="terminal-link">
-                        <span class="lang en">NinjaOne</span>
-                        <span class="lang fr">NinjaOne</span>
-                        <span class="lang nl">NinjaOne</span>
-                    </a>
-                    <a href="https://trustportal.netskope.com/home" target="_blank" class="terminal-link">
-                        <span class="lang en">Netskope</span>
-                        <span class="lang fr">Netskope</span>
-                        <span class="lang nl">Netskope</span>
-                    </a>
-                    <a href="https://status.telenet.be/" target="_blank" class="terminal-link">
-                        <span class="lang en">Telenet</span>
-                        <span class="lang fr">Telenet</span>
-                        <span class="lang nl">Telenet</span>
-                    </a>
-                    <a href="https://allestoringen.be/storing/proximus/" target="_blank" class="terminal-link">
-                        <span class="lang en">Proximus (allestoringen)</span>
-                        <span class="lang fr">Proximus (allestoringen)</span>
-                        <span class="lang nl">Proximus (allestoringen)</span>
-                    </a>
+                    <a href="https://status.sentinelone.com/" target="_blank" rel="noopener noreferrer" class="terminal-link">SentinelOne</a>
+                    <a href="https://status.phished.io/" target="_blank" rel="noopener noreferrer" class="terminal-link">Phished.io</a>
+                    <a href="https://outkept.statuspage.io/" target="_blank" rel="noopener noreferrer" class="terminal-link">Outkept</a>
+                    <a href="https://status.connectwise.com/" target="_blank" rel="noopener noreferrer" class="terminal-link">ConnectWise</a>
+                    <a href="https://status.sonicwall.com/" target="_blank" rel="noopener noreferrer" class="terminal-link">SonicWall</a>
+                    <a href="https://statuspage.keeper.io/" target="_blank" rel="noopener noreferrer" class="terminal-link">Keeper</a>
+                    <a href="https://status.cloud.com/" target="_blank" rel="noopener noreferrer" class="terminal-link">Citrix Cloud</a>
+                    <a href="https://status.myconnectsecure.com/" target="_blank" rel="noopener noreferrer" class="terminal-link">ConnectSecure</a>
+                    <a href="https://status.combell.com/" target="_blank" rel="noopener noreferrer" class="terminal-link">Combell</a>
+                    <a href="https://status.atlassian.com/" target="_blank" rel="noopener noreferrer" class="terminal-link">Confluence/Atlassian</a>
+                    <a href="https://status.teamviewer.com/" target="_blank" rel="noopener noreferrer" class="terminal-link">TeamViewer</a>
+                    <a href="https://status.patchmypc.com/" target="_blank" rel="noopener noreferrer" class="terminal-link">Patch My PC</a>
+                    <a href="https://status.dev.azure.com/" target="_blank" rel="noopener noreferrer" class="terminal-link">Azure DevOps</a>
+                    <a href="https://uptime.n-able.com/" target="_blank" rel="noopener noreferrer" class="terminal-link">N-able</a>
+                    <a href="https://status.ninjaone.com/" target="_blank" rel="noopener noreferrer" class="terminal-link">NinjaOne</a>
+                    <a href="https://trustportal.netskope.com/home" target="_blank" rel="noopener noreferrer" class="terminal-link">Netskope</a>
+                    <a href="https://status.telenet.be/" target="_blank" rel="noopener noreferrer" class="terminal-link">Telenet</a>
+                    <a href="https://allestoringen.be/storing/proximus/" target="_blank" rel="noopener noreferrer" class="terminal-link">Proximus (allestoringen)</a>
                     <a href="#" class="terminal-link deprecated">
                         <span class="lang en">Orange Belgium</span>
                         <span class="lang fr">Orange Belgique</span>
@@ -353,16 +171,12 @@
             </div>
 
             <div class="terminal-section">
-                <span class="section-label">
-                    <span class="lang en"># Info</span>
-                    <span class="lang fr"># Info</span>
-                    <span class="lang nl"># Info</span>
-                </span>
+                <span class="section-label"># Info</span>
                 <div class="terminal-links">
                     <a href="mailto:request@lebon.info" class="terminal-link">feature-request</a>
                 </div>
             </div>
-                <div class="terminal-section terminal-hint">
+            <div class="terminal-section terminal-hint">
                 <span class="lang en"><b>Tab</b> to cycle | <b>Enter</b> to open | <b>Esc</b> to jump to top</span>
                 <span class="lang nl"><b>Tab</b> om te bladeren | <b>Enter</b> om te openen | <b>Esc</b> om naar boven te springen</span>
                 <span class="lang fr"><b>Tab</b> pour naviguer | <b>Entrée</b> pour ouvrir | <b>Échap</b> pour revenir en haut</span>
