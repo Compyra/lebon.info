@@ -142,6 +142,15 @@ const watchedDevices = new Set();
 /** Current filter: 'all' | 'surveillance' | 'tracker' | 'normal' */
 let currentFilter = 'all';
 
+/** Free-text filter (lowercased), matched against name / manufacturer / id. */
+let textFilter = '';
+
+/** Minimum RSSI filter in dBm, or null for no signal filtering. */
+let rssiFilter = null;
+
+/** Whether the device list is grouped by manufacturer. */
+let groupByMfr = false;
+
 // ================================================================
 // Classification
 // ================================================================
@@ -214,6 +223,26 @@ function classifyAdvertisement(event) {
 /** Format a numeric company ID as a 0x-prefixed hex string. */
 function formatCompanyId(id) {
     return `0x${id.toString(16).toUpperCase().padStart(4, '0')}`;
+}
+
+/**
+ * Rough distance estimate from RSSI using the log-distance path-loss model.
+ * If the advertisement carries a TX power, RSSI at 1 m is approximated as
+ * txPower - 41 dB (free-space loss at 1 m, 2.4 GHz); otherwise -59 dBm
+ * (typical BLE). Indoor path-loss exponent n = 2.5.
+ * @returns {number|null} estimated distance in meters, or null.
+ */
+function estimateDistance(rssi, txPower) {
+    if (rssi == null) return null;
+    const rssiAt1m = txPower != null ? txPower - 41 : -59;
+    return Math.pow(10, (rssiAt1m - rssi) / (10 * 2.5));
+}
+
+/** Human-friendly distance string. */
+function formatDistance(meters) {
+    if (meters >= 100) return '100+ m';
+    if (meters >= 10) return `${Math.round(meters)} m`;
+    return `${meters.toFixed(1)} m`;
 }
 
 // ================================================================
@@ -290,9 +319,14 @@ function scheduleCardUpdate(deviceId) {
 /** Re-render all dirty device cards and refresh counters. */
 function flushCardUpdates() {
     flushTimer = null;
-    for (const id of dirtyDevices) {
-        const data = devices.get(id);
-        if (data) updateDeviceCard(data);
+    if (groupByMfr) {
+        // Grouped view: one full rebuild per flush keeps ordering/groups correct
+        if (dirtyDevices.size > 0) rebuildList();
+    } else {
+        for (const id of dirtyDevices) {
+            const data = devices.get(id);
+            if (data) updateDeviceCard(data);
+        }
     }
     dirtyDevices.clear();
     updateCounts();
@@ -312,6 +346,10 @@ function shouldUpgrade(oldType, newType) {
 // ================================================================
 
 function addDeviceCard(data) {
+    if (groupByMfr) {
+        rebuildList();
+        return;
+    }
     const list = document.getElementById('device-list');
     const empty = list.querySelector('.device-list-empty');
     if (empty) empty.remove();
@@ -337,8 +375,56 @@ function updateDeviceCard(data) {
 function buildCard(data) {
     const card = document.createElement('div');
     card.className = `device-card device-${data.classification.type}`;
+    card.dataset.deviceId = data.id;
     card.innerHTML = renderCardHTML(data);
     return card;
+}
+
+/**
+ * Rebuild the entire device list (used for manufacturer grouping and
+ * when toggling grouping on/off).
+ */
+function rebuildList() {
+    const list = document.getElementById('device-list');
+    deviceCards.clear();
+
+    if (devices.size === 0) {
+        list.replaceChildren(renderEmptyState());
+        return;
+    }
+
+    const frag = document.createDocumentFragment();
+    const makeCard = (d) => {
+        const card = buildCard(d);
+        deviceCards.set(d.id, card);
+        return card;
+    };
+
+    if (groupByMfr) {
+        const groups = new Map();
+        for (const d of devices.values()) {
+            const key = d.manufacturers.length > 0
+                ? `${d.manufacturers[0].id} — ${d.manufacturers[0].name}`
+                : 'NO MANUFACTURER DATA';
+            if (!groups.has(key)) groups.set(key, []);
+            groups.get(key).push(d);
+        }
+        for (const key of [...groups.keys()].sort()) {
+            const items = groups.get(key);
+            const header = document.createElement('div');
+            header.className = 'group-header';
+            header.textContent = `# ${key} (${items.length})`;
+            frag.appendChild(header);
+            items.sort((a, b) => (b.rssi ?? -999) - (a.rssi ?? -999));
+            for (const d of items) frag.appendChild(makeCard(d));
+        }
+    } else {
+        const sorted = [...devices.values()].sort((a, b) => b.lastSeen - a.lastSeen);
+        for (const d of sorted) frag.appendChild(makeCard(d));
+    }
+
+    list.replaceChildren(frag);
+    applyCurrentFilter();
 }
 
 function renderCardHTML(data) {
@@ -348,6 +434,14 @@ function renderCardHTML(data) {
 
     const rssiText = data.rssi != null ? `${data.rssi} dBm` : 'N/A';
     const rssiBar  = data.rssi != null ? buildRssiBar(data.rssi) : '';
+
+    const distance = estimateDistance(data.rssi, data.txPower);
+    const distRow = distance != null
+        ? `<div class="device-detail">
+             <span class="detail-label">DIST</span>
+             <span class="detail-value" title="Rough estimate from signal strength — walls, interference and antenna orientation easily cause ×2–×5 error">~${formatDistance(distance)} <span class="dim small">(estimated)</span></span>
+           </div>`
+        : '';
 
     const badgeClass = `badge-${data.classification.type}`;
     const badgeText  = data.classification.type.toUpperCase();
@@ -396,6 +490,7 @@ function renderCardHTML(data) {
                 <span class="detail-label">RSSI</span>
                 <span class="detail-value">${rssiText} ${rssiBar}</span>
             </div>
+            ${distRow}
             ${txRow}
             ${manufacturerRows}
             ${reasonRow}
@@ -480,7 +575,7 @@ function clearNotice() {
 
 function setFilter(filter) {
     currentFilter = filter;
-    document.querySelectorAll('.filter-btn').forEach(btn => {
+    document.querySelectorAll('.filter-btn[data-filter]').forEach(btn => {
         const active = btn.dataset.filter === filter;
         btn.classList.toggle('active', active);
         btn.setAttribute('aria-pressed', String(active));
@@ -488,14 +583,56 @@ function setFilter(filter) {
     applyCurrentFilter();
 }
 
-/** Show/hide a single card according to the current filter. */
+/** Returns true if a device passes all active filters (type, signal, text). */
+function deviceMatchesFilters(data) {
+    if (currentFilter !== 'all' && data.classification.type !== currentFilter) return false;
+    if (rssiFilter != null && (data.rssi == null || data.rssi < rssiFilter)) return false;
+    if (textFilter) {
+        const haystack = [
+            data.name || '',
+            data.id,
+            ...data.manufacturers.map(m => `${m.id} ${m.name}`),
+        ].join(' ').toLowerCase();
+        if (!haystack.includes(textFilter)) return false;
+    }
+    return true;
+}
+
+/** Show/hide a single card according to the active filters. */
 function applyFilterToCard(card) {
-    const visible = currentFilter === 'all' || card.classList.contains(`device-${currentFilter}`);
-    card.style.display = visible ? '' : 'none';
+    const data = devices.get(card.dataset.deviceId);
+    card.style.display = data && deviceMatchesFilters(data) ? '' : 'none';
 }
 
 function applyCurrentFilter() {
     document.querySelectorAll('.device-card').forEach(applyFilterToCard);
+    updateGroupHeaders();
+}
+
+/** Hide group headers whose devices are all filtered out. */
+function updateGroupHeaders() {
+    const list = document.getElementById('device-list');
+    let header = null;
+    let anyVisible = false;
+    for (const el of list.children) {
+        if (el.classList.contains('group-header')) {
+            if (header) header.style.display = anyVisible ? '' : 'none';
+            header = el;
+            anyVisible = false;
+        } else if (el.classList.contains('device-card') && el.style.display !== 'none') {
+            anyVisible = true;
+        }
+    }
+    if (header) header.style.display = anyVisible ? '' : 'none';
+}
+
+/** Toggle grouping of the device list by manufacturer. */
+function toggleGroupByMfr() {
+    groupByMfr = !groupByMfr;
+    const btn = document.getElementById('btn-group');
+    btn.classList.toggle('active', groupByMfr);
+    btn.setAttribute('aria-pressed', String(groupByMfr));
+    rebuildList();
 }
 
 // ================================================================
@@ -803,9 +940,19 @@ function escapeHTML(str) {
     document.getElementById('btn-stop').addEventListener('click', stopScan);
     document.getElementById('btn-add').addEventListener('click', addDevice);
     document.getElementById('btn-clear').addEventListener('click', clearDevices);
-    document.querySelectorAll('.filter-btn').forEach(btn => {
+    document.querySelectorAll('.filter-btn[data-filter]').forEach(btn => {
         btn.addEventListener('click', () => setFilter(btn.dataset.filter));
     });
+
+    document.getElementById('filter-text').addEventListener('input', (e) => {
+        textFilter = e.target.value.trim().toLowerCase();
+        applyCurrentFilter();
+    });
+    document.getElementById('filter-rssi').addEventListener('change', (e) => {
+        rssiFilter = e.target.value ? Number(e.target.value) : null;
+        applyCurrentFilter();
+    });
+    document.getElementById('btn-group').addEventListener('click', toggleGroupByMfr);
 
     // Render the initial empty state from the template
     document.getElementById('device-list').appendChild(renderEmptyState());

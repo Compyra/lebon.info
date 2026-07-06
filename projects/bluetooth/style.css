@@ -212,6 +212,37 @@ small { font-size: max(0.82em, 0.72rem); }
 .filter-btn:hover { border-color: var(--green); color: var(--green); }
 .filter-btn.active { border-color: var(--green); color: var(--green); background: #00ff9015; }
 
+/* ---- Search / Signal Inputs ---- */
+.terminal-input,
+.terminal-select {
+    background: #111612;
+    border: 1px solid #2e3a30;
+    color: var(--text);
+    font-family: inherit;
+    font-size: 0.82rem;
+    padding: 4px 8px;
+    border-radius: 2px;
+}
+.terminal-input { flex: 1 1 140px; min-width: 120px; }
+.terminal-input::placeholder { color: var(--text-dim); opacity: 0.7; }
+.terminal-input:focus-visible,
+.terminal-select:focus-visible {
+    outline: 2px solid var(--green);
+    outline-offset: 1px;
+    border-color: var(--green);
+}
+.terminal-select option { background: #111612; color: var(--text); }
+
+/* ---- Group Headers ---- */
+.group-header {
+    color: var(--amber);
+    font-size: 0.8rem;
+    letter-spacing: 0.08em;
+    border-bottom: 1px dashed #2e3a30;
+    padding: 10px 2px 4px;
+    overflow-wrap: anywhere;
+}
+
 /* ---- Alert Banner ---- */
 .alert-banner {
     background: #3a0000;

@@ -64,6 +64,20 @@
                 <button class="filter-btn" type="button" data-filter="normal" aria-pressed="false">NORMAL</button>
             </div>
 
+            <!-- Search / signal / grouping -->
+            <div class="filter-bar" role="group" aria-label="Search, signal filter and grouping">
+                <label class="filter-label" for="filter-text">SEARCH:</label>
+                <input id="filter-text" class="terminal-input" type="search" placeholder="name / manufacturer / id" autocomplete="off" spellcheck="false">
+                <label class="filter-label" for="filter-rssi">SIGNAL:</label>
+                <select id="filter-rssi" class="terminal-select">
+                    <option value="">ALL</option>
+                    <option value="-50">&ge; -50 dBm (very close)</option>
+                    <option value="-70">&ge; -70 dBm (near)</option>
+                    <option value="-85">&ge; -85 dBm (medium)</option>
+                </select>
+                <button id="btn-group" class="filter-btn" type="button" aria-pressed="false">GROUP BY MFR</button>
+            </div>
+
             <!-- Alert Banner -->
             <div id="alert-banner" class="alert-banner hidden" role="alert">
                 <span class="alert-icon" aria-hidden="true">⚠</span>
