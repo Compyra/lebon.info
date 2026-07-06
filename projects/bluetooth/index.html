@@ -131,9 +131,19 @@
                 <span class="section-label"># REQUIREMENTS</span>
                 <p class="dim">
                     <strong>Full scan mode</strong> (START SCAN): Requires Chrome or Edge with the experimental Web Bluetooth scanning flag:<br>
-                    <code>chrome://flags/#enable-experimental-web-platform-features</code><br><br>
+                    <code>chrome://flags/#enable-experimental-web-platform-features</code><br>
+                    On <strong>Windows</strong>, additionally enable:<br>
+                    <code>chrome://flags/#enable-web-bluetooth-new-permissions-backend</code><br>
+                    then restart the browser.<br><br>
                     <strong>Single device mode</strong> (+ ADD DEVICE): Works in any Chromium browser with Web Bluetooth support over HTTPS.<br><br>
                     <strong>Does not work in:</strong> Firefox, Safari, or HTTP (non-secure) connections.
+                </p>
+                <p class="dim small">
+                    ⚠ <strong>Seeing no devices?</strong> Only BLE devices that are actively <em>advertising</em> are visible.
+                    Classic Bluetooth devices (many speakers, mice, older headphones) never advertise over BLE, and devices
+                    already connected to a phone or laptop usually stop advertising. Trackers like AirTags advertise
+                    roughly every 2 seconds only when away from their owner. To verify your adapter sees packets at all,
+                    open <code>chrome://bluetooth-internals</code> → Adapter → Start Discovery.
                 </p>
             </div>
 

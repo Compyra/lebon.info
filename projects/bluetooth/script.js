@@ -114,6 +114,15 @@ const RENDER_INTERVAL_MS = 300;
 /** Timer handle for auto-hiding the alert banner, or null. */
 let alertTimer = null;
 
+/** Number of advertisement packets received during the current scan. */
+let packetsReceived = 0;
+
+/** Watchdog timer: warns the user if a scan produces no packets. */
+let scanWatchdog = null;
+
+/** How long to wait for the first packet before showing troubleshooting help (ms). */
+const WATCHDOG_DELAY_MS = 10000;
+
 /** Currently active BluetoothLEScan (from requestLEScan), or null. */
 let activeScan = null;
 
@@ -206,6 +215,7 @@ function formatCompanyId(id) {
  * Updates the device map and refreshes the UI.
  */
 function handleAdvertisement(event) {
+    packetsReceived++;
     const deviceId = event.device.id;
     const classification = classifyAdvertisement(event);
 
@@ -507,19 +517,37 @@ async function startScan() {
             return;
         }
 
+        // Attach the listener BEFORE starting the scan so the initial
+        // burst of advertisement packets is not missed.
+        navigator.bluetooth.addEventListener('advertisementreceived', handleAdvertisement);
+
         activeScan = await navigator.bluetooth.requestLEScan({
             acceptAllAdvertisements: true,
             keepRepeatedDevices: true,
         });
-
-        navigator.bluetooth.addEventListener('advertisementreceived', handleAdvertisement);
 
         setStatus('SCANNING', 'scanning');
         showNotice('info', 'Passive BLE scan active — all nearby advertisement packets will appear below. Click [ STOP SCAN ] when done.');
 
         document.getElementById('btn-stop').disabled = false;
 
+        // Watchdog: if no packets arrive, surface troubleshooting help
+        packetsReceived = 0;
+        clearTimeout(scanWatchdog);
+        scanWatchdog = setTimeout(() => {
+            if (activeScan && packetsReceived === 0) {
+                showNotice(
+                    'warn',
+                    'Scan is running but no advertisement packets have been received. Likely causes: ' +
+                    '1) On Windows, Chrome also needs chrome://flags/#enable-web-bluetooth-new-permissions-backend — enable it and restart the browser. ' +
+                    '2) Only BLE devices that are actively ADVERTISING appear — classic Bluetooth devices and already-connected devices (your paired earbuds, watch…) usually don\u2019t advertise. ' +
+                    '3) Verify your adapter sees packets at chrome://bluetooth-internals (Adapter → Start Discovery).'
+                );
+            }
+        }, WATCHDOG_DELAY_MS);
+
     } catch (err) {
+        navigator.bluetooth.removeEventListener('advertisementreceived', handleAdvertisement);
         document.getElementById('btn-scan').disabled = false;
 
         if (err.name === 'NotAllowedError') {
@@ -545,6 +573,9 @@ async function startScan() {
 /** Stop the active passive scan. */
 function stopScan() {
     const wasActive = activeScan !== null || watchedDevices.size > 0;
+
+    clearTimeout(scanWatchdog);
+    scanWatchdog = null;
 
     if (activeScan) {
         activeScan.stop();
