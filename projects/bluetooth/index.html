@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BT Scanner // Surveillance & Tracker Detector</title>
-    <meta name="description" content="Scan for nearby Bluetooth devices and identify surveillance devices and trackers.">
+    <title>GHOSTTOOTH // Surveillance & Tracker Detector</title>
+    <meta name="description" content="GHOSTTOOTH — Gathering Hidden Objects through Signal Tracking and Telemetry Observation of Operational Tracker Hardware. Scan for nearby Bluetooth devices and identify surveillance devices and trackers.">
     <meta name="theme-color" content="#181c1b">
-    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' rx='3' fill='%23181c1b'/%3E%3Ctext x='8' y='12.5' font-size='11' text-anchor='middle' fill='%2300ff90' font-family='monospace'%3EB%3C/text%3E%3C/svg%3E">
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' rx='3' fill='%23181c1b'/%3E%3Ctext x='8' y='12.5' font-size='11' text-anchor='middle' fill='%2300ff90' font-family='monospace'%3EG%3C/text%3E%3C/svg%3E">
     <link rel="stylesheet" href="style.css?654654">
 </head>
 <body class="terminal-bg">
@@ -15,7 +15,7 @@
         <!-- Header -->
         <header class="terminal-header">
             <a href="../../" class="back-link">← lebon.info</a>
-            <span class="prompt-title">bt-scanner:~$</span>
+            <span class="prompt-title">ghosttooth:~$</span>
             <span class="prompt-blink" aria-hidden="true">█</span>
         </header>
 
@@ -23,12 +23,16 @@
 
             <!-- Title -->
             <h1 class="tool-title">
-                <span class="title-prefix">// </span>BLUETOOTH SURVEILLANCE SCANNER
-                <span class="title-suffix"> v1.0</span>
+                <span class="title-prefix">// </span>GHOSTTOOTH
+                <span class="title-suffix"> v2.0</span>
             </h1>
+            <p class="tagline dim small">
+                <strong>G</strong>athering <strong>H</strong>idden <strong>O</strong>bjects through <strong>S</strong>ignal <strong>T</strong>racking and <strong>T</strong>elemetry <strong>O</strong>bservation of <strong>O</strong>perational <strong>T</strong>racker <strong>H</strong>ardware — tracking trackers with Bluetooth.
+            </p>
 
-            <!-- Status Bar -->
-            <div class="status-bar">
+            <!-- Status Panel (sticky on desktop) -->
+            <div class="status-panel">
+                <div class="status-bar">
                 <div class="status-item">
                     <span class="status-label">STATUS</span>
                     <span id="status" class="status-value" aria-live="polite">IDLE</span>
@@ -46,6 +50,33 @@
                     <span id="tracker-count" class="status-value">0</span>
                 </div>
             </div>
+
+            <!-- Filter Statistics -->
+            <div class="status-bar status-bar-filters">
+                <div class="status-item">
+                    <span class="status-label">MFR</span>
+                    <span id="mfr-count" class="status-value">0</span>
+                </div>
+                <div class="status-item">
+                    <span class="status-label">FILTERED</span>
+                    <span id="filtered-count" class="status-value">0</span>
+                </div>
+                <div class="status-item">
+                    <span class="status-label">FILT TRACKERS</span>
+                    <span id="filtered-tracker-count" class="status-value">0</span>
+                </div>
+                <div class="status-item">
+                    <span class="status-label">FILT SURVEILLANCE</span>
+                    <span id="filtered-surv-count" class="status-value">0</span>
+                </div>
+            </div>
+
+                <!-- Alert Banner -->
+                <div id="alert-banner" class="alert-banner hidden" role="alert">
+                    <span class="alert-icon" aria-hidden="true">⚠</span>
+                    <span id="alert-text">SURVEILLANCE DEVICE DETECTED NEARBY</span>
+                </div>
+            </div><!-- /status-panel -->
 
             <!-- Controls -->
             <div class="controls">
@@ -80,6 +111,7 @@
                     <option value="lastseen">LAST SEEN</option>
                     <option value="proximity">PROXIMITY</option>
                     <option value="severity">SEVERITY</option>
+                    <option value="name">NAME</option>
                 </select>
             </div>
 
@@ -94,12 +126,7 @@
                     <option value="60000">HIDE &gt; 1 MIN</option>
                     <option value="600000">HIDE &gt; 10 MIN</option>
                 </select>
-            </div>
-
-            <!-- Alert Banner -->
-            <div id="alert-banner" class="alert-banner hidden" role="alert">
-                <span class="alert-icon" aria-hidden="true">⚠</span>
-                <span id="alert-text">SURVEILLANCE DEVICE DETECTED NEARBY</span>
+                <button id="btn-collapse-all" class="filter-btn" type="button" title="Collapse or expand all manufacturer groups (enables grouping)">COLLAPSE ALL</button>
             </div>
 
             <!-- Notice Box -->
@@ -139,8 +166,8 @@
             </div>
 
             <!-- How it works -->
-            <div class="info-section">
-                <span class="section-label"># HOW IT WORKS</span>
+            <details class="info-section">
+                <summary><span class="section-label"># HOW IT WORKS</span></summary>
                 <p class="dim">
                     Detection uses <strong>Bluetooth manufacturer company IDs</strong> from the
                     <a href="https://www.bluetooth.com/specifications/assigned-numbers/" target="_blank" rel="noopener noreferrer" class="terminal-link">Bluetooth SIG assigned numbers</a>
@@ -162,11 +189,11 @@
                     confirmation before drawing conclusions.<br><br>
                     ⚠ <strong>Do not harass anyone</strong> based on detections from this tool.
                 </p>
-            </div>
+            </details>
 
             <!-- Requirements -->
-            <div class="info-section">
-                <span class="section-label"># SCAN MODES &amp; REQUIREMENTS</span>
+            <details class="info-section">
+                <summary><span class="section-label"># SCAN MODES &amp; REQUIREMENTS</span></summary>
                 <p class="dim">
                     <strong>Why a local bridge?</strong> A webpage cannot access the Bluetooth radio directly —
                     browsers only expose the experimental Web Bluetooth API, and on <strong>Windows</strong> its
@@ -196,7 +223,7 @@
                     roughly every 2 seconds only when away from their owner. To verify your adapter sees packets at all,
                     open <code>chrome://bluetooth-internals</code> → Adapter → Start Discovery.
                 </p>
-            </div>
+            </details>
 
         </main><!-- /terminal-body -->
     </div><!-- /terminal-window -->

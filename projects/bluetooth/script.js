@@ -1,5 +1,8 @@
 /* ============================================================
-   BT Scanner — Bluetooth Surveillance & Tracker Detector
+   GHOSTTOOTH — Gathering Hidden Objects through Signal Tracking
+   and Telemetry Observation of Operational Tracker Hardware
+   (Bluetooth Surveillance & Tracker Detector)
+
    Uses Web Bluetooth requestLEScan (experimental) and
    requestDevice + watchAdvertisements (standard fallback)
 
@@ -213,6 +216,9 @@ let rssiFilter = null;
 /** Whether the device list is grouped by manufacturer. */
 let groupByMfr = false;
 
+/** Group keys currently collapsed in the grouped view. */
+const collapsedGroups = new Set();
+
 /** Sort mode: 'lastseen' | 'proximity' | 'severity' */
 let sortMode = 'lastseen';
 
@@ -417,6 +423,13 @@ function deviceComparator(a, b) {
         const diff = (SEVERITY_RANK[b.classification.type] ?? 0) - (SEVERITY_RANK[a.classification.type] ?? 0);
         return diff !== 0 ? diff : (b.rssi ?? -999) - (a.rssi ?? -999);
     }
+    if (sortMode === 'name') {
+        // Named devices alphabetically first; unnamed after, strongest signal first
+        if (a.name && b.name) return a.name.localeCompare(b.name, undefined, { sensitivity: 'base' });
+        if (a.name) return -1;
+        if (b.name) return 1;
+        return (b.rssi ?? -999) - (a.rssi ?? -999);
+    }
     return b.lastSeen - a.lastSeen; // 'lastseen' (default)
 }
 
@@ -467,6 +480,13 @@ function computeBundles() {
     return [...passthrough, ...merged];
 }
 
+/** Group key (manufacturer) for a device in the grouped view. */
+function groupKeyFor(d) {
+    return d.manufacturers.length > 0
+        ? `${d.manufacturers[0].id} — ${d.manufacturers[0].name}`
+        : 'NO MANUFACTURER DATA';
+}
+
 /**
  * Rebuild the device list honoring bundling, grouping, sorting and filters.
  * Throttled via scheduleRender(); skipped while a note editor is open so
@@ -485,6 +505,7 @@ function renderDeviceList() {
 
     if (devices.size === 0) {
         list.replaceChildren(renderEmptyState());
+        updateFilterStats(0, 0, 0, 0);
         return;
     }
 
@@ -498,20 +519,26 @@ function renderDeviceList() {
     if (groupByMfr) {
         const groups = new Map();
         for (const d of entries) {
-            const key = d.manufacturers.length > 0
-                ? `${d.manufacturers[0].id} — ${d.manufacturers[0].name}`
-                : 'NO MANUFACTURER DATA';
+            const key = groupKeyFor(d);
             if (!groups.has(key)) groups.set(key, []);
             groups.get(key).push(d);
         }
         for (const key of [...groups.keys()].sort()) {
             const items = groups.get(key);
-            const header = document.createElement('div');
+            const collapsed = collapsedGroups.has(key);
+            const header = document.createElement('button');
+            header.type = 'button';
             header.className = 'group-header';
-            header.textContent = `# ${key} (${items.length})`;
+            header.dataset.groupKey = key;
+            header.setAttribute('aria-expanded', String(!collapsed));
+            header.textContent = `${collapsed ? '\u25B8' : '\u25BE'} ${key} (${items.length})`;
             frag.appendChild(header);
             items.sort(deviceComparator);
-            for (const d of items) frag.appendChild(makeCard(d));
+            for (const d of items) {
+                const card = makeCard(d);
+                card.dataset.groupKey = key;
+                frag.appendChild(card);
+            }
         }
     } else {
         entries.sort(deviceComparator);
@@ -520,6 +547,36 @@ function renderDeviceList() {
 
     list.replaceChildren(frag);
     applyCurrentFilter();
+    updateCollapseAllButton();
+}
+
+/** Sync the COLLAPSE ALL button label/state with the current groups. */
+function updateCollapseAllButton() {
+    const btn = document.getElementById('btn-collapse-all');
+    const keys = new Set([...devices.values()].map(groupKeyFor));
+    const allCollapsed = groupByMfr && keys.size > 0 && [...keys].every(k => collapsedGroups.has(k));
+    btn.textContent = allCollapsed ? 'EXPAND ALL' : 'COLLAPSE ALL';
+    btn.setAttribute('aria-pressed', String(allCollapsed));
+    btn.classList.toggle('active', allCollapsed);
+}
+
+/** Collapse every manufacturer group at once (or expand, when all are collapsed). */
+function collapseAllGroups() {
+    // Grouping is required for collapsing — enable it if off
+    if (!groupByMfr) {
+        groupByMfr = true;
+        const groupBtn = document.getElementById('btn-group');
+        groupBtn.classList.add('active');
+        groupBtn.setAttribute('aria-pressed', 'true');
+    }
+
+    const keys = new Set([...devices.values()].map(groupKeyFor));
+    const allCollapsed = keys.size > 0 && [...keys].every(k => collapsedGroups.has(k));
+    collapsedGroups.clear();
+    if (!allCollapsed) {
+        for (const k of keys) collapsedGroups.add(k);
+    }
+    renderDeviceList();
 }
 
 function renderCardHTML(data) {
@@ -742,18 +799,51 @@ function deviceMatchesFilters(data) {
     return true;
 }
 
-/** Show/hide a single card according to the active filters. */
-function applyFilterToCard(card) {
-    const data = renderedData.get(card.dataset.deviceId) || devices.get(card.dataset.deviceId);
-    card.style.display = data && deviceMatchesFilters(data) ? '' : 'none';
-}
-
+/**
+ * Apply filters to all cards, honour collapsed groups, and refresh the
+ * filter statistics (MFR / FILTERED / FILT TRACKERS / FILT SURVEILLANCE).
+ */
 function applyCurrentFilter() {
-    document.querySelectorAll('.device-card').forEach(applyFilterToCard);
+    let filtered = 0;
+    let trackers = 0;
+    let surveillance = 0;
+    const mfrIds = new Set();
+
+    document.querySelectorAll('.device-card').forEach(card => {
+        const data = renderedData.get(card.dataset.deviceId) || devices.get(card.dataset.deviceId);
+        const matches = Boolean(data && deviceMatchesFilters(data));
+        card.dataset.filtered = matches ? '1' : '0';
+        const collapsed = card.dataset.groupKey != null && collapsedGroups.has(card.dataset.groupKey);
+        card.style.display = matches && !collapsed ? '' : 'none';
+
+        if (matches) {
+            filtered++;
+            if (data.classification.type === 'tracker') trackers++;
+            else if (data.classification.type === 'surveillance') surveillance++;
+            for (const m of data.manufacturers) mfrIds.add(m.id);
+        }
+    });
+
+    updateFilterStats(mfrIds.size, filtered, trackers, surveillance);
     updateGroupHeaders();
 }
 
-/** Hide group headers whose devices are all filtered out. */
+/** Update the filter statistics row in the status area. */
+function updateFilterStats(mfr, filtered, trackers, surveillance) {
+    document.getElementById('mfr-count').textContent              = mfr;
+    document.getElementById('filtered-count').textContent         = filtered;
+    document.getElementById('filtered-tracker-count').textContent = trackers;
+    document.getElementById('filtered-surv-count').textContent    = surveillance;
+}
+
+/** Collapse or expand a manufacturer group. */
+function toggleGroup(key) {
+    if (collapsedGroups.has(key)) collapsedGroups.delete(key);
+    else collapsedGroups.add(key);
+    renderDeviceList();
+}
+
+/** Hide group headers whose devices are all filtered out (collapse-agnostic). */
 function updateGroupHeaders() {
     const list = document.getElementById('device-list');
     let header = null;
@@ -763,7 +853,7 @@ function updateGroupHeaders() {
             if (header) header.style.display = anyVisible ? '' : 'none';
             header = el;
             anyVisible = false;
-        } else if (el.classList.contains('device-card') && el.style.display !== 'none') {
+        } else if (el.classList.contains('device-card') && el.dataset.filtered === '1') {
             anyVisible = true;
         }
     }
@@ -842,6 +932,13 @@ function closeNoteEditor(card, deviceId, save) {
 // ================================================================
 
 function handleCardAction(e) {
+    // Group header click: collapse/expand the manufacturer group
+    const header = e.target.closest('.group-header');
+    if (header) {
+        toggleGroup(header.dataset.groupKey);
+        return;
+    }
+
     const btn = e.target.closest('[data-action]');
     if (!btn) return;
     const card = btn.closest('.device-card');
@@ -1159,7 +1256,7 @@ function clearDevices() {
     clearTimeout(renderTimer);
     renderTimer = null;
 
-    document.getElementById('device-list').replaceChildren(renderEmptyState());
+    renderDeviceList();
 
     updateCounts();
     clearTimeout(alertTimer);
@@ -1219,6 +1316,7 @@ function escapeHTML(str) {
 
     bindViewToggle('btn-group',  () => (groupByMfr = !groupByMfr));
     bindViewToggle('btn-bundle', () => (bundleRotating = !bundleRotating));
+    document.getElementById('btn-collapse-all').addEventListener('click', collapseAllGroups);
 
     // Card action buttons (copy / search / notes) via delegation
     document.getElementById('device-list').addEventListener('click', handleCardAction);

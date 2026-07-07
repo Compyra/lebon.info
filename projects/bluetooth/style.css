@@ -51,13 +51,13 @@ small { font-size: max(0.82em, 0.72rem); }
 
 /* ---- Terminal Window ---- */
 .terminal-window {
-    max-width: 860px;
+    max-width: 1100px;
     margin: 30px auto;
     background: var(--gray);
     border: 2px solid var(--border);
     border-radius: 8px;
     box-shadow: 0 0 32px #000c, 0 0 8px #00ff9022;
-    overflow: hidden;
+    overflow: clip; /* clips the rounded corners without breaking position: sticky */
 }
 
 /* ---- Terminal Header ---- */
@@ -107,6 +107,25 @@ small { font-size: max(0.82em, 0.72rem); }
 }
 .title-prefix { color: var(--text-dim); }
 .title-suffix { color: var(--text-dim); font-weight: normal; }
+
+.tagline {
+    margin: -10px 0 18px;
+    line-height: 1.6;
+}
+.tagline strong { color: var(--green-dim); }
+
+/* ---- Status Panel (sticky on desktop) ---- */
+@media (min-width: 768px) {
+    .status-panel {
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        background: var(--gray);
+        margin: 0 -24px;
+        padding: 8px 24px 0;
+        border-bottom: 1px solid #2e3a30;
+    }
+}
 
 /* ---- Status Bar ---- */
 .status-bar {
@@ -172,8 +191,8 @@ small { font-size: max(0.82em, 0.72rem); }
 .terminal-btn:hover:not(:disabled) { border-color: var(--green); color: var(--green); background: #00ff9010; }
 .terminal-btn:disabled { opacity: 0.35; cursor: not-allowed; }
 
-.terminal-btn.primary { border-color: var(--green); color: var(--green); }
-.terminal-btn.primary:hover:not(:disabled) { background: #00ff9020; box-shadow: 0 0 8px #00ff9040; }
+.terminal-btn.primary { border-color: var(--green); color: var(--green); background: #00ff9012; }
+.terminal-btn.primary:hover:not(:disabled) { background: #00ff9025; box-shadow: 0 0 8px #00ff9040; }
 
 .terminal-btn.secondary { border-color: var(--amber); color: var(--amber); }
 .terminal-btn.secondary:hover:not(:disabled) { background: #ffe06615; }
@@ -235,13 +254,26 @@ small { font-size: max(0.82em, 0.72rem); }
 
 /* ---- Group Headers ---- */
 .group-header {
+    display: block;
+    width: 100%;
+    background: transparent;
+    border: none;
+    border-bottom: 1px dashed #2e3a30;
     color: var(--amber);
+    font-family: inherit;
     font-size: 0.8rem;
     letter-spacing: 0.08em;
-    border-bottom: 1px dashed #2e3a30;
+    text-align: left;
     padding: 10px 2px 4px;
+    cursor: pointer;
     overflow-wrap: anywhere;
 }
+.group-header:hover { color: var(--green); }
+.group-header:focus-visible { outline: 2px solid var(--green); outline-offset: 1px; }
+
+/* ---- Filter Statistics Row ---- */
+.status-bar-filters { margin-top: -10px; }
+.status-bar-filters .status-value { color: var(--green-dim); }
 
 /* ---- Card Action Buttons ---- */
 .device-actions {
@@ -315,9 +347,15 @@ small { font-size: max(0.82em, 0.72rem); }
 .device-list {
     min-height: 120px;
     margin-bottom: 20px;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    gap: 10px;
+    align-items: start;
+}
+
+.device-list-empty,
+.group-header {
+    grid-column: 1 / -1;
 }
 
 .device-list-empty {
@@ -491,6 +529,26 @@ small { font-size: max(0.82em, 0.72rem); }
     padding-left: 14px;
 }
 
+details.info-section > summary {
+    cursor: pointer;
+    list-style: none;
+    user-select: none;
+}
+details.info-section > summary::-webkit-details-marker { display: none; }
+details.info-section > summary::before {
+    content: '▸ ';
+    color: var(--text-dim);
+}
+details.info-section[open] > summary::before { content: '▾ '; }
+details.info-section > summary:hover .section-label { color: var(--green); }
+details.info-section > summary:focus-visible { outline: 2px solid var(--green); outline-offset: 2px; }
+details.info-section[open] > summary { margin-bottom: 8px; }
+details.info-section > summary .section-label {
+    display: inline;
+    margin-bottom: 0;
+    transition: color 0.15s;
+}
+
 .info-section .section-label { margin-bottom: 8px; }
 
 .info-section p {
@@ -527,4 +585,5 @@ small { font-size: max(0.82em, 0.72rem); }
     .controls { gap: 6px; }
     .terminal-btn { font-size: 0.82rem; padding: 6px 10px; }
     .device-name { font-size: 0.92rem; }
+    .device-list { grid-template-columns: 1fr; }
 }

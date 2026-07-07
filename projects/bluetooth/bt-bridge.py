@@ -1,5 +1,7 @@
 """
-BT Scanner — local scanner bridge for the bt-scanner webpage.
+GHOSTTOOTH — local scanner bridge for the ghosttooth webpage.
+(Gathering Hidden Objects through Signal Tracking and Telemetry
+Observation of Operational Tracker Hardware)
 
 Chromium's Web Bluetooth passive scanning (requestLEScan) does not start
 radio discovery on Windows. This bridge performs the native BLE scan
@@ -48,8 +50,8 @@ def on_advertisement(device, adv):
 async def scan_loop():
     scanner = BleakScanner(on_advertisement)
     await scanner.start()
-    print(f"BLE scan running. Bridge serving on http://127.0.0.1:{PORT}")
-    print("Open the BT Scanner webpage and click [ START SCAN ]. Ctrl+C to quit.")
+    print(f"GHOSTTOOTH BLE scan running. Bridge serving on http://127.0.0.1:{PORT}")
+    print("Open the GHOSTTOOTH webpage and click [ START SCAN ]. Ctrl+C to quit.")
     while True:
         await asyncio.sleep(PRUNE_INTERVAL_S)
         cutoff = time.time() - STALE_AFTER_S
@@ -81,7 +83,7 @@ class Handler(BaseHTTPRequestHandler):
             self.wfile.write(payload.encode("utf-8"))
         else:
             self._send_headers(200, "text/plain; charset=utf-8")
-            self.wfile.write(b"BT Scanner bridge running. Endpoint: /api/devices\n")
+            self.wfile.write(b"GHOSTTOOTH bridge running. Endpoint: /api/devices\n")
 
     def log_message(self, *args):
         pass  # keep the console quiet
