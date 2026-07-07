@@ -270,6 +270,8 @@ small { font-size: max(0.82em, 0.72rem); }
 /* ---- Device Notes ---- */
 .note-row .note-text { color: var(--amber); font-style: italic; }
 
+.uuid-name { color: var(--green-dim); }
+
 .note-editor { align-items: center; }
 .note-editor .note-input {
     flex: 1 1 160px;

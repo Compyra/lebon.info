@@ -9,6 +9,7 @@
    https://www.bluetooth.com/specifications/assigned-numbers/
    Full company-identifier registry (company_identifiers.yaml):
    https://bitbucket.org/bluetooth-SIG/public/src/main/assigned_numbers/company_identifiers/company_identifiers.yaml
+   For the long_company_identifiers.js file, source: https://gist.githubusercontent.com/ariccio/2882a435c79da28ba6035a14c5c65f22/raw/775e70cbc17b37fb1961b581b514f55296947338/BluetoothConstants.ts
    ============================================================ */
 
 'use strict';
@@ -146,6 +147,17 @@ function companyName(companyId) {
         || 'Unknown';
 }
 
+/**
+ * Human-readable name for an advertised service UUID, resolved against
+ * SERVICE_UUID_NAMES (long_company_identifiers.js — GATT services plus
+ * SIG member UUIDs for Google, Apple, Tile, Chipolo…), or null if unknown.
+ */
+function serviceUuidName(uuid) {
+    return typeof SERVICE_UUID_NAMES !== 'undefined'
+        ? (SERVICE_UUID_NAMES.get(String(uuid).toLowerCase()) ?? null)
+        : null;
+}
+
 // ================================================================
 // Application State
 // ================================================================
@@ -204,11 +216,8 @@ let groupByMfr = false;
 /** Sort mode: 'lastseen' | 'proximity' | 'severity' */
 let sortMode = 'lastseen';
 
-/** Whether devices not seen recently are hidden. */
-let hideStale = false;
-
-/** Staleness threshold for the HIDE STALE filter (ms). */
-const STALE_THRESHOLD_MS = 10 * 60 * 1000;
+/** Hide devices not seen within this window (ms), or null to keep all. */
+let staleThresholdMs = null;
 
 /** Whether nameless devices with matching MFR + signal are bundled (MAC rotation). */
 let bundleRotating = false;
@@ -557,7 +566,7 @@ function renderCardHTML(data) {
     const uuidsRow = data.uuids.length > 0
         ? `<div class="device-detail">
              <span class="detail-label">SVC UUID</span>
-             <span class="detail-value dim small">${data.uuids.map(escapeHTML).join(', ')}</span>
+             <span class="detail-value dim small">${data.uuids.map(formatServiceUuid).join(', ')}</span>
            </div>`
         : '';
 
@@ -629,6 +638,14 @@ function formatDuration(ms) {
     const m = Math.floor(s / 60);
     if (m < 60) return `${m}m ${s % 60}s`;
     return `${Math.floor(m / 60)}h ${String(m % 60).padStart(2, '0')}m`;
+}
+
+/** Escaped service UUID with its known name appended, when available. */
+function formatServiceUuid(uuid) {
+    const name = serviceUuidName(uuid);
+    return name
+        ? `${escapeHTML(uuid)} <span class="uuid-name">(${escapeHTML(name)})</span>`
+        : escapeHTML(uuid);
 }
 
 function buildRssiBar(rssi) {
@@ -711,13 +728,14 @@ function setFilter(filter) {
 function deviceMatchesFilters(data) {
     if (currentFilter !== 'all' && data.classification.type !== currentFilter) return false;
     if (rssiFilter != null && (data.rssi == null || data.rssi < rssiFilter)) return false;
-    if (hideStale && Date.now() - data.lastSeen > STALE_THRESHOLD_MS) return false;
+    if (staleThresholdMs != null && Date.now() - data.lastSeen > staleThresholdMs) return false;
     if (textFilter) {
         const haystack = [
             data.name || '',
             data.id,
             deviceNotes[data.id] || '',
             ...data.manufacturers.map(m => `${m.id} ${m.name}`),
+            ...data.uuids.map(u => serviceUuidName(u) || ''),
         ].join(' ').toLowerCase();
         if (!haystack.includes(textFilter)) return false;
     }
@@ -1194,17 +1212,20 @@ function escapeHTML(str) {
         sortMode = e.target.value;
         renderDeviceList();
     });
+    document.getElementById('stale-mode').addEventListener('change', (e) => {
+        staleThresholdMs = e.target.value ? Number(e.target.value) : null;
+        applyCurrentFilter();
+    });
 
-    bindViewToggle('btn-group',      () => (groupByMfr = !groupByMfr));
-    bindViewToggle('btn-hide-stale', () => (hideStale = !hideStale));
-    bindViewToggle('btn-bundle',     () => (bundleRotating = !bundleRotating));
+    bindViewToggle('btn-group',  () => (groupByMfr = !groupByMfr));
+    bindViewToggle('btn-bundle', () => (bundleRotating = !bundleRotating));
 
     // Card action buttons (copy / search / notes) via delegation
     document.getElementById('device-list').addEventListener('click', handleCardAction);
 
     // Re-apply the staleness filter periodically while it is active
     setInterval(() => {
-        if (hideStale) applyCurrentFilter();
+        if (staleThresholdMs != null) applyCurrentFilter();
     }, 30000);
 
     loadNotes();

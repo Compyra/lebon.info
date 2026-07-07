@@ -87,8 +87,13 @@
             <div class="filter-bar" role="group" aria-label="View options">
                 <span class="filter-label" aria-hidden="true">VIEW:</span>
                 <button id="btn-group" class="filter-btn" type="button" aria-pressed="false">GROUP BY MFR</button>
-                <button id="btn-hide-stale" class="filter-btn" type="button" aria-pressed="false" title="Hide devices not seen in the last 10 minutes">HIDE STALE &gt;10 MIN</button>
                 <button id="btn-bundle" class="filter-btn" type="button" aria-pressed="false" title="Merge nameless devices that look like one physical device rotating its MAC address (same manufacturer, back-to-back appearance, similar signal). Heuristic — results are guesses.">BUNDLE ROTATING MACS</button>
+                <label class="filter-label" for="stale-mode">STALE:</label>
+                <select id="stale-mode" class="terminal-select" title="Hide devices that have not been seen recently">
+                    <option value="">KEEP ALL</option>
+                    <option value="60000">HIDE &gt; 1 MIN</option>
+                    <option value="600000">HIDE &gt; 10 MIN</option>
+                </select>
             </div>
 
             <!-- Alert Banner -->
@@ -196,6 +201,7 @@
         </main><!-- /terminal-body -->
     </div><!-- /terminal-window -->
 
+    <script src="long_company_identifiers.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
