@@ -109,6 +109,15 @@ body.terminal-bg {
     align-items: center;
 }
 
+.terminal-owner-note {
+    color: var(--terminal-fg, #7ec699);
+    font-size: 0.82rem;
+    line-height: 1.4;
+    margin-bottom: 16px;
+    font-family: monospace;
+    opacity: 0.75;
+}
+
 .terminal-section {
     margin-bottom: 18px;
     background: var(--terminal-section);
